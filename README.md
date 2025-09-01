@@ -199,6 +199,49 @@ The `dist/` folder contains all files needed for deployment to:
 - GitHub Pages
 - Any static hosting service
 
+## 🚀 Deployment to Netlify
+
+### Automatic Deployment
+
+1. **Connect to Netlify**
+   - Go to [Netlify](https://netlify.com)
+   - Click "New site from Git"
+   - Connect your GitHub repository
+
+2. **Configure Build Settings**
+   - **Build command**: `npm run build`
+   - **Publish directory**: `dist`
+   - **Node version**: 18.17.0 (matches `.nvmrc`)
+
+3. **Environment Variables** (Optional)
+   - Add any variables from `.env.example` in Netlify dashboard
+
+4. **Deploy**
+   - Netlify will automatically build and deploy on git push
+   - Your site will be live at `https://your-site-name.netlify.app`
+
+### Manual Deployment
+
+1. **Build the project**
+   ```bash
+   npm run build
+   ```
+
+2. **Deploy to Netlify**
+   ```bash
+   npx netlify-cli deploy --prod --dir=dist
+   ```
+
+### SEO & Performance Features
+
+- ✅ **robots.txt** - Search engine crawling rules
+- ✅ **sitemap.xml** - Site structure for search engines
+- ✅ **_redirects** - SPA routing support
+- ✅ **_headers** - Security headers and caching
+- ✅ **netlify.toml** - Build configuration
+- ✅ **Optimized chunks** - Better caching strategy
+- ✅ **Gzip compression** - Faster loading
+
 ## 🤝 Contributing
 
 1. Fork the repository

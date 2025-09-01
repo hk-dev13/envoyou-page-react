@@ -56,3 +56,13 @@
 *.sln   text eol=crlf
 *.csproj text eol=crlf
 *.vscode/* text eol=lf
+
+# Lock files
+package-lock.json   text eol=lf
+yarn.lock   text eol=lf
+pnpm-lock.yaml   text eol=lf
+
+# Additional binaries
+*.svg   binary
+*.woff2 binary
+*.eot   binary
