@@ -49,9 +49,21 @@ const CodeExampleSection = () => {
                         <div className="bg-[#0D1117] rounded-xl border border-slate-800 overflow-hidden">
                             <div className="px-4 py-2 border-b border-slate-800 flex justify-between items-center">
                                 <span className="text-sm text-slate-400">Example: Get emissions data</span>
-                                <button id="copyBtn" className="text-sm text-slate-400 hover:text-white transition-colors flex items-center space-x-1">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
-                                    <span id="copyBtnText">Copy</span>
+                                                                <button
+                                  id="copyBtn"
+                                  onClick={handleCopy}
+                                  onKeyDown={(e) => {
+                                    if (e.key === 'Enter' || e.key === ' ') {
+                                      e.preventDefault();
+                                      handleCopy();
+                                    }
+                                  }}
+                                  aria-label="Copy code to clipboard"
+                                  className={`text-sm hover:text-white transition-colors flex items-center space-x-1 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2 focus:ring-offset-slate-900 rounded px-2 py-1 ${copyButtonText === 'Copied!' ? 'text-emerald-400' : 'text-slate-400'}`}
+                                  type="button"
+                                >
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                                    <span id="copyBtnText">{copyButtonText}</span>
                                 </button>
                             </div>
                             <pre className="p-6 text-sm overflow-x-auto" id="codeBlock"><code className="language-bash"><span className="text-pink-400">curl</span> <span className="text-sky-300">-X</span> GET \

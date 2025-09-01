@@ -1,12 +1,222 @@
-# React + Vite
+# 🚀 Envoyou - Global Environmental Data API Landing Page
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A modern, high-performance React landing page for the Envoyou environmental data verification API, built with Vite and optimized for production.
 
-Currently, two official plugins are available:
+## ✨ Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+### 🎯 **Core Features**
+- **Modern React 19** with Vite for lightning-fast development
+- **Tailwind CSS v4** for beautiful, responsive design
+- **AOS (Animate On Scroll)** for smooth scroll animations
+- **Chart.js Integration** for data visualizations
+- **React Router** for seamless navigation
 
-## Expanding the ESLint configuration
+### ⚡ **Performance Optimizations**
+- **Lazy Loading** - Components load only when needed
+- **Code Splitting** - Optimized bundle chunks for better caching
+- **Error Boundaries** - Graceful error handling with user-friendly UI
+- **Optimized Build** - Production-ready with source maps
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+### 🔍 **SEO & Accessibility**
+- **Structured Data (JSON-LD)** for rich search results
+- **Open Graph & Twitter Cards** for social sharing
+- **ARIA Labels & Keyboard Navigation** for accessibility
+- **Canonical URLs** and meta tags for SEO
+- **DNS Prefetching** for faster resource loading
+
+### 📊 **Analytics Ready**
+- **Google Analytics 4** integration
+- **Custom Event Tracking** setup
+- **Performance Monitoring** configuration
+
+## 🚀 Getting Started
+
+### Prerequisites
+- Node.js 18+
+- npm or yarn
+
+### Installation
+
+1. **Clone the repository**
+   ```bash
+   git clone https://github.com/hk-dev13/ENVOYou-page.git
+   cd envoyou-page-react
+   ```
+
+2. **Install dependencies**
+   ```bash
+   npm install
+   ```
+
+3. **Set up environment variables**
+   ```bash
+   cp .env.example .env
+   # Edit .env with your actual values
+   ```
+
+4. **Start development server**
+   ```bash
+   npm run dev
+   ```
+
+5. **Open your browser**
+   ```
+   http://localhost:5173
+   ```
+
+## 📁 Project Structure
+
+```
+src/
+├── components/
+│   ├── ErrorBoundary.jsx      # Error handling component
+│   ├── Header.jsx            # Navigation header
+│   ├── Footer.jsx            # Site footer
+│   ├── HeroSection.jsx       # Hero/landing section
+│   ├── FeaturesSection.jsx   # Features showcase
+│   ├── PricingSection.jsx    # Pricing plans
+│   ├── CodeExampleSection.jsx # API examples
+│   ├── VisualizationsSection.jsx # Data charts
+│   └── CevsLookupSection.jsx # CEVS lookup tool
+├── pages/
+│   └── HomePage.jsx          # Main landing page
+├── App.jsx                   # Main app component
+└── main.jsx                  # App entry point
+```
+
+## 🛠️ Available Scripts
+
+- `npm run dev` - Start development server
+- `npm run build` - Build for production
+- `npm run preview` - Preview production build
+- `npm run lint` - Run ESLint
+
+## 🔧 Configuration
+
+### Environment Variables
+
+Create a `.env` file with:
+
+```env
+# API Configuration
+VITE_API_BASE_URL=https://api.envoyou.com
+VITE_API_VERSION=v1
+
+# Analytics
+VITE_GA_TRACKING_ID=G-YOUR-GA4-ID
+
+# App Settings
+VITE_APP_NAME=Envoyou
+VITE_APP_DESCRIPTION=Global Environmental Data API
+```
+
+### Google Analytics Setup
+
+1. Replace `G-XXXXXXXXXX` in `index.html` with your GA4 ID
+2. Update the tracking configuration as needed
+
+## 🎨 Customization
+
+### Colors & Branding
+- Primary: Emerald (`emerald-500`)
+- Background: Dark slate (`slate-900`)
+- Accent: Sky blue (`sky-300`)
+
+### Animations
+- AOS library configured with:
+  - Duration: 1200ms
+  - Offset: 100px
+  - Once: true (animations trigger once)
+
+## 📈 Performance Features
+
+### Lazy Loading
+Components are lazy-loaded for better initial page load:
+```jsx
+const HeroSection = lazy(() => import('../components/HeroSection'));
+```
+
+### Error Boundaries
+Graceful error handling prevents app crashes:
+```jsx
+<ErrorBoundary>
+  <App />
+</ErrorBoundary>
+```
+
+### Bundle Optimization
+Automatic code splitting and chunk optimization for production builds.
+
+## 🔍 SEO Features
+
+### Structured Data
+JSON-LD schema for better search engine understanding:
+- SoftwareApplication schema
+- Organization information
+- Feature lists
+
+### Meta Tags
+Comprehensive meta tags for:
+- Search engines
+- Social media sharing
+- Browser optimization
+
+## ♿ Accessibility
+
+- ARIA labels on interactive elements
+- Keyboard navigation support
+- Focus management
+- Screen reader friendly
+
+## 📊 Analytics & Monitoring
+
+### Google Analytics 4
+- Page view tracking
+- Custom event tracking setup
+- Performance monitoring
+
+### Error Tracking
+- Console error logging
+- Development error details
+- Production error boundaries
+
+## 🚀 Deployment
+
+### Build for Production
+```bash
+npm run build
+```
+
+### Preview Production Build
+```bash
+npm run preview
+```
+
+### Deploy to Hosting
+The `dist/` folder contains all files needed for deployment to:
+- Vercel
+- Netlify
+- GitHub Pages
+- Any static hosting service
+
+## 🤝 Contributing
+
+1. Fork the repository
+2. Create a feature branch
+3. Make your changes
+4. Test thoroughly
+5. Submit a pull request
+
+## 📄 License
+
+This project is licensed under the MIT License - see the LICENSE file for details.
+
+## 📞 Support
+
+- **Email**: support@envoyou.com
+- **GitHub Issues**: For bug reports and feature requests
+- **Documentation**: [API Docs](https://api.envoyou.com/docs)
+
+---
+
+**Built with ❤️ for environmental data transparency and sustainability**
