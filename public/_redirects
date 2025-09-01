@@ -3,10 +3,3 @@
 
 # API redirects (if needed)
 /api/*  https://your-api-domain.com/:splat  200
-
-# Security headers
-/*
-  X-Frame-Options: DENY
-  X-XSS-Protection: 1; mode=block
-  X-Content-Type-Options: nosniff
-  Referrer-Policy: strict-origin-when-cross-origin
