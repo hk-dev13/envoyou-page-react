@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 
 const HeroSection = () => {
     return (
-        <section className="relative h-screen flex items-center justify-center hero-gradient">
+        <section className="relative h-screen flex items-center justify-center hero-gradient" data-aos="fade-in">
             <div className="container mx-auto px-6 text-center">
                 <h2 className="text-4xl md:text-6xl font-extrabold text-white leading-tight">
                     Transform Fragmented Environmental Data.

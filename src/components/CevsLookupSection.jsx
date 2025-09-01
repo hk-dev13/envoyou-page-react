@@ -2,7 +2,7 @@ import React from 'react';
 
 const CevsLookupSection = () => {
     return (
-        <section id="cevs-lookup" className="py-12 sm:py-20">
+        <section id="cevs-lookup" className="py-12 sm:py-20" data-aos="fade-up">
             <div className="container mx-auto px-6">
                 <div className="bg-slate-900/40 border border-slate-800 p-8 rounded-xl max-w-3xl mx-auto">
                     <h3 className="text-2xl font-bold text-white">Find CEVS Score</h3>

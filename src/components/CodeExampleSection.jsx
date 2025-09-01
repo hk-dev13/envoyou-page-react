@@ -26,7 +26,7 @@ const CodeExampleSection = () => {
   };
 
   return (
-    <section id="docs" className="py-20 sm:py-32 bg-slate-900/50">
+    <section id="docs" className="py-20 sm:py-32 bg-slate-900/50" data-aos="fade-up">
       <div className="container mx-auto px-6">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
           <div>
