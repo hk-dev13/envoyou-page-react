@@ -23,13 +23,4 @@
     transform: translateY(-5px);
     box-shadow: 0 10px 25px -5px rgba(16, 185, 129, 0.1);
   }
-  .scroll-reveal {
-    opacity: 0;
-    transform: translateY(30px);
-    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
-  }
-  .scroll-reveal.active {
-    opacity: 1;
-    transform: translateY(0);
-  }
 }
