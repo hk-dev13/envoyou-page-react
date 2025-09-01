@@ -1,0 +1,58 @@
+# Auto normalisasi all text file
+* text=auto
+
+# ----------------------------------------
+# Script
+# ----------------------------------------
+# Shell script di Linux/Mac LF
+*.sh   text eol=lf
+# Batch script di Windows CRLF
+*.bat  text eol=crlf
+*.cmd  text eol=crlf
+*.ps1  text eol=crlf
+
+# ----------------------------------------
+# Code Files
+# ----------------------------------------
+# Source code pakai LF (standart Unix)
+*.js    text eol=lf
+*.ts    text eol=lf
+*.jsx   text eol=lf
+*.tsx   text eol=lf
+*.json  text eol=lf
+*.html  text eol=lf
+*.css   text eol=lf
+*.scss  text eol=lf
+*.md    text eol=lf
+*.yml   text eol=lf
+*.yaml  text eol=lf
+*.xml   text eol=lf
+
+# ----------------------------------------
+# Config & Documentation
+# ----------------------------------------
+*.env   text eol=lf
+*.conf  text eol=lf
+*.ini   text eol=lf
+*.toml  text eol=lf
+
+# ----------------------------------------
+# Binary Files (Do not modify)
+# ----------------------------------------
+*.png   binary
+*.jpg   binary
+*.jpeg  binary
+*.gif   binary
+*.ico   binary
+*.pdf   binary
+*.zip   binary
+*.gz    binary
+*.exe   binary
+*.dll   binary
+
+# ----------------------------------------
+# Extra (Do not modify)
+# ----------------------------------------
+*.sln   text eol=crlf
+*.csproj text eol=crlf
+*.vscode/* text eol=lf
