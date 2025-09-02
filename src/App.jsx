@@ -2,6 +2,11 @@ import { BrowserRouter as Router, Routes, Route, Outlet } from 'react-router-dom
 import Header from './components/Header';
 import Footer from './components/Footer';
 import ErrorBoundary from './components/ErrorBoundary';
+import InstallPrompt from './components/InstallPrompt';
+import ServiceWorkerManager from './components/ServiceWorkerManager';
+import NetworkStatus from './components/NetworkStatus';
+import PWAStatus from './components/PWAStatus';
+import PushNotificationManager from './components/PushNotificationManager';
 import HomePage from './pages/HomePage';
 import DocumentationPage from './pages/DocumentationPage';
 const ComingSoonPage = () => <div>Halaman Coming Soon</div>;
@@ -14,6 +19,11 @@ const AppLayout = () => (
       <Outlet /> {/* Ini adalah tempat konten halaman akan ditampilkan */}
     </main>
     <Footer />
+    <InstallPrompt />
+    <ServiceWorkerManager />
+    <NetworkStatus />
+    <PWAStatus />
+    <PushNotificationManager />
   </>
 );
 
