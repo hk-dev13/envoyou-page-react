@@ -14,9 +14,7 @@ export default defineConfig({
           vendor: ['react', 'react-dom'],
           router: ['react-router-dom'],
           charts: ['chart.js', 'react-chartjs-2'],
-          animations: ['aos'],
-          // UI library chunk
-          ui: ['@headlessui/react', 'lucide-react']
+          animations: ['aos']
         }
       }
     },
@@ -24,14 +22,8 @@ export default defineConfig({
     sourcemap: false, // Disable for better performance
     // Optimize chunk size
     chunkSizeWarningLimit: 1000,
-    // Enable minification
-    minify: 'terser',
-    terserOptions: {
-      compress: {
-        drop_console: true,
-        drop_debugger: true
-      }
-    },
+    // Enable minification (using esbuild default)
+    minify: true,
     // Optimize CSS
     cssCodeSplit: true,
     // Preload modules
