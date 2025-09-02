@@ -14,17 +14,37 @@ export default defineConfig({
           vendor: ['react', 'react-dom'],
           router: ['react-router-dom'],
           charts: ['chart.js', 'react-chartjs-2'],
-          animations: ['aos']
+          animations: ['aos'],
+          // UI library chunk
+          ui: ['@headlessui/react', 'lucide-react']
         }
       }
     },
     // Enable source maps for production debugging
-    sourcemap: true,
+    sourcemap: false, // Disable for better performance
     // Optimize chunk size
-    chunkSizeWarningLimit: 1000
+    chunkSizeWarningLimit: 1000,
+    // Enable minification
+    minify: 'terser',
+    terserOptions: {
+      compress: {
+        drop_console: true,
+        drop_debugger: true
+      }
+    },
+    // Optimize CSS
+    cssCodeSplit: true,
+    // Preload modules
+    modulePreload: {
+      polyfill: false
+    }
   },
   // Enable gzip compression
   server: {
     compress: true
+  },
+  // Optimize dependencies
+  optimizeDeps: {
+    include: ['react', 'react-dom', 'react-router-dom']
   }
 })

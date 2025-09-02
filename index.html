@@ -29,6 +29,10 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
+    <!-- Preload and optimize fonts -->
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"></noscript>
+
     <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image">
     <meta property="twitter:url" content="https://www.envoyou.com/">
@@ -36,10 +40,31 @@
     <meta property="twitter:description" content="Unified API access to standardized global environmental datasets for ESG businesses, analysts, and investors.">
     <meta property="twitter:image" content="https://www.envoyou.com/public/www.envoyou.com.png">
 
-    <link rel="stylesheet" href="css/output.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com"> 
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Critical CSS for above-the-fold content -->
+    <style>
+      /* Critical CSS for Above-the-Fold Content */
+      body{font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background-color:#020617;color:#cbd5e1;overflow-x:hidden;font-display:swap;margin:0;padding:0;line-height:1.5}
+      .hero-gradient{background:radial-gradient(ellipse at top,rgba(16,185,129,.15),transparent 60%),radial-gradient(ellipse at bottom,rgba(37,99,235,.1),transparent 70%);min-height:100vh;display:flex;align-items:center;justify-content:center}
+      .container{max-width:1200px;margin:0 auto;padding:0 1.5rem}
+      .text-4xl{font-size:2.25rem;line-height:2.5rem;font-weight:800}
+      @media(min-width:768px){.text-4xl{font-size:3.75rem;line-height:1}}
+      .text-white{color:#fff}.text-emerald-400{color:#34d399}.text-slate-400{color:#94a3b8}
+      .text-center{text-align:center}.mx-auto{margin-left:auto;margin-right:auto}
+      .mt-6{margin-top:1.5rem}.mt-10{margin-top:2.5rem}.max-w-3xl{max-width:48rem}
+      .flex{display:flex}.items-center{align-items:center}.justify-center{justify-content:center}
+      .space-x-4>*+*{margin-left:1rem}.bg-white{background-color:#fff}.text-slate-900{color:#0f172a}
+      .border{border:1px solid}.border-slate-700{border-color:#334155}.font-semibold{font-weight:600}
+      .px-8{padding-left:2rem;padding-right:2rem}.py-3{padding-top:.75rem;padding-bottom:.75rem}
+      .rounded-lg{border-radius:.5rem}.transition-colors{transition:color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out}
+      .hover\:bg-slate-200:hover{background-color:#e2e8f0}.hover\:bg-slate-800:hover{background-color:#1e293b}
+      .hidden{display:none}.md\:block{display:block}
+    </style>
+
+    <!-- Load full CSS asynchronously -->
+    <link rel="preload" href="css/output.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="css/output.css"></noscript>
+
+    <!-- Fonts are now preloaded above -->
     <link rel="icon" type="image/x-icon" href="/favicon_io_envoyou/favicon.ico">
     <link rel="apple-touch-icon" sizes="180x180" href="/favicon_io_envoyou/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon_io_envoyou/favicon-32x32.png">

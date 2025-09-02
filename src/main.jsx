@@ -4,6 +4,10 @@ import './index.css'
 import App from './App.jsx'
 import AOS from 'aos'
 import 'aos/dist/aos.css'
+import { optimizePerformance } from './utils/performance.js'
+
+// Initialize performance optimizations
+optimizePerformance();
 
 // Initialize AOS
 AOS.init({
