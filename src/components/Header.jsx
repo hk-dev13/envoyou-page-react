@@ -1,7 +1,8 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 
 const Header = () => {
+    const [isMenuOpen, setIsMenuOpen] = useState(false);
     const location = useLocation();
     const navigate = useNavigate();
 
@@ -85,26 +86,117 @@ const Header = () => {
                         </button>
                     </>
                 )}
-                {location.pathname !== '/documentation' && (
+                <Link
+                    to="/documentation"
+                    className="text-slate-300 hover:text-emerald-400 transition-colors"
+                >
+                    Documentation
+                </Link>
+                <Link
+                    to="/about"
+                    className="text-slate-300 hover:text-emerald-400 transition-colors"
+                >
+                    About
+                </Link>
+                <Link
+                    to="/contact"
+                    className="text-slate-300 hover:text-emerald-400 transition-colors"
+                >
+                    Contact
+                </Link>
+            </nav>
+            
+            {/* Mobile menu button */}
+            <button
+                className="md:hidden flex items-center text-white"
+                onClick={() => setIsMenuOpen(!isMenuOpen)}
+            >
+                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    {isMenuOpen ? (
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                    ) : (
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+                    )}
+                </svg>
+            </button>
+            
+            <Link to="/documentation" className="hidden md:block bg-emerald-500 hover:bg-emerald-600 text-white font-semibold px-5 py-2 rounded-lg transition-colors">Get Started</Link>
+        </div>
+
+        {/* Mobile menu */}
+        {isMenuOpen && (
+            <div className="md:hidden absolute top-full left-0 w-full bg-slate-900/95 backdrop-blur-md border-t border-slate-700">
+                <nav className="flex flex-col p-4 space-y-4">
+                    {location.pathname === '/' ? (
+                        <>
+                            <a
+                                href="#features"
+                                className="text-slate-300 hover:text-emerald-400 transition-colors"
+                                onClick={() => setIsMenuOpen(false)}
+                            >
+                                Features
+                            </a>
+                            <a
+                                href="#pricing"
+                                className="text-slate-300 hover:text-emerald-400 transition-colors"
+                                onClick={() => setIsMenuOpen(false)}
+                            >
+                                Pricing
+                            </a>
+                        </>
+                    ) : (
+                        <>
+                            <button
+                                onClick={() => {
+                                    handleSectionNavigation('features');
+                                    setIsMenuOpen(false);
+                                }}
+                                className="text-slate-300 hover:text-emerald-400 transition-colors text-left"
+                            >
+                                Features
+                            </button>
+                            <button
+                                onClick={() => {
+                                    handleSectionNavigation('pricing');
+                                    setIsMenuOpen(false);
+                                }}
+                                className="text-slate-300 hover:text-emerald-400 transition-colors text-left"
+                            >
+                                Pricing
+                            </button>
+                        </>
+                    )}
                     <Link
                         to="/documentation"
                         className="text-slate-300 hover:text-emerald-400 transition-colors"
+                        onClick={() => setIsMenuOpen(false)}
                     >
                         Documentation
                     </Link>
-                )}
-                {location.pathname === '/documentation' && (
                     <Link
-                        to="/"
+                        to="/about"
                         className="text-slate-300 hover:text-emerald-400 transition-colors"
+                        onClick={() => setIsMenuOpen(false)}
                     >
-                        Back to Home
+                        About
                     </Link>
-                )}
-                <a href="mailto:info@envoyou.com" className="text-slate-300 hover:text-emerald-400 transition-colors">Contact</a>
-            </nav>
-            <Link to="/coming-soon" className="bg-emerald-500 hover:bg-emerald-600 text-white font-semibold px-5 py-2 rounded-lg transition-colors">Get API Key</Link>
-        </div>
+                    <Link
+                        to="/contact"
+                        className="text-slate-300 hover:text-emerald-400 transition-colors"
+                        onClick={() => setIsMenuOpen(false)}
+                    >
+                        Contact
+                    </Link>
+                    <Link
+                        to="/documentation"
+                        className="bg-emerald-500 hover:bg-emerald-600 text-white font-semibold px-5 py-2 rounded-lg transition-colors text-center"
+                        onClick={() => setIsMenuOpen(false)}
+                    >
+                        Get Started
+                    </Link>
+                </nav>
+            </div>
+        )}
     </header>
     );
 }

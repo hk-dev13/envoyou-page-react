@@ -59,7 +59,7 @@ const PricingSection = () => {
                             <li className="flex items-center"><svg className="w-5 h-5 text-emerald-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path></svg>Access to core emissions & country data</li>
                             <li className="flex items-center"><svg className="w-5 h-5 text-emerald-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path></svg>Support via the GitHub community</li>
                         </ul>
-                        <a href="coming-soon.html" className="mt-8 w-full text-center bg-slate-700 hover:bg-slate-600 text-white font-semibold py-3 rounded-lg transition-colors">Start Free</a>
+                        <Link to="/documentation" className="mt-8 w-full text-center bg-slate-700 hover:bg-slate-600 text-white font-semibold py-3 rounded-lg transition-colors block">Start Free</Link>
                     </div>
 
                     {/* Pricing Card 2: Premium (Highlighted) */}
@@ -113,9 +113,9 @@ const PricingSection = () => {
                                 </li>
                             )}
                         </ul>
-                        <a href="coming-soon.html" className="mt-8 w-full text-center bg-emerald-500 hover:bg-emerald-600 text-white font-semibold py-3 rounded-lg transition-colors">
+                        <Link to="/contact" className="mt-8 w-full text-center bg-emerald-500 hover:bg-emerald-600 text-white font-semibold py-3 rounded-lg transition-colors block">
                             {isAnnual ? `Get Annual Plan - Save $${originalPrice * 12 - annualPrice}` : 'Choose Premium'}
-                        </a>
+                        </Link>
                     </div>
 
                     {/* Pricing Card 3: Enterprise */}
@@ -129,7 +129,7 @@ const PricingSection = () => {
                             <li className="flex items-center"><svg className="w-5 h-5 text-emerald-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path></svg>SLA support & dedicated account manager</li>
                             <li className="flex items-center"><svg className="w-5 h-5 text-emerald-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path></svg>Full access to historical data & beta features</li>
                         </ul>
-                        <a href="mailto:info@envoyou.com" className="mt-8 w-full text-center bg-slate-700 hover:bg-slate-600 text-white font-semibold py-3 rounded-lg transition-colors">Contact Us</a>
+                        <Link to="/contact" className="mt-8 w-full text-center bg-slate-700 hover:bg-slate-600 text-white font-semibold py-3 rounded-lg transition-colors block">Contact Sales</Link>
                     </div>
                 </div>
             </div>

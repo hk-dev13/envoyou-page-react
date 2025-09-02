@@ -9,7 +9,8 @@ import PWAStatus from './components/PWAStatus';
 import PushNotificationManager from './components/PushNotificationManager';
 import HomePage from './pages/HomePage';
 import DocumentationPage from './pages/DocumentationPage';
-const ComingSoonPage = () => <div>Halaman Coming Soon</div>;
+import AboutPage from './pages/AboutPage';
+import ContactPage from './pages/ContactPage';
 
 // Komponen Layout ini akan memastikan Header dan Footer selalu ada
 const AppLayout = () => (
@@ -35,8 +36,8 @@ function App() {
           <Route path="/" element={<AppLayout />}>
             <Route index element={<HomePage />} />
             <Route path="documentation" element={<DocumentationPage />} />
-            <Route path="coming-soon" element={<ComingSoonPage />} />
-            {/* Tambahkan rute untuk halaman lain di sini jika ada */}
+            <Route path="about" element={<AboutPage />} />
+            <Route path="contact" element={<ContactPage />} />
           </Route>
         </Routes>
       </Router>
