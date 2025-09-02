@@ -19,24 +19,12 @@ export default defineConfig({
       }
     },
     // Enable source maps for production debugging
-    sourcemap: false, // Disable for better performance
+    sourcemap: true,
     // Optimize chunk size
-    chunkSizeWarningLimit: 1000,
-    // Enable minification (using esbuild default)
-    minify: true,
-    // Optimize CSS
-    cssCodeSplit: true,
-    // Preload modules
-    modulePreload: {
-      polyfill: false
-    }
+    chunkSizeWarningLimit: 1000
   },
   // Enable gzip compression
   server: {
     compress: true
-  },
-  // Optimize dependencies
-  optimizeDeps: {
-    include: ['react', 'react-dom', 'react-router-dom']
   }
 })

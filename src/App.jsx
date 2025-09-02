@@ -3,7 +3,7 @@ import Header from './components/Header';
 import Footer from './components/Footer';
 import ErrorBoundary from './components/ErrorBoundary';
 import HomePage from './pages/HomePage';
-const DocumentationPage = () => <div>Halaman Dokumentasi</div>;
+import DocumentationPage from './pages/DocumentationPage';
 const ComingSoonPage = () => <div>Halaman Coming Soon</div>;
 
 // Komponen Layout ini akan memastikan Header dan Footer selalu ada

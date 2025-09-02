@@ -5,7 +5,7 @@ const Header = () => {
     return (
         <header className="sticky top-0 z-50 w-full border-b border-slate-800 glass-nav">
         <div className="container mx-auto px-6 py-4 flex justify-between items-center">
-            <div className="flex items-center space-x-1">
+            <Link to="/" className="flex items-center space-x-1 hover:opacity-80 transition-opacity">
                 <svg xmlns="http://www.w3.org/2000/svg"
                 width="25" height="25" viewBox="0 0 300 300" className="text-emerald-400"
                 preserveAspectRatio="xMidYMid meet">
@@ -31,14 +31,14 @@ const Header = () => {
                 </svg>
 
                 <h1 className="text-xl font-bold text-white">Envoyou</h1>
-            </div>
+            </Link>
             <nav className="hidden md:flex items-center space-x-8">
                 <a href="#features" className="text-slate-300 hover:text-emerald-400 transition-colors">Features</a>
                 <a href="#pricing" className="text-slate-300 hover:text-emerald-400 transition-colors">Pricing</a>
-                <a href="documentation.html" className="text-slate-300 hover:text-emerald-400 transition-colors">Documentation</a>
+                <Link to="/documentation" className="text-slate-300 hover:text-emerald-400 transition-colors">Documentation</Link>
                 <a href="mailto:info@envoyou.com" className="text-slate-300 hover:text-emerald-400 transition-colors">Contact</a>
             </nav>
-            <a href="coming-soon.html" className="bg-emerald-500 hover:bg-emerald-600 text-white font-semibold px-5 py-2 rounded-lg transition-colors">Get API Key</a>
+            <Link to="/coming-soon" className="bg-emerald-500 hover:bg-emerald-600 text-white font-semibold px-5 py-2 rounded-lg transition-colors">Get API Key</Link>
         </div>
     </header>
     );

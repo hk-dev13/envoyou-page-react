@@ -14,7 +14,7 @@ const HeroSection = () => {
                     Unified access to standardized global environmental datasets for ESG businesses, analysts, and investors. Stop time-consuming manual data collection and start making strategic data-driven decisions with confidence.
                 </p>
                 <div className="mt-10 flex justify-center items-center space-x-4">
-                    <Link to="documentation.html" className="bg-white text-slate-900 font-semibold px-8 py-3 rounded-lg hover:bg-slate-200 transition-colors text-lg">
+                    <Link to="/documentation" className="bg-white text-slate-900 font-semibold px-8 py-3 rounded-lg hover:bg-slate-200 transition-colors text-lg">
                         View Documentation
                     </Link>
                     <Link to="https://github.com/hk-dev13/project-permit-api" target="_blank" className="border border-slate-700 text-white font-semibold px-8 py-3 rounded-lg hover:bg-slate-800 transition-colors text-lg">
