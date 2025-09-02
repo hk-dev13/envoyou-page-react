@@ -9,6 +9,7 @@ import PWAStatus from './components/PWAStatus';
 import PushNotificationManager from './components/PushNotificationManager';
 import ScrollToTop from './components/ScrollToTop';
 import BackToTop from './components/BackToTop';
+import APITester from './components/APITester';
 import HomePage from './pages/HomePage';
 import DocumentationPage from './pages/DocumentationPage';
 import AboutPage from './pages/AboutPage';
@@ -29,6 +30,8 @@ const AppLayout = () => (
     <PWAStatus />
     <PushNotificationManager />
     <BackToTop />
+    {/* API Tester for development - only show in dev mode */}
+    {import.meta.env.DEV && <APITester />}
   </>
 );
 

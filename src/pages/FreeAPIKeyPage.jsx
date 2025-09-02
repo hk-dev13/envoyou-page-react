@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import apiService from '../services/apiService';
 
 const FreeAPIKeyPage = () => {
     const [formData, setFormData] = useState({
@@ -9,6 +10,7 @@ const FreeAPIKeyPage = () => {
     });
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [submitted, setSubmitted] = useState(false);
+    const [error, setError] = useState(null);
 
     const handleChange = (e) => {
         setFormData({
@@ -20,12 +22,24 @@ const FreeAPIKeyPage = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         setIsSubmitting(true);
+        setError(null);
         
-        // Simulate API call
-        setTimeout(() => {
-            setIsSubmitting(false);
+        try {
+            const response = await apiService.submitAPIKeyRequest({
+                name: formData.name,
+                email: formData.email,
+                organization: formData.organization || null,
+                purpose: formData.purpose
+            });
+            
+            console.log('API Key request submitted:', response);
             setSubmitted(true);
-        }, 2000);
+        } catch (err) {
+            console.error('Error submitting API key request:', err);
+            setError(err.message || 'Failed to submit request. Please try again.');
+        } finally {
+            setIsSubmitting(false);
+        }
     };
 
     if (submitted) {
@@ -177,6 +191,13 @@ const FreeAPIKeyPage = () => {
                                     placeholder="Briefly describe how you plan to use the Envoyou API (e.g., research project, prototype development, ESG analysis, etc.)"
                                 />
                             </div>
+
+                            {/* Error Display */}
+                            {error && (
+                                <div className="mt-6 p-4 bg-red-900/20 border border-red-600/30 rounded-lg">
+                                    <p className="text-red-400 text-sm">{error}</p>
+                                </div>
+                            )}
 
                             <div className="mt-8">
                                 <button

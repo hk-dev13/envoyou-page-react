@@ -112,6 +112,24 @@ const OverviewSection = () => (
                             </svg>
                             <span><strong>Smart Caching</strong> - Optimized data freshness</span>
                         </li>
+                        <li className="flex items-center space-x-2">
+                            <svg className="w-4 h-4 text-emerald-400" fill="currentColor" viewBox="0 0 20 20">
+                                <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-8-3a1 1 0 00-.867.5 1 1 0 11-1.731-1A3 3 0 0113 8a3.001 3.001 0 01-2 2.83V11a1 1 0 11-2 0v-1a1 1 0 011-1 1 1 0 100-2zm0 8a1 1 0 100-2 1 1 0 000 2z" clipRule="evenodd" />
+                            </svg>
+                            <span><strong>🆕 Real-time Testing</strong> - Built-in API tester interface</span>
+                        </li>
+                        <li className="flex items-center space-x-2">
+                            <svg className="w-4 h-4 text-emerald-400" fill="currentColor" viewBox="0 0 20 20">
+                                <path fillRule="evenodd" d="M3 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clipRule="evenodd" />
+                            </svg>
+                            <span><strong>🎯 Instant Demo Keys</strong> - No registration required</span>
+                        </li>
+                        <li className="flex items-center space-x-2">
+                            <svg className="w-4 h-4 text-emerald-400" fill="currentColor" viewBox="0 0 20 20">
+                                <path fillRule="evenodd" d="M5.05 3.636a1 1 0 010 1.414 7 7 0 000 9.9 1 1 0 11-1.414 1.414 9 9 0 010-12.728 1 1 0 011.414 0zm9.9 0a1 1 0 011.414 0 9 9 0 010 12.728 1 1 0 11-1.414-1.414 7 7 0 000-9.9 1 1 0 010-1.414z" clipRule="evenodd" />
+                            </svg>
+                            <span><strong>📊 Connection Monitor</strong> - Live backend status indicator</span>
+                        </li>
                     </ul>
                 </div>
             </div>
@@ -119,12 +137,34 @@ const OverviewSection = () => (
 
         <div className="bg-slate-800 rounded-lg p-8">
             <h2 className="text-2xl font-bold text-white mb-4">Base URL</h2>
-            <div className="bg-slate-900 rounded p-4 font-mono text-emerald-400">
-                https://api.envoyou.com
+            <div className="grid md:grid-cols-2 gap-4">
+                <div>
+                    <h3 className="text-lg font-semibold text-emerald-400 mb-2">Development</h3>
+                    <div className="bg-slate-900 rounded p-4 font-mono text-emerald-400">
+                        http://localhost:8000
+                    </div>
+                    <p className="text-slate-400 text-sm mt-2">Local FastAPI backend</p>
+                </div>
+                <div>
+                    <h3 className="text-lg font-semibold text-emerald-400 mb-2">Production</h3>
+                    <div className="bg-slate-900 rounded p-4 font-mono text-emerald-400">
+                        https://api.envoyou.com
+                    </div>
+                    <p className="text-slate-400 text-sm mt-2">Live production API</p>
+                </div>
             </div>
-            <p className="text-slate-400 mt-4">
-                All API requests should be made to this base URL. For local development, use <code className="bg-slate-700 px-2 py-1 rounded text-sm">http://localhost:8000</code>
-            </p>
+            <div className="mt-6 bg-blue-900/20 border border-blue-500/30 rounded-lg p-4">
+                <div className="flex items-center mb-2">
+                    <svg className="w-5 h-5 text-blue-400 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                    <span className="text-blue-400 font-medium">💡 Quick Start</span>
+                </div>
+                <p className="text-blue-200 text-sm">
+                    This frontend automatically detects and connects to <code>localhost:8000</code> when running in development mode. 
+                    Start your FastAPI backend and refresh this page to see the green connection indicator!
+                </p>
+            </div>
         </div>
     </div>
 );
@@ -159,15 +199,47 @@ const AuthSection = () => (
             </div>
 
             <h3 className="text-xl font-semibold text-white mb-4">Demo API Keys</h3>
+            <div className="bg-emerald-900/20 border border-emerald-500/30 rounded-lg p-4 mb-4">
+                <div className="flex items-center mb-2">
+                    <svg className="w-5 h-5 text-emerald-400 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+                    </svg>
+                    <span className="text-emerald-400 font-medium">🆕 Instant Demo API Keys Available!</span>
+                </div>
+                <p className="text-sm text-slate-300 mb-3">
+                    Get a demo API key instantly without registration. Perfect for testing and development.
+                </p>
+                <div className="bg-slate-900 rounded p-3 space-y-2">
+                    <div className="text-sm">
+                        <span className="text-slate-400">Endpoint:</span>
+                        <code className="ml-2 bg-slate-700 px-2 py-1 rounded text-emerald-400">POST /admin/request-demo-key</code>
+                    </div>
+                    <div className="text-sm">
+                        <span className="text-slate-400">Payload:</span>
+                        <code className="ml-2 bg-slate-700 px-2 py-1 rounded text-slate-300">{'{"client_name": "Your Name"}'}</code>
+                    </div>
+                    <div className="text-sm">
+                        <span className="text-slate-400">Rate Limit:</span>
+                        <code className="ml-2 bg-slate-700 px-2 py-1 rounded text-slate-300">30 requests/minute</code>
+                    </div>
+                </div>
+            </div>
+            
             <div className="bg-slate-900 rounded p-4 space-y-2">
                 <div className="flex justify-between items-center">
-                    <span className="text-slate-400">Basic:</span>
-                    <code className="bg-slate-700 px-3 py-1 rounded text-emerald-400">demo_key_basic_2025</code>
+                    <span className="text-slate-400">Static Demo Keys (Deprecated):</span>
                 </div>
                 <div className="flex justify-between items-center">
-                    <span className="text-slate-400">Premium:</span>
-                    <code className="bg-slate-700 px-3 py-1 rounded text-emerald-400">demo_key_premium_2025</code>
+                    <span className="text-slate-500">Basic:</span>
+                    <code className="bg-slate-700 px-3 py-1 rounded text-slate-500">demo_key_basic_2025</code>
                 </div>
+                <div className="flex justify-between items-center">
+                    <span className="text-slate-500">Premium:</span>
+                    <code className="bg-slate-700 px-3 py-1 rounded text-slate-500">demo_key_premium_2025</code>
+                </div>
+                <p className="text-xs text-slate-500 mt-2">
+                    ⚠️ Use the dynamic endpoint above for guaranteed access
+                </p>
             </div>
         </div>
 
@@ -214,8 +286,23 @@ const EndpointsSection = () => (
                 <EndpointCard
                     method="GET"
                     path="/health"
-                    description="Health check endpoint"
+                    description="Health check endpoint with system status"
                     auth="None"
+                />
+            </div>
+        </div>
+
+        {/* Demo API Key */}
+        <div className="bg-slate-800 rounded-lg p-6 sm:p-8">
+            <h2 className="text-2xl font-bold text-white mb-6">🆕 Demo API Key Management</h2>
+            <p className="text-slate-400 mb-6">Get instant access to demo API keys without registration</p>
+            <div className="space-y-4">
+                <EndpointCard
+                    method="POST"
+                    path="/admin/request-demo-key"
+                    description="Request a new demo API key (30 req/min limit)"
+                    auth="None"
+                    params={["client_name"]}
                 />
             </div>
         </div>

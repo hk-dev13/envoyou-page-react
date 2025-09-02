@@ -1,6 +1,6 @@
 # 🚀 Envoyou - Global Environmental Data API Landing Page
 
-A modern, high-performance React landing page for the Envoyou environmental data verification API, built with Vite and optimized for production.
+A modern, high-performance React landing page for the Envoyou environmental data verification API, built with Vite and optimized for production with **full FastAPI backend integration**.
 
 ## ✨ Features
 
@@ -10,6 +10,9 @@ A modern, high-performance React landing page for the Envoyou environmental data
 - **AOS (Animate On Scroll)** for smooth scroll animations
 - **Chart.js Integration** for data visualizations
 - **React Router** for seamless navigation
+- **🔄 Full Backend Integration** - Connected to FastAPI backend with real data
+- **🔑 Demo API Key System** - Instant access to real environmental data
+- **📊 Real-time API Testing** - Built-in API tester with connection monitoring
 
 ### ⚡ **Performance Optimizations**
 - **Lazy Loading** - Components load only when needed
@@ -28,6 +31,14 @@ A modern, high-performance React landing page for the Envoyou environmental data
 - **Google Analytics 4** integration
 - **Custom Event Tracking** setup
 - **Performance Monitoring** configuration
+
+### 🌐 **Backend Integration Features**
+- **🔍 CEVS Score Lookup** - Real company environmental scores
+- **📈 Emissions Data** - EPA power plant data with filtering
+- **🌍 Global ISO Certifications** - ISO 14001 environmental certifications
+- **🎯 Demo API Keys** - Instant access without registration
+- **📡 Connection Status** - Real-time backend monitoring
+- **🔧 API Testing Tools** - Built-in endpoint testing interface
 
 ## 🚀 Getting Started
 
@@ -54,37 +65,114 @@ A modern, high-performance React landing page for the Envoyou environmental data
    # Edit .env with your actual values
    ```
 
-4. **Start development server**
+4. **Start FastAPI Backend** (Required for full functionality)
+   ```bash
+   # Make sure FastAPI backend is running on http://localhost:8000
+   # Backend should have the demo API key endpoint: /admin/request-demo-key
+   ```
+
+5. **Start development server**
    ```bash
    npm run dev
    ```
 
-5. **Open your browser**
+6. **Open your browser**
    ```
    http://localhost:5173
    ```
+
+7. **Get Demo API Key**
+   - Click the floating API status button (bottom-right)
+   - Use "Get Demo API Key" to access real data
+   - Test all endpoints with real environmental data
 
 ## 📁 Project Structure
 
 ```
 src/
 ├── components/
-│   ├── ErrorBoundary.jsx      # Error handling component
-│   ├── Header.jsx            # Navigation header
-│   ├── Footer.jsx            # Site footer
-│   ├── HeroSection.jsx       # Hero/landing section
-│   ├── FeaturesSection.jsx   # Features showcase
-│   ├── PricingSection.jsx    # Pricing plans
-│   ├── CodeExampleSection.jsx # API examples
+│   ├── ErrorBoundary.jsx         # Error handling component
+│   ├── Header.jsx               # Navigation header
+│   ├── Footer.jsx               # Site footer
+│   ├── HeroSection.jsx          # Hero/landing section
+│   ├── FeaturesSection.jsx      # Features showcase
+│   ├── PricingSection.jsx       # Pricing plans
+│   ├── CodeExampleSection.jsx   # API examples
 │   ├── VisualizationsSection.jsx # Data charts
-│   └── CevsLookupSection.jsx # CEVS lookup tool
+│   ├── CevsLookupSection.jsx    # CEVS lookup tool (connected to backend)
+│   ├── APITester.jsx            # Real-time API testing interface
+│   ├── DemoKeyManager.jsx       # Demo API key management
+│   ├── ScrollToTop.jsx          # Auto scroll-to-top on navigation
+│   └── BackToTop.jsx            # Back to top button
 ├── pages/
-│   └── HomePage.jsx          # Main landing page
-├── App.jsx                   # Main app component
-└── main.jsx                  # App entry point
+│   ├── HomePage.jsx             # Main landing page
+│   ├── DocumentationPage.jsx    # API documentation
+│   ├── AboutPage.jsx            # About us page
+│   ├── ContactPage.jsx          # Contact page
+│   └── FreeAPIKeyPage.jsx       # API key registration
+├── services/
+│   └── apiService.js            # Backend API integration service
+├── App.jsx                      # Main app component
+└── main.jsx                     # App entry point
 ```
 
-## 🛠️ Available Scripts
+## � Backend Integration
+
+### Features
+- **🔄 Real-time Data**: Connected to FastAPI backend with live environmental data
+- **🎯 Demo API Keys**: Get instant access without registration
+- **📊 Connection Monitor**: Real-time backend status indicator
+- **🧪 API Testing**: Built-in testing interface for all endpoints
+
+### API Endpoints Available
+- **Health Check**: `/health` - No authentication required
+- **CEVS Data**: `/global/cevs/{company_name}` - Company environmental scores
+- **Emissions**: `/global/emissions` - EPA power plant emissions data
+- **ISO Certifications**: `/global/iso` - Global ISO 14001 certificates
+- **Demo Keys**: `/admin/request-demo-key` - Get temporary API access
+
+### Getting Started with API
+1. **Start the application** - Frontend connects automatically
+2. **Click API status button** - Green circle in bottom-right corner
+3. **Get Demo API Key** - Click "Get Demo API Key" button
+4. **Test endpoints** - Use built-in testing interface
+5. **Try CEVS lookup** - Search real company data on homepage
+
+### API Response Examples
+
+#### CEVS Score Response
+```json
+{
+  "status": "success",
+  "company": "Shell",
+  "score": 50.0,
+  "components": {
+    "base": 50.0,
+    "iso_bonus": 0.0,
+    "epa_penalty": 0.0,
+    "renewables_bonus": 0.0
+  },
+  "sources": {
+    "epa_matches": 0,
+    "iso_count": 40
+  }
+}
+```
+
+#### Demo API Key Response
+```json
+{
+  "status": "success",
+  "data": {
+    "api_key": "ae21b9776a23b7e7fa28856dd9810544",
+    "client_name": "Demo User",
+    "tier": "basic",
+    "requests_per_minute": 30
+  }
+}
+```
+
+## �🛠️ Available Scripts
 
 - `npm run dev` - Start development server
 - `npm run build` - Build for production
@@ -98,9 +186,9 @@ src/
 Create a `.env` file with:
 
 ```env
-# API Configuration
-VITE_API_BASE_URL=https://api.envoyou.com
-VITE_API_VERSION=v1
+# Backend API Configuration
+VITE_API_URL=http://localhost:8000
+VITE_API_KEY=your_production_api_key
 
 # Analytics
 VITE_GA_TRACKING_ID=G-YOUR-GA4-ID
@@ -108,6 +196,26 @@ VITE_GA_TRACKING_ID=G-YOUR-GA4-ID
 # App Settings
 VITE_APP_NAME=Envoyou
 VITE_APP_DESCRIPTION=Global Environmental Data API
+```
+
+### Backend Integration
+
+This frontend is designed to work with the FastAPI backend. Make sure:
+
+1. **Backend Running**: FastAPI server at `http://localhost:8000`
+2. **Demo Endpoint**: `/admin/request-demo-key` available
+3. **CORS Enabled**: Frontend origin `http://localhost:5173` allowed
+4. **All Endpoints**: Health, CEVS, Emissions, ISO data available
+
+#### Quick Backend Test
+```bash
+# Test if backend is running
+curl http://localhost:8000/health
+
+# Test demo API key endpoint
+curl -X POST http://localhost:8000/admin/request-demo-key \
+  -H "Content-Type: application/json" \
+  -d '{"client_name":"Test User"}'
 ```
 
 ### Google Analytics Setup
@@ -254,11 +362,26 @@ The `dist/` folder contains all files needed for deployment to:
 
 This project is licensed under the MIT License - see the LICENSE file for details.
 
-## 📞 Support
+## � Additional Documentation
+
+- **[Backend Integration Guide](./BACKEND_INTEGRATION.md)** - Detailed integration setup
+- **[PWA Features](./PWA_README.md)** - Progressive Web App functionality
+- **API Documentation** - Available in the app at `/documentation`
+
+## �📞 Support
 
 - **Email**: support@envoyou.com
 - **GitHub Issues**: For bug reports and feature requests
-- **Documentation**: [API Docs](https://api.envoyou.com/docs)
+- **API Documentation**: Available at `/documentation` or `http://localhost:8000/docs`
+- **Backend Status**: Real-time monitoring via floating status indicator
+
+## 🎯 Quick Demo
+
+1. **Start backend**: `FastAPI server on http://localhost:8000`
+2. **Start frontend**: `npm run dev`
+3. **Get demo key**: Click green button → "Get Demo API Key"
+4. **Test CEVS lookup**: Search "Shell" or "Tesla" 
+5. **Explore real data**: Company environmental scores with full breakdown
 
 ---
 
