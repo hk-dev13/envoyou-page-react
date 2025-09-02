@@ -2,6 +2,11 @@
 
 A modern, high-performance React landing page for the Envoyou environmental data verification API, built with Vite and optimized for production with **full FastAPI backend integration**.
 
+![License](https://img.shields.io/badge/license-MIT-blue.svg)
+![React](https://img.shields.io/badge/React-19-blue.svg)
+![Vite](https://img.shields.io/badge/Vite-Latest-green.svg)
+![Tailwind](https://img.shields.io/badge/Tailwind-v4-blue.svg)
+
 ## ✨ Features
 
 ### 🎯 **Core Features**
@@ -360,7 +365,25 @@ The `dist/` folder contains all files needed for deployment to:
 
 ## 📄 License
 
-This project is licensed under the MIT License - see the LICENSE file for details.
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+### MIT License Summary
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software.
+
+**What you can do:**
+- ✅ Commercial use
+- ✅ Modification
+- ✅ Distribution
+- ✅ Private use
+
+**What you must include:**
+- 📄 Copyright notice
+- 📄 License text
+
+**What you cannot do:**
+- ❌ Hold liable
+- ❌ Use trademark
 
 ## � Additional Documentation
 
@@ -371,6 +394,7 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 ## �📞 Support
 
 - **Email**: support@envoyou.com
+- **Website**: https://envoyou.com
 - **GitHub Issues**: For bug reports and feature requests
 - **API Documentation**: Available at `/documentation` or `http://localhost:8000/docs`
 - **Backend Status**: Real-time monitoring via floating status indicator
