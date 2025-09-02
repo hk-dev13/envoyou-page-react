@@ -1,7 +1,28 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React, { useEffect } from 'react';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 
 const Header = () => {
+    const location = useLocation();
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        // Handle scrolling to sections when navigating with hash
+        if (location.hash) {
+            const element = document.querySelector(location.hash);
+            if (element) {
+                // Small delay to ensure the page has loaded
+                setTimeout(() => {
+                    element.scrollIntoView({ behavior: 'smooth' });
+                }, 100);
+            }
+        }
+    }, [location]);
+
+    const handleSectionNavigation = (sectionId) => {
+        if (location.pathname !== '/') {
+            navigate(`/#${sectionId}`);
+        }
+    };
     return (
         <header className="sticky top-0 z-50 w-full border-b border-slate-800 glass-nav">
         <div className="container mx-auto px-6 py-4 flex justify-between items-center">
@@ -33,9 +54,53 @@ const Header = () => {
                 <h1 className="text-xl font-bold text-white">Envoyou</h1>
             </Link>
             <nav className="hidden md:flex items-center space-x-8">
-                <a href="#features" className="text-slate-300 hover:text-emerald-400 transition-colors">Features</a>
-                <a href="#pricing" className="text-slate-300 hover:text-emerald-400 transition-colors">Pricing</a>
-                <Link to="/documentation" className="text-slate-300 hover:text-emerald-400 transition-colors">Documentation</Link>
+                {location.pathname === '/' ? (
+                    <>
+                        <a
+                            href="#features"
+                            className="text-slate-300 hover:text-emerald-400 transition-colors"
+                        >
+                            Features
+                        </a>
+                        <a
+                            href="#pricing"
+                            className="text-slate-300 hover:text-emerald-400 transition-colors"
+                        >
+                            Pricing
+                        </a>
+                    </>
+                ) : (
+                    <>
+                        <button
+                            onClick={() => handleSectionNavigation('features')}
+                            className="text-slate-300 hover:text-emerald-400 transition-colors"
+                        >
+                            Features
+                        </button>
+                        <button
+                            onClick={() => handleSectionNavigation('pricing')}
+                            className="text-slate-300 hover:text-emerald-400 transition-colors"
+                        >
+                            Pricing
+                        </button>
+                    </>
+                )}
+                {location.pathname !== '/documentation' && (
+                    <Link
+                        to="/documentation"
+                        className="text-slate-300 hover:text-emerald-400 transition-colors"
+                    >
+                        Documentation
+                    </Link>
+                )}
+                {location.pathname === '/documentation' && (
+                    <Link
+                        to="/"
+                        className="text-slate-300 hover:text-emerald-400 transition-colors"
+                    >
+                        Back to Home
+                    </Link>
+                )}
                 <a href="mailto:info@envoyou.com" className="text-slate-300 hover:text-emerald-400 transition-colors">Contact</a>
             </nav>
             <Link to="/coming-soon" className="bg-emerald-500 hover:bg-emerald-600 text-white font-semibold px-5 py-2 rounded-lg transition-colors">Get API Key</Link>
