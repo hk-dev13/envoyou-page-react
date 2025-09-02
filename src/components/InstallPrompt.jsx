@@ -6,6 +6,12 @@ const InstallPrompt = () => {
     const [isInstalled, setIsInstalled] = useState(false);
 
     useEffect(() => {
+        // Skip install prompt in development mode
+        if (import.meta.env.DEV) {
+            console.log('InstallPrompt: Skipping in development mode');
+            return;
+        }
+
         // Check if app is already installed
         const checkInstalled = () => {
             if (window.matchMedia('(display-mode: standalone)').matches) {

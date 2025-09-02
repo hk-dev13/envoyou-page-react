@@ -23,4 +23,39 @@
     transform: translateY(-5px);
     box-shadow: 0 10px 25px -5px rgba(16, 185, 129, 0.1);
   }
+  
+  /* Mobile-friendly scrollbars */
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+  
+  .scrollbar-thin {
+    scrollbar-width: thin;
+  }
+  .scrollbar-thumb-slate-600 {
+    scrollbar-color: #475569 #1e293b;
+  }
+  
+  /* Ensure text doesn't break layout on small screens */
+  .text-mobile-safe {
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    hyphens: auto;
+  }
+  
+  /* Better code block handling */
+  pre {
+    max-width: 100%;
+    overflow-x: auto;
+    white-space: pre-wrap;
+    word-break: break-word;
+  }
+  
+  code {
+    word-break: break-all;
+  }
 }

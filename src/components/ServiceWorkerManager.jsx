@@ -8,6 +8,12 @@ const ServiceWorkerManager = () => {
     const [toastMessage, setToastMessage] = useState('');
 
     useEffect(() => {
+        // Skip service worker registration in development mode
+        if (import.meta.env.DEV) {
+            console.log('ServiceWorker: Skipping registration in development mode');
+            return;
+        }
+
         if ('serviceWorker' in navigator) {
             const wb = new Workbox('/sw.js');
 

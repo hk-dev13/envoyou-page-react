@@ -523,6 +523,50 @@ const ErrorsSection = () => (
                     </div>
                 </div>
             </div>
+
+                <div>
+                    <h3 className="text-lg font-semibold text-red-400 mb-3">Rate Limit Exceeded</h3>
+                    <div className="bg-slate-900 rounded p-4">
+                        <div className="text-red-400 font-mono text-sm mb-2">Status: 429</div>
+                        <pre className="text-slate-300 text-sm">{
+`{
+  "status": "error",
+  "message": "Rate limit exceeded. Upgrade to premium tier for higher limits.",
+  "code": "RATE_LIMIT_EXCEEDED",
+  "retry_after": 3600
+}`
+                        }</pre>
+                    </div>
+                </div>
+
+                <div>
+                    <h3 className="text-lg font-semibold text-red-400 mb-3">Data Not Found</h3>
+                    <div className="bg-slate-900 rounded p-4">
+                        <div className="text-red-400 font-mono text-sm mb-2">Status: 404</div>
+                        <pre className="text-slate-300 text-sm">{
+`{
+  "status": "error",
+  "message": "Country 'XYZ' not found in dataset",
+  "code": "DATA_NOT_FOUND"
+}`
+                        }</pre>
+                    </div>
+                </div>
+
+                <div>
+                    <h3 className="text-lg font-semibold text-red-400 mb-3">Invalid Parameters</h3>
+                    <div className="bg-slate-900 rounded p-4">
+                        <div className="text-red-400 font-mono text-sm mb-2">Status: 400</div>
+                        <pre className="text-slate-300 text-sm">{
+`{
+  "status": "error",
+  "message": "Invalid parameter: year must be between 2000-2024",
+  "code": "INVALID_PARAMETER"
+}`
+                        }</pre>
+                    </div>
+                </div>
+            </div>
         </div>
 
         <div className="bg-slate-800 rounded-lg p-6 sm:p-8">

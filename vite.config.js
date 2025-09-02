@@ -84,7 +84,7 @@ export default defineConfig({
         navigateFallbackDenylist: [/^\/api\//]
       },
       devOptions: {
-        enabled: true,
+        enabled: false, // Disable PWA in development to prevent SW errors
         type: 'module'
       }
     })
