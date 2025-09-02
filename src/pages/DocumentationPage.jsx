@@ -33,6 +33,7 @@ const DocumentationPage = () => {
                             <button
                                 key={tab.id}
                                 onClick={() => setActiveTab(tab.id)}
+                                data-tab={tab.id}
                                 className={`py-4 px-2 border-b-2 font-medium text-sm whitespace-nowrap transition-colors flex-shrink-0 ${
                                     activeTab === tab.id
                                         ? 'border-emerald-400 text-emerald-400'

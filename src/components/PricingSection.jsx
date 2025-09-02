@@ -59,7 +59,7 @@ const PricingSection = () => {
                             <li className="flex items-center"><svg className="w-5 h-5 text-emerald-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path></svg>Access to core emissions & country data</li>
                             <li className="flex items-center"><svg className="w-5 h-5 text-emerald-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path></svg>Support via the GitHub community</li>
                         </ul>
-                        <Link to="/documentation" className="mt-8 w-full text-center bg-slate-700 hover:bg-slate-600 text-white font-semibold py-3 rounded-lg transition-colors block">Start Free</Link>
+                        <Link to="/free-api-key" className="mt-8 w-full text-center bg-slate-700 hover:bg-slate-600 text-white font-semibold py-3 rounded-lg transition-colors block">Get Free API Key</Link>
                     </div>
 
                     {/* Pricing Card 2: Premium (Highlighted) */}
@@ -113,8 +113,8 @@ const PricingSection = () => {
                                 </li>
                             )}
                         </ul>
-                        <Link to="/contact" className="mt-8 w-full text-center bg-emerald-500 hover:bg-emerald-600 text-white font-semibold py-3 rounded-lg transition-colors block">
-                            {isAnnual ? `Get Annual Plan - Save $${originalPrice * 12 - annualPrice}` : 'Choose Premium'}
+                                                <Link to="/contact" className="mt-8 w-full text-center bg-emerald-500 hover:bg-emerald-600 text-white font-semibold py-3 rounded-lg transition-colors block">
+                            {isAnnual ? `Get Annual Plan - Save $${originalPrice * 12 - annualPrice}` : 'Contact Sales'}
                         </Link>
                     </div>
 

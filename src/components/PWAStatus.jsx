@@ -116,7 +116,7 @@ const PWAStatus = () => {
 
                     {pwaCapabilities.updateAvailable && (
                         <div className="mt-3 p-2 bg-yellow-600/20 border border-yellow-600/30 rounded">
-                            <p className="text-yellow-300 text-xs">Update available! Refresh to get the latest version.</p>
+                            <p className="text-yellow-300 text-xs">Update available! Install the PWA to get update notifications.</p>
                         </div>
                     )}
 

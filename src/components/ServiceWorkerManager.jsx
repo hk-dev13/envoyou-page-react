@@ -6,11 +6,25 @@ const ServiceWorkerManager = () => {
     const [registration, setRegistration] = useState(null);
     const [showToast, setShowToast] = useState(false);
     const [toastMessage, setToastMessage] = useState('');
+    const [isPWAInstalled, setIsPWAInstalled] = useState(false);
 
     useEffect(() => {
+        // Check if running as installed PWA
+        const checkPWAStatus = () => {
+            const isStandalone = window.matchMedia('(display-mode: standalone)').matches ||
+                               window.navigator.standalone || 
+                               document.referrer.includes('android-app://');
+            setIsPWAInstalled(isStandalone);
+        };
+
+        checkPWAStatus();
+
         // Skip service worker registration in development mode
         if (import.meta.env.DEV) {
             console.log('ServiceWorker: Skipping registration in development mode');
+            // For development testing, you can manually trigger the update banner
+            // Uncomment the line below to test the update banner in development
+            // setTimeout(() => setUpdateAvailable(true), 2000);
             return;
         }
 
@@ -18,18 +32,27 @@ const ServiceWorkerManager = () => {
             const wb = new Workbox('/sw.js');
 
             wb.addEventListener('installed', (event) => {
-                if (event.isUpdate) {
+                if (event.isUpdate && isPWAInstalled) {
                     setUpdateAvailable(true);
+                    console.log('PWA update available');
                 }
             });
 
             wb.addEventListener('waiting', (event) => {
-                setUpdateAvailable(true);
+                if (isPWAInstalled) {
+                    setUpdateAvailable(true);
+                    console.log('PWA update waiting');
+                }
             });
 
             wb.addEventListener('activated', (event) => {
                 if (event.isUpdate) {
-                    showToastMessage('App updated successfully!');
+                    if (isPWAInstalled) {
+                        showToastMessage('App updated successfully!');
+                    } else {
+                        // For web users, just show a subtle notification
+                        showToastMessage('Page updated with latest improvements');
+                    }
                 }
             });
 
@@ -55,23 +78,31 @@ const ServiceWorkerManager = () => {
     };
 
     const handleUpdate = () => {
+        console.log('Update button clicked', { registration, waiting: registration?.waiting });
         if (registration && registration.waiting) {
             registration.waiting.postMessage({ type: 'SKIP_WAITING' });
+            setUpdateAvailable(false);
+            window.location.reload();
+        } else {
+            // Fallback: force reload if no service worker registration
+            console.log('No registration waiting, forcing reload');
+            setUpdateAvailable(false);
             window.location.reload();
         }
     };
 
     const handleDismiss = () => {
+        console.log('Dismiss button clicked');
         setUpdateAvailable(false);
     };
 
-    if (!updateAvailable && !showToast) return null;
+    if (!showToast && (!updateAvailable || !isPWAInstalled)) return null;
 
     return (
         <>
-            {/* Update Available Banner */}
-            {updateAvailable && (
-                <div className="fixed top-16 left-0 right-0 z-40 bg-gradient-to-r from-emerald-600 to-green-600 text-white px-4 py-3 shadow-lg">
+            {/* Update Available Banner - Only show for installed PWA */}
+            {updateAvailable && isPWAInstalled && (
+                <div className="fixed top-16 left-0 right-0 z-50 bg-gradient-to-r from-emerald-600 to-green-600 text-white px-4 py-3 shadow-lg">
                     <div className="container mx-auto flex items-center justify-between">
                         <div className="flex items-center space-x-3">
                             <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
@@ -83,13 +114,15 @@ const ServiceWorkerManager = () => {
                         <div className="flex space-x-2">
                             <button
                                 onClick={handleUpdate}
-                                className="bg-white text-emerald-600 px-4 py-2 rounded-lg font-medium hover:bg-emerald-50 transition-colors"
+                                className="bg-white text-emerald-600 px-4 py-2 rounded-lg font-medium hover:bg-emerald-50 transition-colors cursor-pointer z-10 relative"
+                                type="button"
                             >
                                 Update Now
                             </button>
                             <button
                                 onClick={handleDismiss}
-                                className="text-emerald-100 hover:text-white px-3 py-2 rounded-lg transition-colors"
+                                className="text-emerald-100 hover:text-white px-3 py-2 rounded-lg transition-colors cursor-pointer z-10 relative"
+                                type="button"
                             >
                                 Later
                             </button>

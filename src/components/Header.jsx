@@ -120,7 +120,29 @@ const Header = () => {
                 </svg>
             </button>
             
-            <Link to="/documentation" className="hidden md:block bg-emerald-500 hover:bg-emerald-600 text-white font-semibold px-5 py-2 rounded-lg transition-colors">Get Started</Link>
+            {location.pathname === '/documentation' ? (
+                <a
+                    href="#pricing" 
+                    onClick={(e) => {
+                        e.preventDefault();
+                        if (location.pathname !== '/') {
+                            window.location.href = '/#pricing';
+                        } else {
+                            document.querySelector('#pricing')?.scrollIntoView({ behavior: 'smooth' });
+                        }
+                    }}
+                    className="hidden md:block bg-emerald-500 hover:bg-emerald-600 text-white font-semibold px-5 py-2 rounded-lg transition-colors"
+                >
+                    Get API Key
+                </a>
+            ) : (
+                <Link 
+                    to="/documentation" 
+                    className="hidden md:block bg-emerald-500 hover:bg-emerald-600 text-white font-semibold px-5 py-2 rounded-lg transition-colors"
+                >
+                    Get Started
+                </Link>
+            )}
         </div>
 
         {/* Mobile menu */}
@@ -187,13 +209,31 @@ const Header = () => {
                     >
                         Contact
                     </Link>
-                    <Link
-                        to="/documentation"
-                        className="bg-emerald-500 hover:bg-emerald-600 text-white font-semibold px-5 py-2 rounded-lg transition-colors text-center"
-                        onClick={() => setIsMenuOpen(false)}
-                    >
-                        Get Started
-                    </Link>
+                    {location.pathname === '/documentation' ? (
+                        <a
+                            href="#pricing"
+                            onClick={(e) => {
+                                e.preventDefault();
+                                setIsMenuOpen(false);
+                                if (location.pathname !== '/') {
+                                    window.location.href = '/#pricing';
+                                } else {
+                                    document.querySelector('#pricing')?.scrollIntoView({ behavior: 'smooth' });
+                                }
+                            }}
+                            className="bg-emerald-500 hover:bg-emerald-600 text-white font-semibold px-5 py-2 rounded-lg transition-colors text-center"
+                        >
+                            Get API Key
+                        </a>
+                    ) : (
+                        <Link
+                            to="/documentation"
+                            className="bg-emerald-500 hover:bg-emerald-600 text-white font-semibold px-5 py-2 rounded-lg transition-colors text-center"
+                            onClick={() => setIsMenuOpen(false)}
+                        >
+                            Get Started
+                        </Link>
+                    )}
                 </nav>
             </div>
         )}

@@ -16,8 +16,10 @@ const Footer = () => {
           <div className="flex flex-col space-y-2">
             <h4 className="font-semibold text-white mb-2">Links</h4>
             <Link to="/documentation" className="text-slate-400 hover:text-white transition-colors">Documentation</Link>
+            <Link to="/about" className="text-slate-400 hover:text-white transition-colors">About</Link>
+            <Link to="/contact" className="text-slate-400 hover:text-white transition-colors">Contact</Link>
             <a href="https://github.com/hk-dev13/ENVOYou-page/blob/main/LICENSE" target="_blank" rel="noopener noreferrer" className="text-slate-400 hover:text-white transition-colors">License</a>
-            <a href="#" id="contribute-link-footer" className="text-slate-400 hover:text-white transition-colors">Contribute</a>
+            <a href="https://github.com/hk-dev13/project-permit-api" target="_blank" rel="noopener noreferrer" className="text-slate-400 hover:text-white transition-colors">Contribute</a>
           </div>
 
           {/* Bagian Kanan: Media Sosial */}
