@@ -175,7 +175,7 @@ const AboutPage = () => {
                                     <div className="w-20 h-20 bg-gradient-to-br from-yellow-400 to-orange-500 rounded-full mx-auto mb-6 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
                                         <span className="text-xl font-bold text-white">G</span>
                                     </div>
-                                    <h3 className="text-xl font-semibold text-white mb-2">Grock</h3>
+                                    <h3 className="text-xl font-semibold text-white mb-2">Grok</h3>
                                     <p className="text-emerald-400 font-medium mb-4">Development & Coding</p>
                                     <p className="text-slate-400 text-sm leading-relaxed">
                                         Building reliable systems and innovative solutions. Focused on creating seamless user experiences and maintaining code quality standards.
