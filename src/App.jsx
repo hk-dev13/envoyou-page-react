@@ -8,6 +8,7 @@ import ServiceWorkerManager from './components/ServiceWorkerManager';
 import PushNotificationManager from './components/PushNotificationManager';
 import NetworkStatus from './components/NetworkStatus';
 import BackToTop from './components/BackToTop';
+import CookieConsent from './components/CookieConsent';
 import { ToastProvider } from './components/Toast';
 
 // Lazy load pages for better performance
@@ -76,6 +77,7 @@ function App() {
               <PushNotificationManager />
               <NetworkStatus />
               <BackToTop />
+              <CookieConsent />
             </div>
           </Router>
         </AuthProvider>
