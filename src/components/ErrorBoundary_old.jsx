@@ -1,4 +1,31 @@
 import React from 'react';
+
+class ErrorBoundary extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = { hasError: false, error: null, errorInfo: null };
+  }
+
+  static getDerivedStateFromError() {
+    // Update state so the next render will show the fallback UI
+    return { hasError: true };
+  }
+
+  componentDidCatch(error, errorInfo) {
+    // Log the error to console (in production, you might want to send to error reporting service)
+    console.error('Error caught by ErrorBoundary:', error, errorInfo);
+
+    this.setState({
+      error: error,
+      errorInfo: errorInfo
+    });
+  }
+
+  render() {
+    if (this.state.hasError) {
+      // Custom error UI
+      return (
+        import React from 'react';
 import logger from '../services/logger';
 import { APP_CONFIG } from '../config';
 
@@ -205,6 +232,14 @@ class ErrorBoundary extends React.Component {
             </div>
           </div>
         </div>
+      );
+    }
+
+    return this.props.children;
+  }
+}
+
+export default ErrorBoundary;
       );
     }
 

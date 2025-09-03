@@ -1,3 +1,13 @@
+/**
+ * Performance Utilities (Legacy + New)
+ * Combines legacy performance utilities with new performance monitoring
+ */
+
+import performanceMonitor, { measurePerformance, measureComponentRender, recordMetric } from '../services/performance';
+
+// Re-export new performance functions
+export { measurePerformance, measureComponentRender, recordMetric };
+
 // Performance optimization utilities
 export const preloadCriticalResources = () => {
   // Preload critical images (when they exist)
@@ -73,8 +83,33 @@ export const optimizePerformance = () => {
 if (typeof window !== 'undefined') {
   // Run optimizations after DOM is ready
   if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', optimizePerformance);
+    document.addEventListener('DOMContentLoaded', () => {
+      optimizePerformance();
+      
+      // Initialize performance monitoring
+      performanceMonitor.recordMetric('app_initialization', {
+        timestamp: Date.now(),
+        userAgent: navigator.userAgent,
+        viewport: {
+          width: window.innerWidth,
+          height: window.innerHeight,
+        },
+      });
+    });
   } else {
     optimizePerformance();
+    
+    // Initialize performance monitoring
+    performanceMonitor.recordMetric('app_initialization', {
+      timestamp: Date.now(),
+      userAgent: navigator.userAgent,
+      viewport: {
+        width: window.innerWidth,
+        height: window.innerHeight,
+      },
+    });
   }
 }
+
+// Default export for backward compatibility
+export default performanceMonitor;

@@ -1,4 +1,5 @@
-import React, { lazy, Suspense } from 'react';
+import React, { lazy, Suspense, useEffect } from 'react';
+import seoService from '../services/seo';
 
 // Lazy load PricingSection for better performance
 const PricingSection = lazy(() => import('../components/PricingSection'));
@@ -30,6 +31,11 @@ const PricingSkeleton = () => (
 );
 
 const PricingPage = () => {
+  useEffect(() => {
+    // Set SEO for pricing page
+    seoService.setPageSEO('pricing');
+  }, []);
+
     return (
         <main>
             <Suspense fallback={<PricingSkeleton />}>

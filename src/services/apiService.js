@@ -1,175 +1,177 @@
-// API Configuration
-const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000';
+import { API_CONFIG } from '../config';
+import logger from './logger';
+import { handleError } from './errorHandler';
 
-// API Service Class
-class ApiService {
-    constructor() {
-        this.baseURL = API_BASE_URL;
-    }
+class APIService {
+  constructor() {
+    this.baseURL = API_CONFIG.baseURL;
+    this.timeout = API_CONFIG.timeout;
+    this.retryAttempts = API_CONFIG.retryAttempts;
+    this.retryDelay = API_CONFIG.retryDelay;
+  }
 
-        // Generic request method
-    async request(endpoint, options = {}) {
-        const url = `${this.baseURL}${endpoint}`;
-        
-        const config = {
-            headers: {
-                'Content-Type': 'application/json',
-                ...options.headers,
-            },
-            ...options,
-        };
+  getAuthHeaders() {
+    const token = localStorage.getItem('authToken');
+    return token ? { 'Authorization': `Bearer ${token}` } : {};
+  }
 
-        // Add API key if available (from environment, passed in options, or localStorage)
-        const apiKey = options.apiKey || import.meta.env.VITE_API_KEY || this.getStoredApiKey();
-        if (apiKey) {
-            config.headers['X-API-Key'] = apiKey;
+  createAbortSignal() {
+    const controller = new AbortController();
+    setTimeout(() => controller.abort(), this.timeout);
+    return controller.signal;
+  }
+
+  async request(endpoint, options = {}) {
+    const url = `${this.baseURL}${endpoint}`;
+    const method = options.method || 'GET';
+    let lastError = null;
+
+    // Using retry logic from config, defaulting to 1 attempt for non-GET requests
+    const maxAttempts = (method === 'GET' ? this.retryAttempts : 1);
+
+    for (let attempt = 1; attempt <= maxAttempts; attempt++) {
+      const startTime = Date.now();
+      try {
+        logger.apiRequest(method, url, options.body);
+
+        const response = await fetch(url, {
+          ...options,
+          signal: this.createAbortSignal(),
+          headers: {
+            'Content-Type': 'application/json',
+            ...this.getAuthHeaders(),
+            ...options.headers,
+          },
+        });
+
+        const duration = Date.now() - startTime;
+        // Try to parse JSON, but don't fail if body is empty (e.g., 204 No Content)
+        const responseData = response.status !== 204 ? await response.json().catch(() => null) : null;
+
+        if (!response.ok) {
+          const error = new Error(responseData?.message || `HTTP Error: ${response.status}`);
+          error.response = {
+            status: response.status,
+            data: responseData,
+          };
+          throw error;
         }
 
-        try {
-            console.log(`Making request to: ${url}`);
-            const response = await fetch(url, config);
-            
-            if (!response.ok) {
-                const errorText = await response.text();
-                throw new Error(`HTTP ${response.status}: ${errorText}`);
-            }
-            
-            const data = await response.json();
-            console.log('API Response:', data);
-            return data;
-        } catch (error) {
-            console.error('API request failed:', error);
-            throw error;
-        }
-    }
+        logger.apiResponse(method, url, response.status, responseData, duration);
+        return responseData;
 
-    // GET request
-    async get(endpoint, params = {}) {
-        const queryString = new URLSearchParams(params).toString();
-        const url = queryString ? `${endpoint}?${queryString}` : endpoint;
-        
-        return this.request(url, {
-            method: 'GET',
+      } catch (error) {
+        const duration = Date.now() - startTime;
+        lastError = error;
+        logger.apiResponse(method, url, error.response?.status || 0, { message: error.message }, duration);
+
+        const handledError = handleError(error, {
+          operation: 'apiRequest',
+          url,
+          method,
+          attempt,
         });
-    }
 
-    // POST request
-    async post(endpoint, data) {
-        return this.request(endpoint, {
-            method: 'POST',
-            body: JSON.stringify(data),
-        });
-    }
-
-    // PUT request
-    async put(endpoint, data) {
-        return this.request(endpoint, {
-            method: 'PUT',
-            body: JSON.stringify(data),
-        });
-    }
-
-    // DELETE request
-    async delete(endpoint) {
-        return this.request(endpoint, {
-            method: 'DELETE',
-        });
-    }
-
-    // Health check
-    async healthCheck() {
-        return this.get('/health');
-    }
-
-        // Get CEVS (Company Environmental Verification Score) data
-    async getCEVSData(companyName, country = null, apiKey = null) {
-        if (!companyName) {
-            throw new Error('Company name is required for CEVS lookup');
+        if (handledError.shouldRetry && attempt < maxAttempts) {
+          logger.info(`Retrying API request`, { method, url, attempt: attempt + 1, delay: handledError.delay });
+          await new Promise(resolve => setTimeout(resolve, handledError.delay));
+          continue;
         }
         
-        let endpoint = `/global/cevs/${encodeURIComponent(companyName)}`;
-        const params = new URLSearchParams();
-        
-        if (country) {
-            params.append('country', country);
-        }
-        
-        if (params.toString()) {
-            endpoint += `?${params.toString()}`;
-        }
-        
-        return this.request(endpoint, { apiKey });
+        throw handledError;
+      }
     }
+    throw lastError;
+  }
 
-    // Get emissions data  
-    async getEmissionsData(state = null, year = null, page = 1, limit = 50) {
-        const params = new URLSearchParams();
-        
-        if (state) params.append('state', state);
-        if (year) params.append('year', year.toString());
-        params.append('page', page.toString());
-        params.append('limit', limit.toString());
-        
-        return this.request(`/global/emissions?${params.toString()}`);
-    }
+  // --- Standard HTTP Methods ---
 
-    // Get countries data from ISO endpoint
-    async getCountries(country = null, limit = 50) {
-        const params = new URLSearchParams();
-        
-        if (country) params.append('country', country);
-        params.append('limit', limit.toString());
-        
-        return this.request(`/global/iso?${params.toString()}`);
-    }
+  async get(endpoint, options = {}) {
+    const { params, ...otherOptions } = options;
+    const queryString = params ? new URLSearchParams(params).toString() : '';
+    const url = queryString ? `${endpoint}?${queryString}` : endpoint;
+    return this.request(url, { method: 'GET', ...otherOptions });
+  }
 
-    // Submit API key request
-    async submitAPIKeyRequest(formData) {
-        return this.post('/api/v1/request-api-key', formData);
-    }
+  async post(endpoint, data, options = {}) {
+    return this.request(endpoint, {
+      method: 'POST',
+      body: JSON.stringify(data),
+      ...options,
+    });
+  }
 
-    // Test API with key
-    async testAPIKey(apiKey) {
-        return this.request('/api/v1/test', {
-            method: 'GET',
-            headers: {
-                'X-API-Key': apiKey,
-            },
-        });
-    }
+  async put(endpoint, data, options = {}) {
+    return this.request(endpoint, {
+      method: 'PUT',
+      body: JSON.stringify(data),
+      ...options,
+    });
+  }
 
-    // Request demo API key (no auth required)
-    async requestDemoKey(clientName = "Demo User") {
-        const response = await fetch(`${this.baseURL}/admin/request-demo-key`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ client_name: clientName })
-        });
-        
-        const data = await response.json();
-        if (data.status === 'success') {
-            const apiKey = data.data.api_key;
-            console.log('Demo API Key obtained:', apiKey);
-            // Store in localStorage for persistence
-            localStorage.setItem('envoyou_demo_api_key', apiKey);
-            return apiKey;
-        } else {
-            throw new Error(data.message || 'Failed to get demo API key');
-        }
-    }
+  async delete(endpoint, options = {}) {
+    return this.request(endpoint, { method: 'DELETE', ...options });
+  }
 
-    // Get stored API key from localStorage
-    getStoredApiKey() {
-        return localStorage.getItem('envoyou_demo_api_key');
-    }
+  // --- Application-Specific Methods ---
 
-    // Clear stored API key
-    clearStoredApiKey() {
-        localStorage.removeItem('envoyou_demo_api_key');
+  async healthCheck() {
+    return this.get('/health');
+  }
+
+  async getCEVSData(companyName, country = null, apiKey = null) {
+    if (!companyName) throw new Error('Company name is required for CEVS lookup');
+    
+    const params = {};
+    if (country) params.country = country;
+
+    const headers = apiKey ? { 'X-API-Key': apiKey } : {};
+    return this.get(`/global/cevs/${encodeURIComponent(companyName)}`, { params, headers });
+  }
+
+  async getEmissionsData(state = null, year = null, page = 1, limit = 50) {
+    const params = { state, year, page, limit };
+    Object.keys(params).forEach(key => params[key] == null && delete params[key]);
+    return this.get('/global/emissions', { params });
+  }
+
+  async getCountries(country = null, limit = 50) {
+    const params = { country, limit };
+    Object.keys(params).forEach(key => params[key] == null && delete params[key]);
+    return this.get('/global/iso', { params });
+  }
+
+  async submitAPIKeyRequest(formData) {
+    return this.post('/api/v1/request-api-key', formData);
+  }
+
+  async testAPIKey(apiKey) {
+    return this.get('/api/v1/test', {
+      headers: { 'X-API-Key': apiKey },
+    });
+  }
+
+  async requestDemoKey(clientName = "Demo User") {
+    const data = await this.post('/admin/request-demo-key', { client_name: clientName });
+    if (data.status === 'success') {
+        const apiKey = data.data.api_key;
+        logger.info('Demo API Key obtained and stored.');
+        localStorage.setItem('envoyou_demo_api_key', apiKey);
+        return apiKey;
+    } else {
+        throw new Error(data.message || 'Failed to get demo API key');
     }
+  }
+
+  getStoredApiKey() {
+    return localStorage.getItem('envoyou_demo_api_key');
+  }
+
+  clearStoredApiKey() {
+    localStorage.removeItem('envoyou_demo_api_key');
+    logger.info('Stored Demo API Key cleared.');
+  }
 }
 
-// Create singleton instance
-const apiService = new ApiService();
-
+const apiService = new APIService();
 export default apiService;
