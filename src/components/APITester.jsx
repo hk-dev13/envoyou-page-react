@@ -9,6 +9,8 @@ const APITester = () => {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
     const [isExpanded, setIsExpanded] = useState(false);
+    const [cevsData, setCevsData] = useState([]);
+    const [countriesData, setCountriesData] = useState([]);
 
     // Test connection on component mount
     useEffect(() => {
@@ -72,6 +74,34 @@ const APITester = () => {
             requiresKey: true
         }
     ];
+
+    const fetchCEVSData = async () => {
+        setLoading(true);
+        try {
+            const data = await apiService.getCEVSData('Shell', 'Netherlands');
+            setCevsData(Array.isArray(data) ? data : [data]);
+            setError(null);
+        } catch (err) {
+            setError(`CEVS API Error: ${err.message}`);
+            setCevsData([]);
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    const fetchCountries = async () => {
+        setLoading(true);
+        try {
+            const data = await apiService.getCountries('Indonesia');
+            setCountriesData(Array.isArray(data) ? data : [data]);
+            setError(null);
+        } catch (err) {
+            setError(`Countries API Error: ${err.message}`);
+            setCountriesData([]);
+        } finally {
+            setLoading(false);
+        }
+    };
 
     const getStatusColor = () => {
         switch (connectionStatus) {

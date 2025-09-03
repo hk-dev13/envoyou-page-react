@@ -11,6 +11,12 @@ export default defineConfig({
     VitePWA({
       registerType: 'autoUpdate',
       includeAssets: ['favicon.ico', 'apple-touch-icon.png', 'masked-icon.svg'],
+      injectManifest: {
+        swSrc: false // Let PWA plugin handle everything
+      },
+      devOptions: {
+        enabled: true // Enable PWA in dev mode for testing
+      },
       manifest: {
         name: 'Envoyou - Environmental Data Platform',
         short_name: 'Envoyou',
@@ -82,10 +88,6 @@ export default defineConfig({
         ],
         navigateFallback: '/index.html',
         navigateFallbackDenylist: [/^\/api\//]
-      },
-      devOptions: {
-        enabled: false, // Disable PWA in development to prevent SW errors
-        type: 'module'
       }
     })
   ],
