@@ -1,8 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Button from './Button';
 
 const CevsCalculator = () => {
   const [score, setScore] = useState(50);
+  const [displayScore, setDisplayScore] = useState(50);
+  const [isAnimating, setIsAnimating] = useState(false);
   const [factors, setFactors] = useState({
     iso14001: false,
     renewableEnergy: false,
@@ -20,6 +22,34 @@ const CevsCalculator = () => {
     return Math.max(0, Math.min(100, baseScore));
   };
 
+  // Animated score transition
+  useEffect(() => {
+    if (displayScore !== score) {
+      setIsAnimating(true);
+      const difference = score - displayScore;
+      const duration = 800; // Animation duration in ms
+      const steps = 60; // Number of animation steps
+      const stepValue = difference / steps;
+      const stepDuration = duration / steps;
+
+      let currentStep = 0;
+      const animationInterval = setInterval(() => {
+        currentStep++;
+        const newDisplayScore = Math.round(displayScore + (stepValue * currentStep));
+
+        if (currentStep >= steps) {
+          setDisplayScore(score);
+          setIsAnimating(false);
+          clearInterval(animationInterval);
+        } else {
+          setDisplayScore(newDisplayScore);
+        }
+      }, stepDuration);
+
+      return () => clearInterval(animationInterval);
+    }
+  }, [score, displayScore]);
+
   const toggleFactor = (factor) => {
     const newFactors = {
       ...factors,
@@ -30,15 +60,15 @@ const CevsCalculator = () => {
   };
 
   const getScoreColor = () => {
-    if (score >= 80) return '#2ECC71'; // Green
-    if (score >= 60) return '#F39C12'; // Orange
+    if (displayScore >= 80) return '#2ECC71'; // Green
+    if (displayScore >= 60) return '#F39C12'; // Orange
     return '#E74C3C'; // Red
   };
 
   const getScoreLabel = () => {
-    if (score >= 80) return 'Excellent';
-    if (score >= 60) return 'Good';
-    if (score >= 40) return 'Fair';
+    if (displayScore >= 80) return 'Excellent';
+    if (displayScore >= 60) return 'Good';
+    if (displayScore >= 40) return 'Fair';
     return 'Poor';
   };
 
@@ -50,15 +80,23 @@ const CevsCalculator = () => {
         </h3>
         <div className="relative">
           <div
-            className="w-32 h-32 rounded-full border-8 flex items-center justify-center mx-auto mb-4 transition-all duration-500"
+            className={`w-32 h-32 rounded-full border-8 flex items-center justify-center mx-auto mb-4 transition-all duration-500 ${
+              isAnimating ? 'scale-110 shadow-lg shadow-current' : ''
+            }`}
             style={{
               borderColor: getScoreColor(),
-              backgroundColor: 'rgba(13, 17, 23, 0.8)'
+              backgroundColor: 'rgba(13, 17, 23, 0.8)',
+              boxShadow: isAnimating ? `0 0 20px ${getScoreColor()}40` : 'none'
             }}
           >
             <div className="text-center">
-              <div className="text-3xl font-bold" style={{ color: 'var(--envoyou-white)' }}>
-                {score}
+              <div
+                className={`text-3xl font-bold transition-all duration-200 ${
+                  isAnimating ? 'scale-110' : ''
+                }`}
+                style={{ color: 'var(--envoyou-white)' }}
+              >
+                {displayScore}
               </div>
               <div className="text-sm" style={{ color: 'var(--envoyou-gray)' }}>
                 /100
@@ -66,7 +104,12 @@ const CevsCalculator = () => {
             </div>
           </div>
           <div className="text-center">
-            <div className="text-lg font-semibold mb-1" style={{ color: getScoreColor() }}>
+            <div
+              className={`text-lg font-semibold mb-1 transition-all duration-300 ${
+                isAnimating ? 'scale-105' : ''
+              }`}
+              style={{ color: getScoreColor() }}
+            >
               {getScoreLabel()}
             </div>
             <div className="text-sm" style={{ color: 'var(--envoyou-gray)' }}>
@@ -78,17 +121,17 @@ const CevsCalculator = () => {
 
       <div className="space-y-4">
         <div
-          className={`p-4 rounded-lg border-2 cursor-pointer transition-all duration-300 ${
-            factors.iso14001 ? 'border-green-500 bg-green-500/10' : 'border-slate-700 hover:border-slate-600'
+          className={`p-4 rounded-lg border-2 cursor-pointer transition-all duration-300 hover:scale-105 ${
+            factors.iso14001 ? 'border-green-500 bg-green-500/10 shadow-lg shadow-green-500/20' : 'border-slate-700 hover:border-slate-600'
           }`}
           onClick={() => toggleFactor('iso14001')}
         >
           <div className="flex items-center space-x-3">
-            <div className={`w-5 h-5 rounded border-2 flex items-center justify-center ${
-              factors.iso14001 ? 'bg-green-500 border-green-500' : 'border-slate-500'
+            <div className={`w-5 h-5 rounded border-2 flex items-center justify-center transition-all duration-200 ${
+              factors.iso14001 ? 'bg-green-500 border-green-500 scale-110' : 'border-slate-500'
             }`}>
               {factors.iso14001 && (
-                <svg className="w-3 h-3 text-white" fill="currentColor" viewBox="0 0 20 20">
+                <svg className="w-3 h-3 text-white animate-pulse" fill="currentColor" viewBox="0 0 20 20">
                   <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
                 </svg>
               )}
@@ -105,17 +148,17 @@ const CevsCalculator = () => {
         </div>
 
         <div
-          className={`p-4 rounded-lg border-2 cursor-pointer transition-all duration-300 ${
-            factors.renewableEnergy ? 'border-green-500 bg-green-500/10' : 'border-slate-700 hover:border-slate-600'
+          className={`p-4 rounded-lg border-2 cursor-pointer transition-all duration-300 hover:scale-105 ${
+            factors.renewableEnergy ? 'border-green-500 bg-green-500/10 shadow-lg shadow-green-500/20' : 'border-slate-700 hover:border-slate-600'
           }`}
           onClick={() => toggleFactor('renewableEnergy')}
         >
           <div className="flex items-center space-x-3">
-            <div className={`w-5 h-5 rounded border-2 flex items-center justify-center ${
-              factors.renewableEnergy ? 'bg-green-500 border-green-500' : 'border-slate-500'
+            <div className={`w-5 h-5 rounded border-2 flex items-center justify-center transition-all duration-200 ${
+              factors.renewableEnergy ? 'bg-green-500 border-green-500 scale-110' : 'border-slate-500'
             }`}>
               {factors.renewableEnergy && (
-                <svg className="w-3 h-3 text-white" fill="currentColor" viewBox="0 0 20 20">
+                <svg className="w-3 h-3 text-white animate-pulse" fill="currentColor" viewBox="0 0 20 20">
                   <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
                 </svg>
               )}
@@ -132,17 +175,17 @@ const CevsCalculator = () => {
         </div>
 
         <div
-          className={`p-4 rounded-lg border-2 cursor-pointer transition-all duration-300 ${
-            factors.emissionViolation ? 'border-red-500 bg-red-500/10' : 'border-slate-700 hover:border-slate-600'
+          className={`p-4 rounded-lg border-2 cursor-pointer transition-all duration-300 hover:scale-105 ${
+            factors.emissionViolation ? 'border-red-500 bg-red-500/10 shadow-lg shadow-red-500/20' : 'border-slate-700 hover:border-slate-600'
           }`}
           onClick={() => toggleFactor('emissionViolation')}
         >
           <div className="flex items-center space-x-3">
-            <div className={`w-5 h-5 rounded border-2 flex items-center justify-center ${
-              factors.emissionViolation ? 'bg-red-500 border-red-500' : 'border-slate-500'
+            <div className={`w-5 h-5 rounded border-2 flex items-center justify-center transition-all duration-200 ${
+              factors.emissionViolation ? 'bg-red-500 border-red-500 scale-110' : 'border-slate-500'
             }`}>
               {factors.emissionViolation && (
-                <svg className="w-3 h-3 text-white" fill="currentColor" viewBox="0 0 20 20">
+                <svg className="w-3 h-3 text-white animate-pulse" fill="currentColor" viewBox="0 0 20 20">
                   <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
                 </svg>
               )}
@@ -160,9 +203,14 @@ const CevsCalculator = () => {
       </div>
 
       <div className="mt-6 text-center">
-        <div className="text-sm" style={{ color: 'var(--envoyou-gray)' }}>
+        <div className="text-sm mb-2" style={{ color: 'var(--envoyou-gray)' }}>
           Click factors to see how they impact the CEVS score
         </div>
+        {isAnimating && (
+          <div className="text-xs animate-pulse" style={{ color: getScoreColor() }}>
+            🔄 Calculating score...
+          </div>
+        )}
       </div>
     </div>
   );

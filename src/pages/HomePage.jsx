@@ -17,7 +17,25 @@ const HomePage = () => {
     };
 
     return (
-        <div className="min-h-screen" style={{ backgroundColor: 'var(--envoyou-dark)' }}>
+        <div className="min-h-screen relative" style={{ backgroundColor: 'var(--envoyou-dark)' }}>
+            {/* Subtle Background Pattern */}
+            <div className="absolute inset-0 opacity-[0.03]">
+                <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+                    <defs>
+                        <pattern id="dots" x="0" y="0" width="40" height="40" patternUnits="userSpaceOnUse">
+                            <circle cx="20" cy="20" r="1" fill="currentColor" style={{ color: 'var(--envoyou-green)' }}/>
+                        </pattern>
+                        <pattern id="grid" x="0" y="0" width="60" height="60" patternUnits="userSpaceOnUse">
+                            <path d="M 60 0 L 0 0 0 60" fill="none" stroke="currentColor" strokeWidth="0.5" opacity="0.3" style={{ color: 'var(--envoyou-green)' }}/>
+                        </pattern>
+                    </defs>
+                    <rect width="100%" height="100%" fill="url(#dots)"/>
+                    <rect width="100%" height="100%" fill="url(#grid)"/>
+                </svg>
+            </div>
+
+            {/* Content */}
+            <div className="relative z-10">
             {/* Hero Section */}
             <section className="relative overflow-hidden">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
@@ -105,40 +123,40 @@ const HomePage = () => {
                     </div>
 
                     <div className="grid md:grid-cols-2 lg:grid-cols-5 gap-8">
-                        <div className="text-center p-6 rounded-lg border" style={{ backgroundColor: 'var(--envoyou-dark-light)', borderColor: 'var(--envoyou-border)' }}>
-                            <div className="text-4xl mb-4" style={{ color: 'var(--envoyou-green)' }}>
+                        <div className="text-center p-6 rounded-lg border transition-all duration-300 hover:transform hover:-translate-y-2 hover:shadow-2xl hover:shadow-green-500/20 group" style={{ backgroundColor: 'var(--envoyou-dark-light)', borderColor: 'var(--envoyou-border)' }}>
+                            <div className="text-4xl mb-4 transition-transform duration-300 group-hover:scale-110" style={{ color: 'var(--envoyou-green)' }}>
                                 <Database />
                             </div>
                             <h3 className="text-xl font-semibold mb-2" style={{ color: 'var(--envoyou-white)' }}>EPA</h3>
                             <p className="text-sm" style={{ color: 'var(--envoyou-gray)' }}>United States Environmental Protection Agency</p>
                         </div>
 
-                        <div className="text-center p-6 rounded-lg border" style={{ backgroundColor: 'var(--envoyou-dark-light)', borderColor: 'var(--envoyou-border)' }}>
-                            <div className="text-4xl mb-4" style={{ color: 'var(--envoyou-green)' }}>
+                        <div className="text-center p-6 rounded-lg border transition-all duration-300 hover:transform hover:-translate-y-2 hover:shadow-2xl hover:shadow-green-500/20 group" style={{ backgroundColor: 'var(--envoyou-dark-light)', borderColor: 'var(--envoyou-border)' }}>
+                            <div className="text-4xl mb-4 transition-transform duration-300 group-hover:scale-110" style={{ color: 'var(--envoyou-green)' }}>
                                 <Database />
                             </div>
                             <h3 className="text-xl font-semibold mb-2" style={{ color: 'var(--envoyou-white)' }}>EEA</h3>
                             <p className="text-sm" style={{ color: 'var(--envoyou-gray)' }}>European Environment Agency</p>
                         </div>
 
-                        <div className="text-center p-6 rounded-lg border" style={{ backgroundColor: 'var(--envoyou-dark-light)', borderColor: 'var(--envoyou-border)' }}>
-                            <div className="text-4xl mb-4" style={{ color: 'var(--envoyou-green)' }}>
+                        <div className="text-center p-6 rounded-lg border transition-all duration-300 hover:transform hover:-translate-y-2 hover:shadow-2xl hover:shadow-green-500/20 group" style={{ backgroundColor: 'var(--envoyou-dark-light)', borderColor: 'var(--envoyou-border)' }}>
+                            <div className="text-4xl mb-4 transition-transform duration-300 group-hover:scale-110" style={{ color: 'var(--envoyou-green)' }}>
                                 <Database />
                             </div>
                             <h3 className="text-xl font-semibold mb-2" style={{ color: 'var(--envoyou-white)' }}>EDGAR</h3>
                             <p className="text-sm" style={{ color: 'var(--envoyou-gray)' }}>Emissions Database for Global Atmospheric Research</p>
                         </div>
 
-                        <div className="text-center p-6 rounded-lg border" style={{ backgroundColor: 'var(--envoyou-dark-light)', borderColor: 'var(--envoyou-border)' }}>
-                            <div className="text-4xl mb-4" style={{ color: 'var(--envoyou-green)' }}>
+                        <div className="text-center p-6 rounded-lg border transition-all duration-300 hover:transform hover:-translate-y-2 hover:shadow-2xl hover:shadow-green-500/20 group" style={{ backgroundColor: 'var(--envoyou-dark-light)', borderColor: 'var(--envoyou-border)' }}>
+                            <div className="text-4xl mb-4 transition-transform duration-300 group-hover:scale-110" style={{ color: 'var(--envoyou-green)' }}>
                                 <Database />
                             </div>
                             <h3 className="text-xl font-semibold mb-2" style={{ color: 'var(--envoyou-white)' }}>ISO</h3>
                             <p className="text-sm" style={{ color: 'var(--envoyou-gray)' }}>International Organization for Standardization</p>
                         </div>
 
-                        <div className="text-center p-6 rounded-lg border" style={{ backgroundColor: 'var(--envoyou-dark-light)', borderColor: 'var(--envoyou-border)' }}>
-                            <div className="text-4xl mb-4" style={{ color: 'var(--envoyou-green)' }}>
+                        <div className="text-center p-6 rounded-lg border transition-all duration-300 hover:transform hover:-translate-y-2 hover:shadow-2xl hover:shadow-green-500/20 group" style={{ backgroundColor: 'var(--envoyou-dark-light)', borderColor: 'var(--envoyou-border)' }}>
+                            <div className="text-4xl mb-4 transition-transform duration-300 group-hover:scale-110" style={{ color: 'var(--envoyou-green)' }}>
                                 <Database />
                             </div>
                             <h3 className="text-xl font-semibold mb-2" style={{ color: 'var(--envoyou-white)' }}>KLHK</h3>
@@ -244,8 +262,8 @@ const HomePage = () => {
                     </div>
 
                     <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-                        <div className="p-6 rounded-lg border text-center" style={{ backgroundColor: 'var(--envoyou-dark-light)', borderColor: 'var(--envoyou-border)' }}>
-                            <div className="text-4xl mb-4" style={{ color: 'var(--envoyou-green)' }}>
+                        <div className="p-6 rounded-lg border text-center transition-all duration-300 hover:transform hover:-translate-y-2 hover:shadow-2xl hover:shadow-green-500/20 group cursor-pointer" style={{ backgroundColor: 'var(--envoyou-dark-light)', borderColor: 'var(--envoyou-border)' }}>
+                            <div className="text-4xl mb-4 transition-transform duration-300 group-hover:scale-110" style={{ color: 'var(--envoyou-green)' }}>
                                 <Shield />
                             </div>
                             <h3 className="text-xl font-semibold mb-3" style={{ color: 'var(--envoyou-white)' }}>
@@ -256,8 +274,8 @@ const HomePage = () => {
                             </p>
                         </div>
 
-                        <div className="p-6 rounded-lg border text-center" style={{ backgroundColor: 'var(--envoyou-dark-light)', borderColor: 'var(--envoyou-border)' }}>
-                            <div className="text-4xl mb-4" style={{ color: 'var(--envoyou-green)' }}>
+                        <div className="p-6 rounded-lg border text-center transition-all duration-300 hover:transform hover:-translate-y-2 hover:shadow-2xl hover:shadow-green-500/20 group cursor-pointer" style={{ backgroundColor: 'var(--envoyou-dark-light)', borderColor: 'var(--envoyou-border)' }}>
+                            <div className="text-4xl mb-4 transition-transform duration-300 group-hover:scale-110" style={{ color: 'var(--envoyou-green)' }}>
                                 <TrendingUp />
                             </div>
                             <h3 className="text-xl font-semibold mb-3" style={{ color: 'var(--envoyou-white)' }}>
@@ -268,8 +286,8 @@ const HomePage = () => {
                             </p>
                         </div>
 
-                        <div className="p-6 rounded-lg border text-center" style={{ backgroundColor: 'var(--envoyou-dark-light)', borderColor: 'var(--envoyou-border)' }}>
-                            <div className="text-4xl mb-4" style={{ color: 'var(--envoyou-green)' }}>
+                        <div className="p-6 rounded-lg border text-center transition-all duration-300 hover:transform hover:-translate-y-2 hover:shadow-2xl hover:shadow-green-500/20 group cursor-pointer" style={{ backgroundColor: 'var(--envoyou-dark-light)', borderColor: 'var(--envoyou-border)' }}>
+                            <div className="text-4xl mb-4 transition-transform duration-300 group-hover:scale-110" style={{ color: 'var(--envoyou-green)' }}>
                                 <Users />
                             </div>
                             <h3 className="text-xl font-semibold mb-3" style={{ color: 'var(--envoyou-white)' }}>
@@ -280,8 +298,8 @@ const HomePage = () => {
                             </p>
                         </div>
 
-                        <div className="p-6 rounded-lg border text-center" style={{ backgroundColor: 'var(--envoyou-dark-light)', borderColor: 'var(--envoyou-border)' }}>
-                            <div className="text-4xl mb-4" style={{ color: 'var(--envoyou-green)' }}>
+                        <div className="p-6 rounded-lg border text-center transition-all duration-300 hover:transform hover:-translate-y-2 hover:shadow-2xl hover:shadow-green-500/20 group cursor-pointer" style={{ backgroundColor: 'var(--envoyou-dark-light)', borderColor: 'var(--envoyou-border)' }}>
+                            <div className="text-4xl mb-4 transition-transform duration-300 group-hover:scale-110" style={{ color: 'var(--envoyou-green)' }}>
                                 <Code />
                             </div>
                             <h3 className="text-xl font-semibold mb-3" style={{ color: 'var(--envoyou-white)' }}>
@@ -322,6 +340,7 @@ const HomePage = () => {
                     </div>
                 </div>
             </section>
+            </div>
         </div>
     );
 };
