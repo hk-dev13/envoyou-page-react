@@ -5,19 +5,27 @@ const Footer = () => {
   return (
     <footer className="border-t border-slate-800 bg-slate-900/50">
       <div className="container mx-auto px-6 py-12">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center md:text-left">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-8 text-center md:text-left">
           {/* Bagian Kiri: Logo & Tagline */}
           <div>
             <h3 className="text-lg font-bold text-white">Envoyou</h3>
             <p className="mt-1 text-slate-400">Empowering sustainable decisions with data.</p>
           </div>
 
-          {/* Bagian Tengah: Link Navigasi */}
+          {/* Bagian Navigasi */}
           <div className="flex flex-col space-y-2">
-            <h4 className="font-semibold text-white mb-2">Links</h4>
+            <h4 className="font-semibold text-white mb-2">Navigation</h4>
             <Link to="/documentation" className="text-slate-400 hover:text-white transition-colors">Documentation</Link>
+            <Link to="/pricing" className="text-slate-400 hover:text-white transition-colors">Pricing</Link>
             <Link to="/about" className="text-slate-400 hover:text-white transition-colors">About</Link>
             <Link to="/contact" className="text-slate-400 hover:text-white transition-colors">Contact</Link>
+          </div>
+
+          {/* Legal Links */}
+          <div className="flex flex-col space-y-2">
+            <h4 className="font-semibold text-white mb-2">Legal</h4>
+            <Link to="/legal/terms" className="text-slate-400 hover:text-white transition-colors">Terms of Service</Link>
+            <Link to="/legal/privacy" className="text-slate-400 hover:text-white transition-colors">Privacy Policy</Link>
             <a href="https://github.com/hk-dev13/ENVOYou-page/blob/main/LICENSE" target="_blank" rel="noopener noreferrer" className="text-slate-400 hover:text-white transition-colors">License</a>
             <a href="https://github.com/hk-dev13/project-permit-api" target="_blank" rel="noopener noreferrer" className="text-slate-400 hover:text-white transition-colors">Contribute</a>
           </div>

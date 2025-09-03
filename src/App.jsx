@@ -21,6 +21,11 @@ import PricingPage from './pages/PricingPage';
 import LoginPage from './pages/auth/LoginPage';
 import RegisterPage from './pages/auth/RegisterPage';
 import Dashboard from './pages/Dashboard';
+import TermsOfServicePage from './pages/legal/TermsOfServicePage';
+import PrivacyPolicyPage from './pages/legal/PrivacyPolicyPage';
+import ProfileSettingsPage from './pages/settings/ProfileSettingsPage';
+import SecuritySettingsPage from './pages/settings/SecuritySettingsPage';
+import APIKeysSettingsPage from './pages/settings/APIKeysSettingsPage';
 
 // Komponen Layout ini akan memastikan Header dan Footer selalu ada
 const AppLayout = () => (
@@ -56,6 +61,10 @@ function App() {
               <Route path="pricing" element={<PricingPage />} />
               <Route path="contact" element={<ContactPage />} />
               <Route path="free-api-key" element={<FreeAPIKeyPage />} />
+              
+              {/* Legal pages */}
+              <Route path="legal/terms" element={<TermsOfServicePage />} />
+              <Route path="legal/privacy" element={<PrivacyPolicyPage />} />
             </Route>
 
             {/* Auth routes (no layout) */}
@@ -74,6 +83,23 @@ function App() {
             <Route path="/dashboard" element={
               <ProtectedRoute requireAuth={true}>
                 <Dashboard />
+              </ProtectedRoute>
+            } />
+
+            {/* Protected settings routes */}
+            <Route path="/settings/profile" element={
+              <ProtectedRoute requireAuth={true}>
+                <ProfileSettingsPage />
+              </ProtectedRoute>
+            } />
+            <Route path="/settings/security" element={
+              <ProtectedRoute requireAuth={true}>
+                <SecuritySettingsPage />
+              </ProtectedRoute>
+            } />
+            <Route path="/settings/api-keys" element={
+              <ProtectedRoute requireAuth={true}>
+                <APIKeysSettingsPage />
               </ProtectedRoute>
             } />
           </Routes>
