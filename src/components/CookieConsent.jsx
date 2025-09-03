@@ -43,14 +43,36 @@ const CookieConsent = () => {
     };
 
     const initializeCookies = (prefs) => {
-        // Set cookie based on preferences
-        if (prefs.analytics) {
-            // Initialize Google Analytics or other analytics
-            console.log('Analytics cookies enabled');
+        // Google Consent Mode v2 implementation
+        if (window.gtag) {
+            window.gtag('consent', 'update', {
+                analytics_storage: prefs.analytics ? 'granted' : 'denied',
+                ad_storage: prefs.marketing ? 'granted' : 'denied',
+                functionality_storage: prefs.necessary ? 'granted' : 'denied',
+                personalization_storage: prefs.marketing ? 'granted' : 'denied',
+                security_storage: 'granted' // Always granted for security
+            });
+
+            console.log('Google Consent Mode updated:', {
+                analytics_storage: prefs.analytics ? 'granted' : 'denied',
+                ad_storage: prefs.marketing ? 'granted' : 'denied',
+                functionality_storage: prefs.necessary ? 'granted' : 'denied',
+                personalization_storage: prefs.marketing ? 'granted' : 'denied',
+                security_storage: 'granted'
+            });
+        } else {
+            console.warn('Google Analytics gtag not found. Make sure Google Analytics is properly initialized.');
         }
+
+        // Additional cookie initialization
+        if (prefs.analytics) {
+            console.log('Analytics cookies enabled');
+            // Additional analytics setup can go here
+        }
+
         if (prefs.marketing) {
-            // Initialize marketing cookies
             console.log('Marketing cookies enabled');
+            // Additional marketing setup can go here
         }
     };
 
@@ -66,8 +88,11 @@ const CookieConsent = () => {
                         <div className="flex-1">
                             <h3 className="text-white font-semibold mb-2">We Value Your Privacy</h3>
                             <p className="text-slate-400 text-sm">
-                                We use cookies to enhance your experience and analyze site usage.
-                                You can manage your preferences or accept all cookies.
+                                We use cookies and Google Analytics to enhance your experience.
+                                Choose your preferences below or accept all to enable full functionality.
+                            </p>
+                            <p className="text-slate-500 text-xs mt-2">
+                                Uses Google Consent Mode v2 for privacy-compliant analytics
                             </p>
                         </div>
                     </div>
@@ -117,10 +142,10 @@ const CookieConsent = () => {
                                     />
                                     <div>
                                         <h5 className="text-white font-medium text-sm">Necessary Cookies</h5>
-                                        <p className="text-slate-400 text-xs">Required for website functionality and security</p>
+                                        <p className="text-slate-400 text-xs">Required for website functionality, security, and basic features</p>
                                     </div>
                                 </div>
-                                <p className="text-slate-500 text-xs italic">Always enabled</p>
+                                <p className="text-slate-500 text-xs italic">Always enabled • Controls: functionality_storage, security_storage</p>
                             </div>
 
                             <div className="space-y-3">
@@ -133,10 +158,10 @@ const CookieConsent = () => {
                                     />
                                     <div>
                                         <h5 className="text-white font-medium text-sm">Analytics Cookies</h5>
-                                        <p className="text-slate-400 text-xs">Help us understand how visitors use our site</p>
+                                        <p className="text-slate-400 text-xs">Help us understand how visitors use our site to improve experience</p>
                                     </div>
                                 </div>
-                                <p className="text-slate-500 text-xs">Google Analytics, usage statistics</p>
+                                <p className="text-slate-500 text-xs">Google Analytics • Controls: analytics_storage</p>
                             </div>
 
                             <div className="space-y-3">
@@ -149,10 +174,10 @@ const CookieConsent = () => {
                                     />
                                     <div>
                                         <h5 className="text-white font-medium text-sm">Marketing Cookies</h5>
-                                        <p className="text-slate-400 text-xs">Used for personalized ads and content</p>
+                                        <p className="text-slate-400 text-xs">Used for personalized ads and content across platforms</p>
                                     </div>
                                 </div>
-                                <p className="text-slate-500 text-xs">Targeted advertising, social media</p>
+                                <p className="text-slate-500 text-xs">Targeted advertising • Controls: ad_storage, personalization_storage</p>
                             </div>
                         </div>
 
