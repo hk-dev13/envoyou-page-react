@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { useAuth } from '../context/AuthContext';
 
 const Header = () => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const location = useLocation();
     const navigate = useNavigate();
+    const { isAuthenticated, user, logout } = useAuth();
 
     useEffect(() => {
         // Handle scrolling to sections when navigating with hash
@@ -63,12 +65,12 @@ const Header = () => {
                         >
                             Features
                         </a>
-                        <a
-                            href="#pricing"
+                        <Link
+                            to="/pricing"
                             className="text-slate-300 hover:text-emerald-400 transition-colors"
                         >
                             Pricing
-                        </a>
+                        </Link>
                     </>
                 ) : (
                     <>
@@ -79,7 +81,7 @@ const Header = () => {
                             Features
                         </button>
                         <button
-                            onClick={() => handleSectionNavigation('pricing')}
+                            onClick={() => navigate('/pricing')}
                             className="text-slate-300 hover:text-emerald-400 transition-colors"
                         >
                             Pricing
@@ -120,28 +122,55 @@ const Header = () => {
                 </svg>
             </button>
             
-            {location.pathname === '/documentation' ? (
-                <a
-                    href="#pricing" 
-                    onClick={(e) => {
-                        e.preventDefault();
-                        if (location.pathname !== '/') {
-                            window.location.href = '/#pricing';
-                        } else {
-                            document.querySelector('#pricing')?.scrollIntoView({ behavior: 'smooth' });
-                        }
-                    }}
-                    className="hidden md:block bg-emerald-500 hover:bg-emerald-600 text-white font-semibold px-5 py-2 rounded-lg transition-colors"
-                >
-                    Get API Key
-                </a>
+            {isAuthenticated ? (
+                <div className="hidden md:flex items-center space-x-4">
+                    <Link
+                        to="/dashboard"
+                        className="text-slate-300 hover:text-emerald-400 transition-colors"
+                    >
+                        Dashboard
+                    </Link>
+                    <div className="flex items-center space-x-2">
+                        <div className="w-8 h-8 bg-emerald-600 rounded-full flex items-center justify-center">
+                            <span className="text-white text-sm font-medium">
+                                {user?.first_name?.[0] || user?.email?.[0] || 'U'}
+                            </span>
+                        </div>
+                        <button
+                            onClick={logout}
+                            className="text-slate-400 hover:text-white transition-colors"
+                            title="Sign out"
+                        >
+                            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+                            </svg>
+                        </button>
+                    </div>
+                </div>
             ) : (
-                <Link 
-                    to="/documentation" 
-                    className="hidden md:block bg-emerald-500 hover:bg-emerald-600 text-white font-semibold px-5 py-2 rounded-lg transition-colors"
-                >
-                    Get Started
-                </Link>
+                <div className="hidden md:flex items-center space-x-4">
+                    <Link
+                        to="/auth/login"
+                        className="text-slate-300 hover:text-emerald-400 transition-colors"
+                    >
+                        Sign In
+                    </Link>
+                    {location.pathname === '/documentation' ? (
+                        <Link
+                            to="/pricing"
+                            className="bg-emerald-500 hover:bg-emerald-600 text-white font-semibold px-5 py-2 rounded-lg transition-colors"
+                        >
+                            Get API Key
+                        </Link>
+                    ) : (
+                        <Link 
+                            to="/auth/register" 
+                            className="bg-emerald-500 hover:bg-emerald-600 text-white font-semibold px-5 py-2 rounded-lg transition-colors"
+                        >
+                            Get Started
+                        </Link>
+                    )}
+                </div>
             )}
         </div>
 
@@ -158,13 +187,13 @@ const Header = () => {
                             >
                                 Features
                             </a>
-                            <a
-                                href="#pricing"
+                            <Link
+                                to="/pricing"
                                 className="text-slate-300 hover:text-emerald-400 transition-colors"
                                 onClick={() => setIsMenuOpen(false)}
                             >
                                 Pricing
-                            </a>
+                            </Link>
                         </>
                     ) : (
                         <>
@@ -179,7 +208,7 @@ const Header = () => {
                             </button>
                             <button
                                 onClick={() => {
-                                    handleSectionNavigation('pricing');
+                                    navigate('/pricing');
                                     setIsMenuOpen(false);
                                 }}
                                 className="text-slate-300 hover:text-emerald-400 transition-colors text-left"
@@ -209,30 +238,72 @@ const Header = () => {
                     >
                         Contact
                     </Link>
-                    {location.pathname === '/documentation' ? (
-                        <a
-                            href="#pricing"
-                            onClick={(e) => {
-                                e.preventDefault();
-                                setIsMenuOpen(false);
-                                if (location.pathname !== '/') {
-                                    window.location.href = '/#pricing';
-                                } else {
-                                    document.querySelector('#pricing')?.scrollIntoView({ behavior: 'smooth' });
-                                }
-                            }}
-                            className="bg-emerald-500 hover:bg-emerald-600 text-white font-semibold px-5 py-2 rounded-lg transition-colors text-center"
-                        >
-                            Get API Key
-                        </a>
+                    {isAuthenticated ? (
+                        <>
+                            <Link
+                                to="/dashboard"
+                                className="text-slate-300 hover:text-emerald-400 transition-colors"
+                                onClick={() => setIsMenuOpen(false)}
+                            >
+                                Dashboard
+                            </Link>
+                            <div className="border-t border-slate-700 pt-4 mt-4">
+                                <div className="flex items-center space-x-3 mb-3">
+                                    <div className="w-10 h-10 bg-emerald-600 rounded-full flex items-center justify-center">
+                                        <span className="text-white font-medium">
+                                            {user?.first_name?.[0] || user?.email?.[0] || 'U'}
+                                        </span>
+                                    </div>
+                                    <div>
+                                        <div className="text-white font-medium">
+                                            {user?.first_name ? `${user.first_name} ${user.last_name}` : user?.email}
+                                        </div>
+                                        <div className="text-slate-400 text-sm">
+                                            {user?.email}
+                                        </div>
+                                    </div>
+                                </div>
+                                <button
+                                    onClick={() => {
+                                        logout();
+                                        setIsMenuOpen(false);
+                                    }}
+                                    className="w-full text-left text-slate-400 hover:text-white hover:bg-slate-800/50 rounded-lg transition-colors flex items-center space-x-2 px-2 py-2"
+                                >
+                                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+                                    </svg>
+                                    <span>Sign Out</span>
+                                </button>
+                            </div>
+                        </>
                     ) : (
-                        <Link
-                            to="/documentation"
-                            className="bg-emerald-500 hover:bg-emerald-600 text-white font-semibold px-5 py-2 rounded-lg transition-colors text-center"
-                            onClick={() => setIsMenuOpen(false)}
-                        >
-                            Get Started
-                        </Link>
+                        <>
+                            <Link
+                                to="/auth/login"
+                                className="text-slate-300 hover:text-emerald-400 transition-colors"
+                                onClick={() => setIsMenuOpen(false)}
+                            >
+                                Sign In
+                            </Link>
+                            {location.pathname === '/documentation' ? (
+                                <Link
+                                    to="/pricing"
+                                    className="bg-emerald-500 hover:bg-emerald-600 text-white font-semibold px-5 py-2 rounded-lg transition-colors text-center"
+                                    onClick={() => setIsMenuOpen(false)}
+                                >
+                                    Get API Key
+                                </Link>
+                            ) : (
+                                <Link
+                                    to="/auth/register"
+                                    className="bg-emerald-500 hover:bg-emerald-600 text-white font-semibold px-5 py-2 rounded-lg transition-colors text-center"
+                                    onClick={() => setIsMenuOpen(false)}
+                                >
+                                    Get Started
+                                </Link>
+                            )}
+                        </>
                     )}
                 </nav>
             </div>

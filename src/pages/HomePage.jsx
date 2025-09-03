@@ -7,7 +7,6 @@ const VisualizationsSection = lazy(() => import('../components/VisualizationsSec
 const FeaturesSection = lazy(() => import('../components/FeaturesSection'));
 const CodeExampleSection = lazy(() => import('../components/CodeExampleSection'));
 const TestimonialsSection = lazy(() => import('../components/TestimonialsSection'));
-const PricingSection = lazy(() => import('../components/PricingSection'));
 
 // Loading component
 const SectionSkeleton = () => (
@@ -40,9 +39,6 @@ const HomePage = () => {
             </Suspense>
             <Suspense fallback={<SectionSkeleton />}>
                 <TestimonialsSection />
-            </Suspense>
-            <Suspense fallback={<SectionSkeleton />}>
-                <PricingSection />
             </Suspense>
         </main>
     );

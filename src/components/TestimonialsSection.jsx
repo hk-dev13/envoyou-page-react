@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 const TestimonialsSection = () => {
     const testimonials = [
@@ -89,21 +90,27 @@ const TestimonialsSection = () => {
                         Join teams worldwide who trust Envoyou for reliable, standardized environmental data access.
                     </p>
                     <div className="flex flex-col sm:flex-row justify-center items-center space-y-4 sm:space-y-0 sm:space-x-4">
-                        <a
-                            href="/documentation"
+                        <Link
+                            to="/documentation"
                             className="bg-emerald-500 hover:bg-emerald-600 text-white font-semibold px-8 py-3 rounded-lg transition-colors inline-flex items-center space-x-2"
                         >
                             <span>Start Building Today</span>
                             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
                             </svg>
-                        </a>
-                        <a
-                            href="/contact"
+                        </Link>
+                        <Link
+                            to="/pricing"
+                            className="border border-emerald-500 text-emerald-400 hover:bg-emerald-500 hover:text-white font-semibold px-8 py-3 rounded-lg transition-colors"
+                        >
+                            See Pricing
+                        </Link>
+                        <Link
+                            to="/contact"
                             className="border border-emerald-500 text-emerald-400 hover:bg-emerald-500 hover:text-white font-semibold px-8 py-3 rounded-lg transition-colors"
                         >
                             Contact Sales
-                        </a>
+                        </Link>
                     </div>
                 </div>
             </div>

@@ -20,7 +20,7 @@ const HeroSection = () => {
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
                         </svg>
                     </Link>
-                    <Link to="#pricing" className="border-2 border-emerald-500 text-emerald-400 hover:bg-emerald-500 hover:text-white font-semibold px-8 py-4 rounded-lg transition-colors text-lg">
+                    <Link to="/pricing" className="border-2 border-emerald-500 text-emerald-400 hover:bg-emerald-500 hover:text-white font-semibold px-8 py-4 rounded-lg transition-colors text-lg">
                         See Pricing
                     </Link>
                     <Link to="https://github.com/hk-dev13/project-permit-api" target="_blank" className="text-slate-400 hover:text-white font-medium px-6 py-3 rounded-lg hover:bg-slate-800 transition-colors text-lg flex items-center space-x-2">
