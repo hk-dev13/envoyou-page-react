@@ -1,157 +1,86 @@
-import React, { createContext, useContext, useReducer, useEffect } from 'react';
+import React, { createContext, useContext, useReducer, useEffect, useCallback } from 'react';
+import apiService from '../services/apiService';
+import logger from '../services/logger';
 
-// Initial state
-const initialState = {
-  user: null,
-  token: null,
-  isAuthenticated: false,
-  isLoading: true,
-  error: null
-};
-
-// Action types
-export const AUTH_ACTIONS = {
-  LOGIN_START: 'LOGIN_START',
-  LOGIN_SUCCESS: 'LOGIN_SUCCESS',
-  LOGIN_FAILURE: 'LOGIN_FAILURE',
-  LOGOUT: 'LOGOUT',
-  REGISTER_START: 'REGISTER_START',
-  REGISTER_SUCCESS: 'REGISTER_SUCCESS',
-  REGISTER_FAILURE: 'REGISTER_FAILURE',
-  CLEAR_ERROR: 'CLEAR_ERROR',
-  SET_LOADING: 'SET_LOADING'
-};
-
-// Auth reducer
-const authReducer = (state, action) => {
-  switch (action.type) {
-    case AUTH_ACTIONS.LOGIN_START:
-    case AUTH_ACTIONS.REGISTER_START:
-      return {
-        ...state,
-        isLoading: true,
-        error: null
-      };
-
-    case AUTH_ACTIONS.LOGIN_SUCCESS:
-    case AUTH_ACTIONS.REGISTER_SUCCESS:
-      return {
-        ...state,
-        user: action.payload.user,
-        token: action.payload.token,
-        isAuthenticated: true,
-        isLoading: false,
-        error: null
-      };
-
-    case AUTH_ACTIONS.LOGIN_FAILURE:
-    case AUTH_ACTIONS.REGISTER_FAILURE:
-      return {
-        ...state,
-        user: null,
-        token: null,
-        isAuthenticated: false,
-        isLoading: false,
-        error: action.payload
-      };
-
-    case AUTH_ACTIONS.LOGOUT:
-      return {
-        ...state,
-        user: null,
-        token: null,
-        isAuthenticated: false,
-        error: null
-      };
-
-    case AUTH_ACTIONS.CLEAR_ERROR:
-      return {
-        ...state,
-        error: null
-      };
-
-    case AUTH_ACTIONS.SET_LOADING:
-      return {
-        ...state,
-        isLoading: action.payload
-      };
-
-    default:
-      return state;
-  }
-};
-
-// Create context
+// Create Auth Context
 const AuthContext = createContext();
 
+// useAuth hook for consuming auth context
+export const useAuth = () => {
+  const context = useContext(AuthContext);
+  if (!context) {
+    throw new Error('useAuth must be used within an AuthProvider');
+  }
+  return context;
+};
+
+// Initial state
+// ... existing code ...
+// ... existing code ...
+// ... existing code ...
 // Auth provider component
 export const AuthProvider = ({ children }) => {
   const [state, dispatch] = useReducer(authReducer, initialState);
 
+  const checkAuthStatus = useCallback(async () => {
+    const token = localStorage.getItem('envoyou_token');
+    if (!token) {
+      dispatch({ type: AUTH_ACTIONS.SET_LOADING, payload: false });
+      return;
+    }
+
+    try {
+      const userData = await apiService.get('/auth/me');
+      if (userData) {
+        // Update localStorage with fresh user data
+        localStorage.setItem('envoyou_user', JSON.stringify(userData));
+        dispatch({
+          type: AUTH_ACTIONS.LOGIN_SUCCESS,
+          payload: { user: userData, token },
+        });
+        logger.info('User session restored and updated successfully.');
+      } else {
+        throw new Error('Invalid user data received from server.');
+      }
+    } catch (error) {
+      logger.error('Session restore failed. Token might be invalid or expired.', { error });
+      localStorage.removeItem('envoyou_token');
+      localStorage.removeItem('envoyou_user');
+      dispatch({ type: AUTH_ACTIONS.LOGOUT });
+    } finally {
+      dispatch({ type: AUTH_ACTIONS.SET_LOADING, payload: false });
+    }
+  }, []);
+
   // Load user from localStorage on app start
   useEffect(() => {
-    const loadUser = () => {
-      try {
-        const token = localStorage.getItem('envoyou_token');
-        const user = localStorage.getItem('envoyou_user');
-        
-        if (token && user) {
-          dispatch({
-            type: AUTH_ACTIONS.LOGIN_SUCCESS,
-            payload: {
-              token,
-              user: JSON.parse(user)
-            }
-          });
-        }
-      } catch (error) {
-        console.error('Error loading user from localStorage:', error);
-        localStorage.removeItem('envoyou_token');
-        localStorage.removeItem('envoyou_user');
-      } finally {
-        dispatch({ type: AUTH_ACTIONS.SET_LOADING, payload: false });
-      }
-    };
-
-    loadUser();
-  }, []);
+    checkAuthStatus();
+  }, [checkAuthStatus]);
 
   // Login function
   const login = async (email, password) => {
     dispatch({ type: AUTH_ACTIONS.LOGIN_START });
-    
     try {
-      const response = await fetch(`${import.meta.env.VITE_API_BASE_URL || 'http://localhost:8000'}/auth/login`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ email, password }),
-      });
+      const data = await apiService.post('/auth/login', { email, password });
 
-      const data = await response.json();
-
-      if (!response.ok) {
-        throw new Error(data.message || 'Login failed');
+      if (!data.access_token || !data.user) {
+        throw new Error('Login response is missing token or user data.');
       }
 
-      // Store in localStorage
       localStorage.setItem('envoyou_token', data.access_token);
       localStorage.setItem('envoyou_user', JSON.stringify(data.user));
 
       dispatch({
         type: AUTH_ACTIONS.LOGIN_SUCCESS,
-        payload: {
-          token: data.access_token,
-          user: data.user
-        }
+        payload: { token: data.access_token, user: data.user },
       });
-
+      logger.info(`User ${data.user.email} logged in successfully.`);
       return { success: true };
     } catch (error) {
+      logger.error('Login failed', { error: error.message });
       dispatch({
         type: AUTH_ACTIONS.LOGIN_FAILURE,
-        payload: error.message
+        payload: error.message || 'An unexpected error occurred during login.',
       });
       return { success: false, error: error.message };
     }
@@ -160,55 +89,53 @@ export const AuthProvider = ({ children }) => {
   // Register function
   const register = async (userData) => {
     dispatch({ type: AUTH_ACTIONS.REGISTER_START });
-    
     try {
-      const response = await fetch(`${import.meta.env.VITE_API_BASE_URL || 'http://localhost:8000'}/auth/register`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(userData),
-      });
+      const data = await apiService.post('/auth/register', userData);
 
-      const data = await response.json();
-
-      if (!response.ok) {
-        throw new Error(data.message || 'Registration failed');
+      if (!data.access_token || !data.user) {
+        throw new Error('Register response is missing token or user data.');
       }
 
-      // Store in localStorage
       localStorage.setItem('envoyou_token', data.access_token);
       localStorage.setItem('envoyou_user', JSON.stringify(data.user));
 
       dispatch({
         type: AUTH_ACTIONS.REGISTER_SUCCESS,
-        payload: {
-          token: data.access_token,
-          user: data.user
-        }
+        payload: { token: data.access_token, user: data.user },
       });
-
+      logger.info(`New user ${data.user.email} registered and logged in successfully.`);
       return { success: true };
     } catch (error) {
+      logger.error('Registration failed', { error: error.message });
       dispatch({
         type: AUTH_ACTIONS.REGISTER_FAILURE,
-        payload: error.message
+        payload: error.message || 'An unexpected error occurred during registration.',
       });
       return { success: false, error: error.message };
     }
   };
 
   // Logout function
-  const logout = () => {
+  const logout = async () => {
+    const userEmail = state.user?.email;
+    // Optional: Call an API endpoint to invalidate the token on the server side
+    // try {
+    //   await apiService.post('/auth/logout');
+    //   logger.info('Server-side token invalidated.');
+    // } catch (error) {
+    //   logger.error('Failed to invalidate server-side token on logout.', { error });
+    // }
+
     localStorage.removeItem('envoyou_token');
     localStorage.removeItem('envoyou_user');
     dispatch({ type: AUTH_ACTIONS.LOGOUT });
+    logger.info(`User ${userEmail || ''} logged out.`);
   };
 
   // Clear error function
-  const clearError = () => {
+  const clearError = useCallback(() => {
     dispatch({ type: AUTH_ACTIONS.CLEAR_ERROR });
-  };
+  }, []);
 
   // Context value
   const value = {
@@ -216,7 +143,8 @@ export const AuthProvider = ({ children }) => {
     login,
     register,
     logout,
-    clearError
+    clearError,
+    checkAuthStatus,
   };
 
   return (
@@ -226,15 +154,85 @@ export const AuthProvider = ({ children }) => {
   );
 };
 
-// Custom hook to use auth context
-export const useAuth = () => {
-  const context = useContext(AuthContext);
-  
-  if (!context) {
-    throw new Error('useAuth must be used within an AuthProvider');
-  }
-  
-  return context;
-};
+// Export AuthContext for advanced usage
+export { AuthContext };
 
-export default AuthContext;
+  // Load user from localStorage on app start
+  useEffect(() => {
+    checkAuthStatus();
+  }, [checkAuthStatus]);
+
+  // Login function
+  const login = async (email, password) => {
+    dispatch({ type: AUTH_ACTIONS.LOGIN_START });
+    try {
+      const data = await apiService.post('/auth/login', { email, password });
+
+      if (!data.access_token || !data.user) {
+        throw new Error('Login response is missing token or user data.');
+      }
+
+      localStorage.setItem('envoyou_token', data.access_token);
+      localStorage.setItem('envoyou_user', JSON.stringify(data.user));
+
+      dispatch({
+        type: AUTH_ACTIONS.LOGIN_SUCCESS,
+        payload: { token: data.access_token, user: data.user },
+      });
+      logger.info(`User ${data.user.email} logged in successfully.`);
+      return { success: true };
+    } catch (error) {
+      logger.error('Login failed', { error: error.message });
+      dispatch({
+        type: AUTH_ACTIONS.LOGIN_FAILURE,
+        payload: error.message || 'An unexpected error occurred during login.',
+      });
+      return { success: false, error: error.message };
+    }
+  };
+
+  // Register function
+  const register = async (userData) => {
+    dispatch({ type: AUTH_ACTIONS.REGISTER_START });
+    try {
+      const data = await apiService.post('/auth/register', userData);
+
+      if (!data.access_token || !data.user) {
+        throw new Error('Register response is missing token or user data.');
+      }
+
+      localStorage.setItem('envoyou_token', data.access_token);
+      localStorage.setItem('envoyou_user', JSON.stringify(data.user));
+
+      dispatch({
+        type: AUTH_ACTIONS.REGISTER_SUCCESS,
+        payload: { token: data.access_token, user: data.user },
+      });
+      logger.info(`New user ${data.user.email} registered and logged in successfully.`);
+      return { success: true };
+    } catch (error) {
+      logger.error('Registration failed', { error: error.message });
+      dispatch({
+        type: AUTH_ACTIONS.REGISTER_FAILURE,
+        payload: error.message || 'An unexpected error occurred during registration.',
+      });
+      return { success: false, error: error.message };
+    }
+  };
+
+  // Logout function
+  const logout = async () => {
+    const userEmail = state.user?.email;
+    // Optional: Call an API endpoint to invalidate the token on the server side
+    // try {
+    //   await apiService.post('/auth/logout');
+    //   logger.info('Server-side token invalidated.');
+    // } catch (error) {
+    //   logger.error('Failed to invalidate server-side token on logout.', { error });
+    // }
+
+    localStorage.removeItem('envoyou_token');
+    localStorage.removeItem('envoyou_user');
+    dispatch({ type: AUTH_ACTIONS.LOGOUT });
+    logger.info(`User ${userEmail || ''} logged out.`);
+  };
