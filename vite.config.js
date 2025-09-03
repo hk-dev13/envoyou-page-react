@@ -3,6 +3,7 @@ import react from '@vitejs/plugin-react'
 import tailwindcss from '@tailwindcss/vite'
 import { VitePWA } from 'vite-plugin-pwa'
 import { visualizer } from 'rollup-plugin-visualizer'
+import path from 'path'
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -141,6 +142,12 @@ export default defineConfig({
     brotliSize: true,
   }),
 ].filter(Boolean),
+
+  resolve: {
+      alias: {
+      "@": path.resolve(__dirname, "./src"),
+      },
+  },
   
   // Build optimizations
   build: {

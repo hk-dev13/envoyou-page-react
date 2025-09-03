@@ -116,19 +116,19 @@ const OverviewSection = () => (
                             <svg className="w-4 h-4 text-emerald-400" fill="currentColor" viewBox="0 0 20 20">
                                 <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-8-3a1 1 0 00-.867.5 1 1 0 11-1.731-1A3 3 0 0113 8a3.001 3.001 0 01-2 2.83V11a1 1 0 11-2 0v-1a1 1 0 011-1 1 1 0 100-2zm0 8a1 1 0 100-2 1 1 0 000 2z" clipRule="evenodd" />
                             </svg>
-                            <span><strong>🆕 Real-time Testing</strong> - Built-in API tester interface</span>
+                            <span><strong>Real-time Testing</strong> - Built-in API tester interface</span>
                         </li>
                         <li className="flex items-center space-x-2">
                             <svg className="w-4 h-4 text-emerald-400" fill="currentColor" viewBox="0 0 20 20">
                                 <path fillRule="evenodd" d="M3 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clipRule="evenodd" />
                             </svg>
-                            <span><strong>🎯 Instant Demo Keys</strong> - No registration required</span>
+                            <span><strong>Instant Demo Keys</strong> - No registration required</span>
                         </li>
                         <li className="flex items-center space-x-2">
                             <svg className="w-4 h-4 text-emerald-400" fill="currentColor" viewBox="0 0 20 20">
                                 <path fillRule="evenodd" d="M5.05 3.636a1 1 0 010 1.414 7 7 0 000 9.9 1 1 0 11-1.414 1.414 9 9 0 010-12.728 1 1 0 011.414 0zm9.9 0a1 1 0 011.414 0 9 9 0 010 12.728 1 1 0 11-1.414-1.414 7 7 0 000-9.9 1 1 0 010-1.414z" clipRule="evenodd" />
                             </svg>
-                            <span><strong>📊 Connection Monitor</strong> - Live backend status indicator</span>
+                            <span><strong>Connection Monitor</strong> - Live backend status indicator</span>
                         </li>
                     </ul>
                 </div>
@@ -158,7 +158,7 @@ const OverviewSection = () => (
                     <svg className="w-5 h-5 text-blue-400 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                     </svg>
-                    <span className="text-blue-400 font-medium">💡 Quick Start</span>
+                    <span className="text-blue-400 font-medium">Quick Start</span>
                 </div>
                 <p className="text-blue-200 text-sm">
                     This frontend automatically detects and connects to <code>localhost:8000</code> when running in development mode. 
@@ -204,7 +204,7 @@ const AuthSection = () => (
                     <svg className="w-5 h-5 text-emerald-400 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
                     </svg>
-                    <span className="text-emerald-400 font-medium">🆕 Instant Demo API Keys Available!</span>
+                    <span className="text-emerald-400 font-medium">Instant Demo API Keys Available!</span>
                 </div>
                 <p className="text-sm text-slate-300 mb-3">
                     Get a demo API key instantly without registration. Perfect for testing and development.
@@ -294,7 +294,7 @@ const EndpointsSection = () => (
 
         {/* Demo API Key */}
         <div className="bg-slate-800 rounded-lg p-6 sm:p-8">
-            <h2 className="text-2xl font-bold text-white mb-6">🆕 Demo API Key Management</h2>
+            <h2 className="text-2xl font-bold text-white mb-6">Demo API Key Management</h2>
             <p className="text-slate-400 mb-6">Get instant access to demo API keys without registration</p>
             <div className="space-y-4">
                 <EndpointCard
