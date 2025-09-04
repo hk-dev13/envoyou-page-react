@@ -183,10 +183,10 @@ export default defineConfig({
         
         // Naming convention for chunks
         chunkFileNames: (chunkInfo) => {
-          const facadeModuleId = chunkInfo.facadeModuleId 
-            ? chunkInfo.facadeModuleId.split('/').pop().replace('.jsx', '') 
+          const facadeModuleId = chunkInfo.facadeModuleId
+            ? chunkInfo.facadeModuleId.split('/').pop().replace('.jsx', '')
             : 'chunk';
-          return `assets/js/[name]-[hash].js`;
+          return `assets/js/${facadeModuleId}-[hash].js`;
         },
         entryFileNames: 'assets/js/[name]-[hash].js',
         assetFileNames: 'assets/[ext]/[name]-[hash].[ext]',
