@@ -14,7 +14,8 @@
     "lint:fix": "eslint . --fix",
     "test": "echo \"No tests specified\" && exit 0",
     "serve": "vite preview --port 3000",
-    "clean": "rm -rf dist",
+    "deploy:netlify": "npm run build && netlify deploy --prod --dir=dist",
+    "build:netlify": "NODE_ENV=production npm run build",
     "type-check": "echo \"Type checking not configured\"",
     "validate": "npm run lint && npm run type-check",
     "prepare": "npm run validate"
