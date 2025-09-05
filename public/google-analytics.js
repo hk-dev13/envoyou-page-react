@@ -1,5 +1,5 @@
 // Google Analytics with Consent Mode v2
-// This should be loaded in the <head> of your HTML
+// This should be loaded AFTER the Google Analytics library script
 
 // Replace 'GA_MEASUREMENT_ID' with your actual Google Analytics Measurement ID
 const GA_MEASUREMENT_ID = 'G-HJPHVX4X02';
@@ -18,8 +18,7 @@ gtag('consent', 'default', {
   security_storage: 'granted'
 });
 
-// Initialize Google Analytics
-gtag('js', new Date());
+// Configure Google Analytics (don't initialize here - it's done by the library script)
 gtag('config', GA_MEASUREMENT_ID, {
   // Additional configuration options
   anonymize_ip: true,
@@ -27,4 +26,4 @@ gtag('config', GA_MEASUREMENT_ID, {
   allow_ad_personalization_signals: false
 });
 
-console.log('Google Analytics initialized with Consent Mode v2 - Default: All denied except security');
+console.log('Google Analytics configured with Consent Mode v2 - Default: All denied except security');
