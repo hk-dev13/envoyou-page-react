@@ -1,66 +1,59 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import SettingsLayout from '../../components/settings/SettingsLayout';
+import apiService from '../../services/apiService';
 
 function APIKeysSettingsPage() {
-    const [apiKeys, setApiKeys] = useState([
-        {
-            id: 1,
-            name: 'Production API Key',
-            key: 'envoyou_pk_live_abc123***************************def789',
-            created: '2025-08-15',
-            lastUsed: '2025-09-03',
-            usage: 1250,
-            limit: 5000,
-            status: 'active'
-        },
-        {
-            id: 2,
-            name: 'Development API Key',
-            key: 'envoyou_pk_dev_xyz789***************************uvw456',
-            created: '2025-08-20',
-            lastUsed: '2025-09-02',
-            usage: 450,
-            limit: 1000,
-            status: 'active'
-        }
-    ]);
-
+    const [apiKeys, setApiKeys] = useState([]);
+    const [isLoading, setIsLoading] = useState(true);
     const [isCreatingKey, setIsCreatingKey] = useState(false);
     const [newKeyName, setNewKeyName] = useState('');
     const [newKeyEnvironment, setNewKeyEnvironment] = useState('development');
     const [message, setMessage] = useState('');
     const [showCreateForm, setShowCreateForm] = useState(false);
 
+    // Load API keys on component mount
+    useEffect(() => {
+        loadApiKeys();
+    }, []);
+
+    const loadApiKeys = async () => {
+        try {
+            setIsLoading(true);
+            const keys = await apiService.getApiKeys();
+            setApiKeys(keys);
+        } catch (error) {
+            console.error('Failed to load API keys:', error);
+            setMessage('Failed to load API keys');
+        } finally {
+            setIsLoading(false);
+        }
+    };
+
     const handleCreateKey = async (e) => {
         e.preventDefault();
+        if (!newKeyName.trim()) {
+            setMessage('Please enter a name for the API key');
+            return;
+        }
+
         setIsCreatingKey(true);
+        setMessage('');
 
         try {
-            // Here would be API call to create new key
-            // const newKey = await createAPIKey({ name: newKeyName, environment: newKeyEnvironment });
-            
-            // Simulate API call
-            await new Promise(resolve => setTimeout(resolve, 1000));
-            
-            const newKey = {
-                id: Date.now(),
-                name: newKeyName,
-                key: `envoyou_pk_${newKeyEnvironment}_${Math.random().toString(36).substring(2, 15)}***************************${Math.random().toString(36).substring(2, 8)}`,
-                created: new Date().toISOString().split('T')[0],
-                lastUsed: 'Never',
-                usage: 0,
-                limit: newKeyEnvironment === 'production' ? 5000 : 1000,
-                status: 'active'
-            };
+            const newKey = await apiService.createApiKey({
+                name: newKeyName.trim(),
+                environment: newKeyEnvironment
+            });
 
             setApiKeys(prev => [...prev, newKey]);
-            setMessage('API key created successfully! Make sure to copy it now as you won\'t be able to see it again.');
             setNewKeyName('');
+            setNewKeyEnvironment('development');
             setShowCreateForm(false);
+            setMessage('API key created successfully! Make sure to copy it now as you won\'t be able to see it again.');
             setTimeout(() => setMessage(''), 5000);
         } catch (error) {
             console.error('Failed to create API key:', error);
-            setMessage('Failed to create API key. Please try again.');
+            setMessage(error.message || 'Failed to create API key. Please try again.');
             setTimeout(() => setMessage(''), 3000);
         } finally {
             setIsCreatingKey(false);
@@ -70,18 +63,13 @@ function APIKeysSettingsPage() {
     const handleDeleteKey = async (keyId) => {
         if (confirm('Are you sure you want to delete this API key? This action cannot be undone.')) {
             try {
-                // Here would be API call to delete key
-                // await deleteAPIKey(keyId);
-                
-                // Simulate API call
-                await new Promise(resolve => setTimeout(resolve, 500));
-                
+                await apiService.deleteApiKey(keyId);
                 setApiKeys(prev => prev.filter(key => key.id !== keyId));
                 setMessage('API key deleted successfully.');
                 setTimeout(() => setMessage(''), 3000);
             } catch (error) {
                 console.error('Failed to delete API key:', error);
-                setMessage('Failed to delete API key. Please try again.');
+                setMessage(error.message || 'Failed to delete API key. Please try again.');
                 setTimeout(() => setMessage(''), 3000);
             }
         }
@@ -209,11 +197,36 @@ function APIKeysSettingsPage() {
 
                     {/* API Keys List */}
                     <div className="space-y-4">
-                        {apiKeys.map((apiKey) => {
-                            const usagePercentage = getUsagePercentage(apiKey.usage, apiKey.limit);
-                            
-                            return (
-                                <div key={apiKey.id} className="p-4 bg-slate-800/50 rounded-lg border border-slate-700">
+                        {isLoading ? (
+                            <div className="text-center py-12">
+                                <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-emerald-400 mx-auto mb-4"></div>
+                                <p className="text-slate-300">Loading API keys...</p>
+                            </div>
+                        ) : apiKeys.length === 0 ? (
+                            <div className="text-center py-12">
+                                <svg className="w-12 h-12 text-slate-600 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z" />
+                                </svg>
+                                <h3 className="text-lg font-medium text-white mb-2">No API Keys</h3>
+                                <p className="text-slate-400 mb-4">
+                                    You haven't created any API keys yet. Create your first key to start using our API.
+                                </p>
+                                <button
+                                    onClick={() => setShowCreateForm(true)}
+                                    className="inline-flex items-center px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg transition-colors"
+                                >
+                                    <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
+                                    </svg>
+                                    Create Your First API Key
+                                </button>
+                            </div>
+                        ) : (
+                            apiKeys.map((apiKey) => {
+                                const usagePercentage = getUsagePercentage(apiKey.usage, apiKey.limit);
+                                
+                                return (
+                                    <div key={apiKey.id} className="p-4 bg-slate-800/50 rounded-lg border border-slate-700">
                                     <div className="flex items-start justify-between mb-4">
                                         <div className="flex-1">
                                             <div className="flex items-center space-x-3 mb-2">
@@ -291,27 +304,7 @@ function APIKeysSettingsPage() {
                                     </div>
                                 </div>
                             );
-                        })}
-
-                        {apiKeys.length === 0 && (
-                            <div className="text-center py-12">
-                                <svg className="w-12 h-12 text-slate-600 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z" />
-                                </svg>
-                                <h3 className="text-lg font-medium text-white mb-2">No API Keys</h3>
-                                <p className="text-slate-400 mb-4">
-                                    You haven't created any API keys yet. Create your first key to start using our API.
-                                </p>
-                                <button
-                                    onClick={() => setShowCreateForm(true)}
-                                    className="inline-flex items-center px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg transition-colors"
-                                >
-                                    <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
-                                    </svg>
-                                    Create Your First API Key
-                                </button>
-                            </div>
+                        })
                         )}
                     </div>
                 </div>

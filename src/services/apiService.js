@@ -13,7 +13,7 @@ class APIService {
   getAuthHeaders() {
     let token = null;
     try {
-        token = localStorage.getItem('authToken');
+        token = localStorage.getItem('envoyou_token');
     } catch (error) {
         console.warn('localStorage not available (incognito mode):', error);
     }
@@ -118,10 +118,130 @@ class APIService {
     return this.request(endpoint, { method: 'DELETE', ...options });
   }
 
-  // --- Application-Specific Methods ---
+  // --- Authentication Methods ---
 
-  async healthCheck() {
-    return this.get('/health');
+  async register(userData) {
+    return this.post('/auth/register', userData);
+  }
+
+  async login(credentials) {
+    return this.post('/auth/login', credentials);
+  }
+
+  async logout() {
+    return this.post('/auth/logout');
+  }
+
+  async refreshToken() {
+    return this.post('/auth/refresh');
+  }
+
+  async sendVerificationEmail(email) {
+    return this.post('/auth/send-verification', { email });
+  }
+
+  async verifyEmail(token) {
+    return this.post('/auth/verify-email', { token });
+  }
+
+  async forgotPassword(email) {
+    return this.post('/auth/forgot-password', { email });
+  }
+
+  async resetPassword(token, newPassword) {
+    return this.post('/auth/reset-password', { token, new_password: newPassword });
+  }
+
+  async changePassword(currentPassword, newPassword) {
+    return this.post('/auth/change-password', {
+      current_password: currentPassword,
+      new_password: newPassword
+    });
+  }
+
+  // --- User Profile Methods ---
+
+  async getUserProfile() {
+    return this.get('/user/profile');
+  }
+
+  async updateUserProfile(profileData) {
+    return this.put('/user/profile', profileData);
+  }
+
+  async uploadAvatar(formData) {
+    return this.request('/user/avatar', {
+      method: 'POST',
+      body: formData,
+      headers: {
+        ...this.getAuthHeaders(),
+        // Don't set Content-Type for FormData, let browser set it with boundary
+      },
+    });
+  }
+
+  // --- API Keys Methods ---
+
+  async getApiKeys() {
+    return this.get('/user/api-keys');
+  }
+
+  async createApiKey(name) {
+    return this.post('/user/api-keys', { name });
+  }
+
+  async deleteApiKey(keyId) {
+    return this.delete(`/user/api-keys/${keyId}`);
+  }
+
+  // --- Sessions Methods ---
+
+  async getUserSessions() {
+    return this.get('/user/sessions');
+  }
+
+  async deleteUserSession(sessionId) {
+    return this.delete(`/user/sessions/${sessionId}`);
+  }
+
+  // --- 2FA Methods ---
+
+  async setup2FA() {
+    return this.post('/auth/2fa/setup');
+  }
+
+  async verify2FA(code) {
+    return this.post('/auth/2fa/verify', { code });
+  }
+
+  async disable2FA() {
+    return this.post('/auth/2fa/disable');
+  }
+
+  // --- Environmental Data Methods ---
+
+  async getPermits(params = {}) {
+    return this.get('/permits', { params });
+  }
+
+  async searchPermits(query, params = {}) {
+    return this.get('/permits/search', { params: { q: query, ...params } });
+  }
+
+  async getActivePermits() {
+    return this.get('/permits/active');
+  }
+
+  async getPermitsByCompany(companyName) {
+    return this.get(`/permits/company/${encodeURIComponent(companyName)}`);
+  }
+
+  async getPermitsByType(permitType) {
+    return this.get(`/permits/type/${encodeURIComponent(permitType)}`);
+  }
+
+  async getPermitStats() {
+    return this.get('/permits/stats');
   }
 
   async getCEVSData(companyName, country = null, apiKey = null) {

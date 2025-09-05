@@ -105,7 +105,7 @@ export const AuthProvider = ({ children }) => {
     }
 
     try {
-      const userData = await apiService.get('/auth/me');
+      const userData = await apiService.getUserProfile();
       if (userData) {
         // Update localStorage with fresh user data
         try {
@@ -139,7 +139,7 @@ export const AuthProvider = ({ children }) => {
   const login = async (email, password) => {
     dispatch({ type: AUTH_ACTIONS.LOGIN_START });
     try {
-      const data = await apiService.post('/auth/login', { email, password });
+      const data = await apiService.login({ email, password });
 
       if (!data.access_token || !data.user) {
         throw new Error('Login response is missing token or user data.');
@@ -168,7 +168,7 @@ export const AuthProvider = ({ children }) => {
   const register = async (userData) => {
     dispatch({ type: AUTH_ACTIONS.REGISTER_START });
     try {
-      const data = await apiService.post('/auth/register', userData);
+      const data = await apiService.register(userData);
 
       if (!data.access_token || !data.user) {
         throw new Error('Register response is missing token or user data.');

@@ -1,23 +1,48 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import SettingsLayout from '../../components/settings/SettingsLayout';
 import { useAuth } from '../../context/AuthContext';
+import apiService from '../../services/apiService';
 
 function ProfileSettingsPage() {
-    const { user } = useAuth();
+    const { user, checkAuthStatus } = useAuth();
     const [isEditing, setIsEditing] = useState(false);
     const [isSaving, setIsSaving] = useState(false);
     const [message, setMessage] = useState('');
     
     const [formData, setFormData] = useState({
-        first_name: user?.first_name || '',
-        last_name: user?.last_name || '',
-        email: user?.email || '',
-        company: user?.company || '',
-        job_title: user?.job_title || '',
-        bio: user?.bio || '',
-        website: user?.website || '',
-        location: user?.location || ''
+        first_name: '',
+        last_name: '',
+        email: '',
+        company: '',
+        job_title: '',
+        bio: '',
+        website: '',
+        location: ''
     });
+
+    // Load user profile data
+    useEffect(() => {
+        loadProfile();
+    }, []);
+
+    const loadProfile = async () => {
+        try {
+            const profileData = await apiService.getUserProfile();
+            setFormData({
+                first_name: profileData.first_name || '',
+                last_name: profileData.last_name || '',
+                email: profileData.email || '',
+                company: profileData.company || '',
+                job_title: profileData.job_title || '',
+                bio: profileData.bio || '',
+                website: profileData.website || '',
+                location: profileData.location || ''
+            });
+        } catch (error) {
+            console.error('Failed to load profile:', error);
+            setMessage('Failed to load profile data');
+        }
+    };
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;
@@ -29,19 +54,18 @@ function ProfileSettingsPage() {
 
     const handleSave = async () => {
         setIsSaving(true);
+        setMessage('');
+        
         try {
-            // Here would be API call to update profile
-            // await updateProfile(formData);
-            
-            // Simulate API call
-            await new Promise(resolve => setTimeout(resolve, 1000));
-            
+            await apiService.updateUserProfile(formData);
             setMessage('Profile updated successfully!');
             setIsEditing(false);
+            // Refresh auth context to update user data
+            await checkAuthStatus();
             setTimeout(() => setMessage(''), 3000);
         } catch (error) {
             console.error('Failed to update profile:', error);
-            setMessage('Failed to update profile. Please try again.');
+            setMessage(error.message || 'Failed to update profile. Please try again.');
             setTimeout(() => setMessage(''), 3000);
         } finally {
             setIsSaving(false);

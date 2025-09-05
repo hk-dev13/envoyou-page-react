@@ -15,7 +15,7 @@ export const APP_CONFIG = {
 
 // API Configuration
 export const API_CONFIG = {
-  baseURL: import.meta.env.VITE_API_BASE_URL || 'http://localhost:3001/api',
+  baseURL: import.meta.env.VITE_API_BASE_URL || 'http://localhost:8000',
   version: import.meta.env.VITE_API_VERSION || 'v1',
   timeout: parseInt(import.meta.env.VITE_API_TIMEOUT) || 30000,
   rateLimit: {
