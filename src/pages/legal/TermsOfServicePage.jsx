@@ -24,10 +24,10 @@ function TermsOfServicePage() {
                             Terms of Service
                         </h1>
                         <p className="text-xl text-slate-400 max-w-2xl">
-                            Please read these terms and conditions carefully before using our service.
+                            Please read these terms and conditions carefully before using our environmental data API service.
                         </p>
                         <p className="text-sm text-slate-500 mt-2">
-                            Last updated: September 3, 2025
+                            Last updated: September 5, 2025
                         </p>
                     </div>
 
@@ -37,21 +37,22 @@ function TermsOfServicePage() {
                             <section className="mb-8">
                                 <h2 className="text-2xl font-semibold text-white mb-4">1. Acceptance of Terms</h2>
                                 <p className="text-slate-300 leading-relaxed mb-4">
-                                    By accessing and using EnvoyOU's CV Enhancement API service, you accept and agree to be bound by the terms and provision of this agreement. These Terms of Service ("Terms") govern your use of our website and API services.
+                                    By accessing and using EnvoyOU's Global Environmental Data Verification API service, you accept and agree to be bound by the terms and provision of this agreement. These Terms of Service ("Terms") govern your use of our website and API services.
                                 </p>
                             </section>
 
                             <section className="mb-8">
                                 <h2 className="text-2xl font-semibold text-white mb-4">2. Description of Service</h2>
                                 <p className="text-slate-300 leading-relaxed mb-4">
-                                    EnvoyOU provides a CV Enhancement API that helps users improve their resumes through AI-powered analysis and suggestions. Our service includes:
+                                    EnvoyOU provides a comprehensive Environmental Data Verification API that delivers standardized global environmental datasets for ESG businesses, analysts, and investors. Our service includes:
                                 </p>
                                 <ul className="list-disc list-inside text-slate-300 space-y-2 ml-4">
-                                    <li>CV content analysis and optimization</li>
-                                    <li>Skill gap identification</li>
-                                    <li>Industry-specific recommendations</li>
-                                    <li>ATS (Applicant Tracking System) optimization</li>
-                                    <li>API access for developers</li>
+                                    <li>Carbon emissions data verification</li>
+                                    <li>Environmental compliance datasets</li>
+                                    <li>Climate risk assessment data</li>
+                                    <li>ESG reporting metrics</li>
+                                    <li>RESTful API access for developers</li>
+                                    <li>Real-time data updates</li>
                                 </ul>
                             </section>
 
@@ -65,6 +66,8 @@ function TermsOfServicePage() {
                                     <li>All activities that occur under your account</li>
                                     <li>Notifying us immediately of any unauthorized use</li>
                                     <li>Providing accurate and complete information</li>
+                                    <li>Complying with usage limits and rate restrictions</li>
+                                    <li>Using data only for lawful ESG and environmental purposes</li>
                                 </ul>
                             </section>
 
@@ -74,12 +77,13 @@ function TermsOfServicePage() {
                                     You agree not to use our service to:
                                 </p>
                                 <ul className="list-disc list-inside text-slate-300 space-y-2 ml-4">
-                                    <li>Violate any applicable laws or regulations</li>
-                                    <li>Infringe on intellectual property rights</li>
-                                    <li>Upload malicious code or attempt to breach security</li>
-                                    <li>Exceed rate limits or abuse our API</li>
-                                    <li>Use the service for spam or fraudulent activities</li>
-                                    <li>Reverse engineer or attempt to extract our algorithms</li>
+                                    <li>Violate any applicable environmental regulations or laws</li>
+                                    <li>Misrepresent environmental data or ESG metrics</li>
+                                    <li>Use data for fraudulent or misleading ESG reporting</li>
+                                    <li>Exceed rate limits or abuse our API infrastructure</li>
+                                    <li>Attempt to reverse engineer or extract proprietary algorithms</li>
+                                    <li>Share API keys or allow unauthorized access</li>
+                                    <li>Use data for purposes other than legitimate ESG analysis</li>
                                 </ul>
                             </section>
 
@@ -161,7 +165,7 @@ function TermsOfServicePage() {
                                 </p>
                                 <div className="bg-slate-800/50 rounded-lg p-4 mt-4">
                                     <p className="text-slate-300">
-                                        <strong className="text-white">Email:</strong> legal@envoyou.com<br />
+                                        <strong className="text-white">Email:</strong> info@envoyou.com<br />
                                         <strong className="text-white">Address:</strong> EnvoyOU Legal Department<br />
                                         <strong className="text-white">Response Time:</strong> Within 48 hours
                                     </p>

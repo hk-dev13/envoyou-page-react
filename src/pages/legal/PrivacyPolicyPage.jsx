@@ -24,10 +24,10 @@ function PrivacyPolicyPage() {
                             Privacy Policy
                         </h1>
                         <p className="text-xl text-slate-400 max-w-2xl">
-                            Your privacy is important to us. This policy explains how we collect, use, and protect your information.
+                            Your privacy is important to us. This policy explains how we collect, use, and protect your information when using our environmental data API.
                         </p>
                         <p className="text-sm text-slate-500 mt-2">
-                            Last updated: September 3, 2025
+                            Last updated: September 5, 2025
                         </p>
                     </div>
 
@@ -43,9 +43,10 @@ function PrivacyPolicyPage() {
                                 <h3 className="text-xl font-medium text-white mb-3">Information You Provide</h3>
                                 <ul className="list-disc list-inside text-slate-300 space-y-2 ml-4 mb-4">
                                     <li><strong>Account Information:</strong> Name, email address, company name, job title</li>
-                                    <li><strong>CV Content:</strong> Resume text, skills, experience, education details</li>
+                                    <li><strong>API Usage Data:</strong> Environmental data queries, location data, ESG metrics requested</li>
                                     <li><strong>Payment Information:</strong> Billing address, payment method details (processed securely by our payment providers)</li>
                                     <li><strong>Communication Data:</strong> Messages you send to our support team</li>
+                                    <li><strong>Environmental Data:</strong> Location coordinates, environmental parameters, compliance data</li>
                                 </ul>
 
                                 <h3 className="text-xl font-medium text-white mb-3">Information Collected Automatically</h3>
@@ -63,12 +64,13 @@ function PrivacyPolicyPage() {
                                     We use the information we collect to provide, maintain, and improve our services:
                                 </p>
                                 <ul className="list-disc list-inside text-slate-300 space-y-2 ml-4">
-                                    <li><strong>Service Delivery:</strong> Process your CV content and provide enhancement suggestions</li>
+                                    <li><strong>Service Delivery:</strong> Process environmental data requests and provide verification services</li>
                                     <li><strong>Account Management:</strong> Create and maintain your account, authenticate API requests</li>
                                     <li><strong>Communication:</strong> Send service updates, technical notices, and respond to inquiries</li>
-                                    <li><strong>Improvement:</strong> Analyze usage patterns to enhance our AI algorithms</li>
+                                    <li><strong>Improvement:</strong> Analyze usage patterns to enhance our environmental data algorithms</li>
                                     <li><strong>Security:</strong> Detect and prevent fraud, abuse, and security incidents</li>
                                     <li><strong>Compliance:</strong> Meet legal obligations and enforce our terms</li>
+                                    <li><strong>Environmental Reporting:</strong> Support legitimate ESG and environmental compliance activities</li>
                                 </ul>
                             </section>
 
@@ -117,7 +119,7 @@ function PrivacyPolicyPage() {
                                 </p>
                                 <ul className="list-disc list-inside text-slate-300 space-y-2 ml-4">
                                     <li><strong>Account Data:</strong> Retained while your account is active</li>
-                                    <li><strong>CV Content:</strong> Deleted 30 days after account closure</li>
+                                    <li><strong>Environmental Data:</strong> Deleted 30 days after account closure</li>
                                     <li><strong>Usage Logs:</strong> Retained for 12 months for security and improvement purposes</li>
                                     <li><strong>Financial Records:</strong> Retained for 7 years for tax and legal compliance</li>
                                 </ul>
@@ -208,7 +210,7 @@ function PrivacyPolicyPage() {
                                 </p>
                                 <div className="bg-slate-800/50 rounded-lg p-4 mt-4">
                                     <p className="text-slate-300">
-                                        <strong className="text-white">Data Protection Officer:</strong> privacy@envoyou.com<br />
+                                        <strong className="text-white">Data Protection Officer:</strong> info@envoyou.com<br />
                                         <strong className="text-white">General Inquiries:</strong> support@envoyou.com<br />
                                         <strong className="text-white">Address:</strong> EnvoyOU Privacy Team<br />
                                         <strong className="text-white">Response Time:</strong> Within 48 hours
