@@ -65,6 +65,12 @@ const Header = () => {
             isButton: false,
         },
         {
+            name: 'Test API',
+            href: null,
+            to: '/test',
+            isButton: false,
+        },
+        {
             name: 'About',
             href: null,
             to: '/about',

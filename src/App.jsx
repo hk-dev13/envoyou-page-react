@@ -25,8 +25,7 @@ const DashboardUsage = lazy(() => import('./pages/DashboardUsage'));
 const APIKeysSettingsPage = lazy(() => import('./pages/settings/APIKeysSettingsPage'));
 const ProfileSettingsPage = lazy(() => import('./pages/settings/ProfileSettingsPage'));
 const SecuritySettingsPage = lazy(() => import('./pages/settings/SecuritySettingsPage'));
-const TermsOfServicePage = lazy(() => import('./pages/legal/TermsOfServicePage'));
-const PrivacyPolicyPage = lazy(() => import('./pages/legal/PrivacyPolicyPage'));
+const TestPage = lazy(() => import('./pages/TestPage'));
 
 // Loading component for Suspense fallback
 const PageLoader = () => (
@@ -69,6 +68,7 @@ function App() {
                     <Route path="/settings/security" element={<SecuritySettingsPage />} />
                     <Route path="/legal/terms" element={<TermsOfServicePage />} />
                     <Route path="/legal/privacy" element={<PrivacyPolicyPage />} />
+                    <Route path="/test" element={<TestPage />} />
                   </Routes>
                 </Suspense>
               </main>

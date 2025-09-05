@@ -62,21 +62,20 @@ const PushNotificationManager = () => {
         }
     };
 
-    const unsubscribeFromNotifications = async () => {
-        if (subscription) {
-            await subscription.unsubscribe();
-            setSubscription(null);
-
-            // Notify server about unsubscription
-            await fetch('/api/unsubscribe', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ endpoint: subscription.endpoint })
-            });
-        }
-    };
+    // const unsubscribeFromNotifications = async () => {
+    //     if (subscription) {
+    //         await subscription.unsubscribe();
+    //         setSubscription(null);
+    //         // Notify server about unsubscription
+    //         await fetch('/api/unsubscribe', {
+    //             method: 'POST',
+    //             headers: {
+    //                 'Content-Type': 'application/json',
+    //             },
+    //             body: JSON.stringify({ endpoint: subscription.endpoint })
+    //         });
+    //     }
+    // };
 
     // Helper function to convert VAPID key
     function urlBase64ToUint8Array(base64String) {

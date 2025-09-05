@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 
 const Dashboard = () => {
   const { user, logout } = useAuth();
-  const [stats, setStats] = useState({
+  const [stats] = useState({
     apiCalls: 1247,
     thisMonth: 89,
     quota: 5000,

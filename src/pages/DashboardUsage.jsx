@@ -4,7 +4,7 @@ import { useAuth } from '../context/AuthContext';
 
 const DashboardUsage = () => {
   const { user } = useAuth();
-  const [stats, setStats] = useState({
+  const [stats] = useState({
     apiCalls: 1247,
     thisMonth: 89,
     quota: 5000,

@@ -141,9 +141,9 @@ const OverviewSection = () => (
                 <div>
                     <h3 className="text-lg font-semibold text-emerald-400 mb-2">Development</h3>
                     <div className="bg-slate-900 rounded p-4 font-mono text-emerald-400">
-                        http://localhost:8000
+                        https://api.envoyou.com
                     </div>
-                    <p className="text-slate-400 text-sm mt-2">Local FastAPI backend</p>
+                    <p className="text-slate-400 text-sm mt-2">Production API (shared for dev)</p>
                 </div>
                 <div>
                     <h3 className="text-lg font-semibold text-emerald-400 mb-2">Production</h3>
@@ -161,7 +161,7 @@ const OverviewSection = () => (
                     <span className="text-blue-400 font-medium">Quick Start</span>
                 </div>
                 <p className="text-blue-200 text-sm">
-                    This frontend automatically detects and connects to <code>localhost:8000</code> when running in development mode. 
+                    This frontend automatically connects to <code>https://api.envoyou.com</code> for both development and production environments. 
                     Start your FastAPI backend and refresh this page to see the green connection indicator!
                 </p>
             </div>

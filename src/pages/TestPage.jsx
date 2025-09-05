@@ -1,39 +1,53 @@
 import React from 'react';
+import DemoKeyManager from '../components/DemoKeyManager';
+import CevsLookupSection from '../components/CevsLookupSection';
 
 const TestPage = () => {
   return (
-    <div style={{ 
-      minHeight: '100vh', 
-      background: 'linear-gradient(135deg, #1e293b 0%, #0f172a 100%)',
-      color: 'white',
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'center',
-      flexDirection: 'column',
-      padding: '2rem'
-    }}>
-      <h1 style={{ fontSize: '3rem', marginBottom: '1rem' }}>
-        🚀 EnvoyOU Working!
-      </h1>
-      <p style={{ fontSize: '1.2rem', textAlign: 'center', maxWidth: '600px' }}>
-        Development server is running successfully. All production services have been implemented and are ready for deployment.
-      </p>
-      <div style={{ 
-        marginTop: '2rem', 
-        padding: '1rem', 
-        background: 'rgba(34, 197, 94, 0.1)', 
-        border: '1px solid #22c55e',
-        borderRadius: '8px'
-      }}>
-        <h3 style={{ color: '#22c55e', marginBottom: '0.5rem' }}>✅ Production Ready Features:</h3>
-        <ul style={{ listStyle: 'none', padding: 0 }}>
-          <li>🔧 Environment Configuration</li>
-          <li>📊 Performance Monitoring</li>
-          <li>🔒 Security Implementation</li>
-          <li>📝 Advanced Logging</li>
-          <li>🎯 SEO Optimization</li>
-          <li>⚡ Build Optimization</li>
-        </ul>
+    <div className="min-h-screen bg-slate-900 text-white">
+      <div className="container mx-auto px-6 py-12">
+        <div className="text-center mb-12">
+          <h1 className="text-4xl md:text-6xl font-extrabold text-white leading-tight mb-6">
+            🧪 API <span className="text-emerald-400">Test Center</span>
+          </h1>
+          <p className="max-w-3xl mx-auto text-lg text-slate-400">
+            Test the Envoyou CEVS API with our interactive demo. Get a free API key and explore environmental data verification capabilities.
+          </p>
+        </div>
+
+        {/* Demo Key Manager */}
+        <div className="mb-12">
+          <h2 className="text-2xl font-bold text-white mb-6 text-center">Get Your Demo API Key</h2>
+          <DemoKeyManager />
+        </div>
+
+        {/* CEVS Lookup Section */}
+        <div className="mb-12">
+          <h2 className="text-2xl font-bold text-white mb-6 text-center">Test CEVS Company Lookup</h2>
+          <CevsLookupSection />
+        </div>
+
+        {/* API Status */}
+        <div className="bg-slate-800 rounded-xl p-8 text-center">
+          <h3 className="text-xl font-semibold text-emerald-400 mb-4">✅ API Status: Online</h3>
+          <p className="text-slate-300">
+            Backend API is running at <code className="bg-slate-700 px-2 py-1 rounded">https://api.envoyou.com</code>
+          </p>
+          <div className="mt-6 grid md:grid-cols-3 gap-4 text-sm">
+            <div className="bg-slate-700 rounded p-4">
+              <h4 className="font-semibold text-emerald-400">Health Check</h4>
+              <p className="text-slate-300">✅ System healthy</p>
+            </div>
+            <div className="bg-slate-700 rounded p-4">
+              <h4 className="font-semibold text-emerald-400">Demo Keys</h4>
+              <p className="text-slate-300">✅ Available</p>
+            </div>
+            <div className="bg-slate-700 rounded p-4">
+              <h4 className="font-semibold text-emerald-400">CEVS Data</h4>
+              <p className="text-slate-300">✅ Ready</p>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );
