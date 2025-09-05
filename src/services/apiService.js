@@ -273,23 +273,26 @@ class APIService {
   }
 
   async submitAPIKeyRequest(formData) {
-    // Use the correct backend endpoint for API key requests
-    return this.post('/user/api-keys', {
-      name: formData.name || 'Free API Key',
-      environment: 'development'
-    });
+    // Use the correct backend endpoint for free API key requests
+    return this.post('/auth/request-free-api-key', formData);
   }
 
   async testAPIKey(apiKey) {
-    return this.get('/api/v1/test', {
+    // Use a working endpoint for testing API keys
+    return this.get('/health', {
       headers: { 'X-API-Key': apiKey },
     });
   }
 
   async requestDemoKey(clientName = "Demo User") {
-    const data = await this.post('/admin/request-demo-key', { client_name: clientName });
-    if (data.status === 'success') {
-        const apiKey = data.data.api_key;
+    // Use the free API key endpoint for demo requests
+    const data = await this.post('/auth/request-free-api-key', {
+      name: clientName,
+      email: 'demo@example.com',
+      purpose: 'Demo testing'
+    });
+    if (data && data.api_key) {
+        const apiKey = data.api_key;
         logger.info('Demo API Key obtained and stored.');
         try {
             localStorage.setItem('envoyou_demo_api_key', apiKey);
@@ -298,7 +301,7 @@ class APIService {
         }
         return apiKey;
     } else {
-        throw new Error(data.message || 'Failed to get demo API key');
+        throw new Error(data?.message || 'Failed to get demo API key');
     }
   }
 
