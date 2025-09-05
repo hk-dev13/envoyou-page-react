@@ -71,8 +71,6 @@ const RegisterPage = () => {
       errors.password = 'Password is required';
     } else if (formData.password.length < 8) {
       errors.password = 'Password must be at least 8 characters long';
-    } else if (!/(?=.*[a-z])(?=.*[A-Z])(?=.*\d)/.test(formData.password)) {
-      errors.password = 'Password must contain uppercase, lowercase, and number';
     }
 
     if (!formData.confirmPassword) {
@@ -97,11 +95,11 @@ const RegisterPage = () => {
     }
 
     const userData = {
-      first_name: formData.firstName,
-      last_name: formData.lastName,
       email: formData.email,
       password: formData.password,
-      company: formData.company || null
+      name: `${formData.firstName.trim()} ${formData.lastName.trim()}`.trim(),
+      company: formData.company || undefined,
+      job_title: undefined // Optional field, can be added later if needed
     };
 
     const result = await register(userData);
