@@ -186,8 +186,14 @@ class APIService {
     return this.get('/user/api-keys');
   }
 
-  async createApiKey(name) {
-    return this.post('/user/api-keys', { name });
+  async createApiKey(data) {
+    if (typeof data === 'string') {
+      // Backward compatibility: if data is just a string, treat it as name
+      return this.post('/user/api-keys', { name: data });
+    } else {
+      // New format: data is an object with name and environment
+      return this.post('/user/api-keys', data);
+    }
   }
 
   async deleteApiKey(keyId) {
@@ -267,7 +273,11 @@ class APIService {
   }
 
   async submitAPIKeyRequest(formData) {
-    return this.post('/api/v1/request-api-key', formData);
+    // Use the correct backend endpoint for API key requests
+    return this.post('/user/api-keys', {
+      name: formData.name || 'Free API Key',
+      environment: 'development'
+    });
   }
 
   async testAPIKey(apiKey) {
