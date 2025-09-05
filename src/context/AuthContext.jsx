@@ -93,7 +93,12 @@ export const AuthProvider = ({ children }) => {
   const [state, dispatch] = useReducer(authReducer, initialState);
 
   const checkAuthStatus = useCallback(async () => {
-    const token = localStorage.getItem('envoyou_token');
+    let token = null;
+    try {
+        token = localStorage.getItem('envoyou_token');
+    } catch (error) {
+        console.warn('localStorage not available (incognito mode):', error);
+    }
     if (!token) {
       dispatch({ type: AUTH_ACTIONS.SET_LOADING, payload: false });
       return;
@@ -103,7 +108,11 @@ export const AuthProvider = ({ children }) => {
       const userData = await apiService.get('/auth/me');
       if (userData) {
         // Update localStorage with fresh user data
-        localStorage.setItem('envoyou_user', JSON.stringify(userData));
+        try {
+            localStorage.setItem('envoyou_user', JSON.stringify(userData));
+        } catch (error) {
+            console.warn('localStorage not available (incognito mode):', error);
+        }
         dispatch({
           type: AUTH_ACTIONS.LOGIN_SUCCESS,
           payload: { user: userData, token },
@@ -114,8 +123,12 @@ export const AuthProvider = ({ children }) => {
       }
     } catch (error) {
       logger.error('Session restore failed. Token might be invalid or expired.', { error });
-      localStorage.removeItem('envoyou_token');
-      localStorage.removeItem('envoyou_user');
+      try {
+          localStorage.removeItem('envoyou_token');
+          localStorage.removeItem('envoyou_user');
+      } catch (error) {
+          console.warn('localStorage not available (incognito mode):', error);
+      }
       dispatch({ type: AUTH_ACTIONS.LOGOUT });
     } finally {
       dispatch({ type: AUTH_ACTIONS.SET_LOADING, payload: false });

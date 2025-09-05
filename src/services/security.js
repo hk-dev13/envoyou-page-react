@@ -107,14 +107,14 @@ class SecurityService {
     
     Object.defineProperty(Element.prototype, 'innerHTML', {
       set: function(value) {
-        if (typeof value === 'string' && this.isContentSuspicious(value)) {
+        if (typeof value === 'string' && securityService.isContentSuspicious(value)) {
           logger.warn('Suspicious innerHTML content detected', {
             element: this.tagName,
             content: value.substring(0, 100),
             type: 'suspicious_dom',
           });
         }
-        return originalInnerHTML.set.call(this, value);
+        originalInnerHTML.set.call(this, value);
       },
       get: originalInnerHTML.get,
     });
@@ -127,11 +127,11 @@ class SecurityService {
     // Override fetch to monitor requests
     const originalFetch = window.fetch;
     
-    window.fetch = async function(resource, options = {}) {
+    window.fetch = async (resource, options = {}) => {
       const url = typeof resource === 'string' ? resource : resource.url;
       
       // Check for suspicious requests
-      if (this.isURLSuspicious(url)) {
+      if (securityService.isURLSuspicious(url)) {
         logger.warn('Suspicious network request detected', {
           url,
           method: options.method || 'GET',
@@ -139,8 +139,8 @@ class SecurityService {
         });
       }
       
-      return originalFetch.call(this, resource, options);
-    }.bind(this);
+      return originalFetch.call(window, resource, options);
+    };
   }
 
   /**
@@ -164,7 +164,7 @@ class SecurityService {
    */
   isURLSuspicious(url) {
     try {
-      const urlObj = new URL(url, window.location.origin);
+      new URL(url, window.location.origin);
       
       // Check for known malicious patterns
       const suspiciousPatterns = [
@@ -175,7 +175,7 @@ class SecurityService {
       ];
 
       return suspiciousPatterns.some(pattern => pattern.test(url));
-    } catch (error) {
+    } catch {
       // Invalid URL
       return true;
     }

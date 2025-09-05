@@ -84,9 +84,9 @@ export default defineConfig({
         ]
       },
       manifest: {
-        name: 'EnvoyOU - Professional CV Management & API Service',
-        short_name: 'EnvoyOU',
-        description: 'Professional CV data management API service with secure authentication and comprehensive features.',
+        name: 'Envoyou - Global Environmental Data Verification API',
+        short_name: 'Envoyou',
+        description: 'Unified API access to standardized global environmental datasets for ESG businesses, analysts, and investors.',
         theme_color: '#3b82f6',
         background_color: '#ffffff',
         display: 'standalone',

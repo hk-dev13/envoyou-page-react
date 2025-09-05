@@ -11,7 +11,12 @@ class APIService {
   }
 
   getAuthHeaders() {
-    const token = localStorage.getItem('authToken');
+    let token = null;
+    try {
+        token = localStorage.getItem('authToken');
+    } catch (error) {
+        console.warn('localStorage not available (incognito mode):', error);
+    }
     return token ? { 'Authorization': `Bearer ${token}` } : {};
   }
 
@@ -156,7 +161,11 @@ class APIService {
     if (data.status === 'success') {
         const apiKey = data.data.api_key;
         logger.info('Demo API Key obtained and stored.');
-        localStorage.setItem('envoyou_demo_api_key', apiKey);
+        try {
+            localStorage.setItem('envoyou_demo_api_key', apiKey);
+        } catch (error) {
+            console.warn('localStorage not available (incognito mode):', error);
+        }
         return apiKey;
     } else {
         throw new Error(data.message || 'Failed to get demo API key');
@@ -164,11 +173,20 @@ class APIService {
   }
 
   getStoredApiKey() {
-    return localStorage.getItem('envoyou_demo_api_key');
+    try {
+        return localStorage.getItem('envoyou_demo_api_key');
+    } catch (error) {
+        console.warn('localStorage not available (incognito mode):', error);
+        return null;
+    }
   }
 
   clearStoredApiKey() {
-    localStorage.removeItem('envoyou_demo_api_key');
+    try {
+        localStorage.removeItem('envoyou_demo_api_key');
+    } catch (error) {
+        console.warn('localStorage not available (incognito mode):', error);
+    }
     logger.info('Stored Demo API Key cleared.');
   }
 }

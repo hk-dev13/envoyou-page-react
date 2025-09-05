@@ -1,6 +1,7 @@
 import React from 'react';
-import Button from './Button';  
+import Button from './Button';
 
+// eslint-disable-next-line no-unused-vars
 const FeatureButton = ({ icon: Icon, title, subtitle, iconClassName, onClick }) => {
     return (
         <Button

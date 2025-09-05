@@ -237,8 +237,12 @@ class ErrorHandler {
   handleAuthenticationError(errorInfo, recovery) {
     if (recovery.clearSession) {
       // Clear user session
-      localStorage.removeItem('authToken');
-      localStorage.removeItem('user');
+      try {
+          localStorage.removeItem('authToken');
+          localStorage.removeItem('user');
+      } catch (error) {
+          console.warn('localStorage not available (incognito mode):', error);
+      }
       
       logger.info('Session cleared due to authentication error');
     }

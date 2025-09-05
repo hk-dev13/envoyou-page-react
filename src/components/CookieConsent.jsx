@@ -11,7 +11,13 @@ const CookieConsent = () => {
     });
 
     useEffect(() => {
-        const consent = localStorage.getItem('envoyou-cookie-consent');
+        // Check if localStorage is available (not in incognito mode)
+        let consent = null;
+        try {
+            consent = localStorage.getItem('envoyou-cookie-consent');
+        } catch (error) {
+            console.warn('localStorage not available (incognito mode):', error);
+        }
         if (!consent) {
             // Delay showing banner for better UX
             const timer = setTimeout(() => setShowBanner(true), 2000);
@@ -22,7 +28,11 @@ const CookieConsent = () => {
     const acceptAll = () => {
         const allPreferences = { necessary: true, analytics: true, marketing: true };
         setPreferences(allPreferences);
-        localStorage.setItem('envoyou-cookie-consent', JSON.stringify(allPreferences));
+        try {
+            localStorage.setItem('envoyou-cookie-consent', JSON.stringify(allPreferences));
+        } catch (error) {
+            console.warn('localStorage not available (incognito mode):', error);
+        }
         setShowBanner(false);
         // Initialize analytics/marketing cookies here
         initializeCookies(allPreferences);
@@ -31,13 +41,21 @@ const CookieConsent = () => {
     const acceptNecessary = () => {
         const necessaryOnly = { necessary: true, analytics: false, marketing: false };
         setPreferences(necessaryOnly);
-        localStorage.setItem('envoyou-cookie-consent', JSON.stringify(necessaryOnly));
+        try {
+            localStorage.setItem('envoyou-cookie-consent', JSON.stringify(necessaryOnly));
+        } catch (error) {
+            console.warn('localStorage not available (incognito mode):', error);
+        }
         setShowBanner(false);
         initializeCookies(necessaryOnly);
     };
 
     const savePreferences = () => {
-        localStorage.setItem('envoyou-cookie-consent', JSON.stringify(preferences));
+        try {
+            localStorage.setItem('envoyou-cookie-consent', JSON.stringify(preferences));
+        } catch (error) {
+            console.warn('localStorage not available (incognito mode):', error);
+        }
         setShowBanner(false);
         initializeCookies(preferences);
     };

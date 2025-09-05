@@ -59,6 +59,7 @@ function APIKeysSettingsPage() {
             setShowCreateForm(false);
             setTimeout(() => setMessage(''), 5000);
         } catch (error) {
+            console.error('Failed to create API key:', error);
             setMessage('Failed to create API key. Please try again.');
             setTimeout(() => setMessage(''), 3000);
         } finally {
@@ -79,6 +80,7 @@ function APIKeysSettingsPage() {
                 setMessage('API key deleted successfully.');
                 setTimeout(() => setMessage(''), 3000);
             } catch (error) {
+                console.error('Failed to delete API key:', error);
                 setMessage('Failed to delete API key. Please try again.');
                 setTimeout(() => setMessage(''), 3000);
             }

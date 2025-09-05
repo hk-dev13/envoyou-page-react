@@ -40,6 +40,7 @@ function ProfileSettingsPage() {
             setIsEditing(false);
             setTimeout(() => setMessage(''), 3000);
         } catch (error) {
+            console.error('Failed to update profile:', error);
             setMessage('Failed to update profile. Please try again.');
             setTimeout(() => setMessage(''), 3000);
         } finally {

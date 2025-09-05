@@ -1,7 +1,7 @@
-import React, { useState, useEffect, createContext, useContext } from 'react';
+import { createContext, useContext, useState, useEffect } from 'react';
 
 /**
- * Toast Notification System
+ * Context for managing toast notifications
  * Provides smooth toast notifications with animations
  */
 

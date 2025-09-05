@@ -8,6 +8,10 @@ import { CheckCircle, Shield, TrendingUp, Users, Code, Database } from 'lucide-r
 const HomePage = () => {
     const navigate = useNavigate();
 
+    console.log('🏠 HomePage component is rendering');
+    console.log('Current URL:', window.location.href);
+    console.log('User agent:', navigator.userAgent);
+
     const handleGetStarted = () => {
         navigate('/pricing');
     };

@@ -45,6 +45,7 @@ function SecuritySettingsPage() {
             setConfirmPassword('');
             setTimeout(() => setMessage(''), 3000);
         } catch (error) {
+            console.error('Failed to change password:', error);
             setMessage('Failed to change password. Please check your current password.');
             setTimeout(() => setMessage(''), 3000);
         } finally {
@@ -62,6 +63,7 @@ function SecuritySettingsPage() {
                 await new Promise(resolve => setTimeout(resolve, 500));
                 logout();
             } catch (error) {
+                console.error('Failed to logout from all devices:', error);
                 setMessage('Failed to logout from all devices. Please try again.');
                 setTimeout(() => setMessage(''), 3000);
             }
@@ -79,6 +81,7 @@ function SecuritySettingsPage() {
             setMessage(`Two-factor authentication ${!twoFactorEnabled ? 'enabled' : 'disabled'} successfully!`);
             setTimeout(() => setMessage(''), 3000);
         } catch (error) {
+            console.error('Failed to update two-factor authentication:', error);
             setMessage('Failed to update two-factor authentication settings.');
             setTimeout(() => setMessage(''), 3000);
         }

@@ -68,7 +68,11 @@ const InstallPrompt = () => {
     const handleDismiss = () => {
         setShowPrompt(false);
         // Store dismissal in localStorage to not show again for a while
-        localStorage.setItem('pwa-install-dismissed', Date.now().toString());
+        try {
+            localStorage.setItem('pwa-install-dismissed', Date.now().toString());
+        } catch (error) {
+            console.warn('localStorage not available (incognito mode):', error);
+        }
     };
 
     // Don't show if already installed or dismissed recently

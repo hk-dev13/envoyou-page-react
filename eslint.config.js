@@ -5,7 +5,7 @@ import reactRefresh from 'eslint-plugin-react-refresh'
 import { defineConfig, globalIgnores } from 'eslint/config'
 
 export default defineConfig([
-  globalIgnores(['dist']),
+  globalIgnores(['dist/**', 'dev-dist/**', 'node_modules/**', 'build/**', '.netlify/**', 'public/sw.js', 'public/workbox-*.js']),
   {
     files: ['**/*.{js,jsx}'],
     extends: [
@@ -23,7 +23,12 @@ export default defineConfig([
       },
     },
     rules: {
-      'no-unused-vars': ['error', { varsIgnorePattern: '^[A-Z_]' }],
+      'no-unused-vars': ['error', { 
+        varsIgnorePattern: '^[A-Z_]',
+        argsIgnorePattern: '^_',
+        caughtErrors: 'none'
+      }],
+      'react-refresh/only-export-components': 'off',
     },
   },
   // Configuration for Node.js files (config files, build scripts)
@@ -67,6 +72,24 @@ export default defineConfig([
     },
     rules: {
       'no-unused-vars': ['error', { varsIgnorePattern: '^[A-Z_]' }],
+    },
+  },
+  // Configuration for service worker files
+  {
+    files: ['**/*.sw.js', '**/sw.js', '**/workbox-*.js'],
+    languageOptions: {
+      ecmaVersion: 2020,
+      globals: {
+        ...globals.serviceworker,
+        importScripts: 'readonly',
+        workbox: 'readonly',
+        define: 'readonly',
+        registration: 'readonly',
+      },
+    },
+    rules: {
+      'no-unused-vars': ['error', { varsIgnorePattern: '^[A-Z_]' }],
+      'no-undef': 'off', // Allow service worker globals
     },
   },
 ])

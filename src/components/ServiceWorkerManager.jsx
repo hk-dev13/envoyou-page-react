@@ -64,12 +64,13 @@ const ServiceWorkerManager = () => {
                   console.log('Service Worker registered:', reg);
               })
               .catch((error) => {
-                  console.error('Service Worker registration failed:', error);
+                  console.warn('Service Worker registration failed (possibly incognito mode):', error);
+                  // Don't throw error, just log it - app should still work
               });
         } else {
             console.warn("Service Worker not supported in this browser.");
         }
-    }, []);
+    }, [isPWAInstalled]);
 
     const handleUpdate = () => {
         if (registration?.waiting) {
