@@ -2,11 +2,15 @@ import { API_CONFIG, EXTERNAL_SERVICES } from '../config';
 import logger from './logger';
 import { handleError } from './errorHandler';
 
-// Import Sentry conditionally
+// Import Sentry conditionally for ESM compatibility
 let Sentry = null;
 if (EXTERNAL_SERVICES.sentry.enabled && EXTERNAL_SERVICES.sentry.dsn) {
   try {
-    Sentry = require('@sentry/react');
+    // For browser environment, we'll use a different approach
+    // Sentry will be available globally if loaded
+    if (typeof window !== 'undefined' && window.Sentry) {
+      Sentry = window.Sentry;
+    }
   } catch (e) {
     console.warn('Sentry not available:', e);
   }

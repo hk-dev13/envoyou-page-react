@@ -52,7 +52,7 @@ export const EXTERNAL_SERVICES = {
     googleAnalyticsId: import.meta.env.VITE_GOOGLE_ANALYTICS_ID,
   },
   sentry: {
-    enabled: !APP_CONFIG.isDevelopment,
+    enabled: true, // Enable Sentry if DSN is available, regardless of environment
     dsn: import.meta.env.VITE_SENTRY_DSN,
   },
 };
