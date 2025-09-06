@@ -72,12 +72,12 @@ function SettingsLayout({ children }) {
                                 <div className="flex items-center space-x-3 mb-6 pb-6 border-b border-slate-800">
                                     <div className="w-12 h-12 bg-emerald-600 rounded-full flex items-center justify-center">
                                         <span className="text-white font-medium">
-                                            {user?.first_name?.[0] || user?.email?.[0] || 'U'}
+                                            {user?.name?.[0] || user?.email?.[0] || 'U'}
                                         </span>
                                     </div>
                                     <div>
                                         <div className="text-white font-medium">
-                                            {user?.first_name ? `${user.first_name} ${user.last_name}` : user?.email}
+                                            {user?.name || user?.email}
                                         </div>
                                         <div className="text-slate-400 text-sm">
                                             {user?.email}

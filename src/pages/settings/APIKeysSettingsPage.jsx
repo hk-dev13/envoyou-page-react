@@ -11,6 +11,12 @@ function APIKeysSettingsPage() {
     const [message, setMessage] = useState('');
     const [showCreateForm, setShowCreateForm] = useState(false);
 
+    // Helper function to calculate usage percentage
+    const getUsagePercentage = (usage, limit) => {
+        if (!limit || limit === 0) return 0;
+        return Math.min((usage / limit) * 100, 100);
+    };
+
     // Load API keys on component mount
     useEffect(() => {
         loadApiKeys();

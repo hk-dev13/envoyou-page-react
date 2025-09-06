@@ -31,9 +31,6 @@ AOS.init({
 logger.info('AOS animation library initialized.');
 
 // --- PWA Service Worker Registration ---
-// Temporarily disabled for debugging
-console.log('ServiceWorker registration temporarily disabled');
-/*
 if ('serviceWorker' in navigator && (APP_CONFIG.isProduction || APP_CONFIG.isDevelopment)) {
   window.addEventListener('load', () => {
     navigator.serviceWorker.register('/sw.js')
@@ -46,7 +43,6 @@ if ('serviceWorker' in navigator && (APP_CONFIG.isProduction || APP_CONFIG.isDev
       });
   });
 }
-*/
 
 // --- React App Rendering ---
 const rootElement = document.getElementById('root');

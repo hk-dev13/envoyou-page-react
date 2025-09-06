@@ -132,7 +132,7 @@ function ProfileSettingsPage() {
                         <div className="flex items-center space-x-4">
                             <div className="w-20 h-20 bg-emerald-600 rounded-full flex items-center justify-center">
                                 <span className="text-white text-2xl font-medium">
-                                    {formData.first_name?.[0] || formData.email?.[0] || 'U'}
+                                    {formData.name?.[0] || formData.email?.[0] || 'U'}
                                 </span>
                             </div>
                             <div>

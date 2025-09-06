@@ -12,7 +12,6 @@ import CookieConsent from './components/CookieConsent';
 import { ToastProvider } from './components/Toast';
 
 // Lazy load pages for better performance
-// Temporarily disable lazy loading for debugging
 import HomePage from './pages/HomePage';
 const DocumentationPage = lazy(() => import('./pages/DocumentationPage'));
 const AboutPage = lazy(() => import('./pages/AboutPage'));
@@ -46,11 +45,11 @@ const PageLoader = () => (
 function App() {
   console.log('🚀 EnvoyOU - Full App with Auth & Error Boundary');
   
-  // Add global error handler for debugging
+  // Global error handler
   useEffect(() => {
     const handleError = (event) => {
       console.error('Global error caught:', event.error);
-      // Display error on page for debugging
+      // Display error on page
       const errorDiv = document.createElement('div');
       errorDiv.style.cssText = `
         position: fixed;
@@ -123,8 +122,7 @@ function App() {
   }, []);
   
   return (
-    // Temporarily disabled ErrorBoundary for debugging
-    // <ErrorBoundary>
+    <ErrorBoundary>
       <ToastProvider>
         <AuthProvider>
           <Router>
@@ -175,7 +173,7 @@ function App() {
           </Router>
         </AuthProvider>
       </ToastProvider>
-    // </ErrorBoundary>
+    </ErrorBoundary>
   );
 }
 
