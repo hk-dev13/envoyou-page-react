@@ -30,6 +30,9 @@ const TermsOfServicePage = lazy(() => import('./pages/legal/TermsOfServicePage')
 const PrivacyPolicyPage = lazy(() => import('./pages/legal/PrivacyPolicyPage'));
 const TestPage = lazy(() => import('./pages/TestPage'));
 
+// Import ProtectedRoute
+import ProtectedRoute from './components/auth/ProtectedRoute';
+
 // Loading component for Suspense fallback
 const PageLoader = () => (
   <div className="min-h-screen flex items-center justify-center bg-slate-900">
@@ -136,18 +139,28 @@ function App() {
                     <Route path="/pricing" element={<PricingPage />} />
                     <Route path="/contact" element={<ContactPage />} />
                     <Route path="/free-api-key" element={<FreeAPIKeyPage />} />
-                    <Route path="/auth/login" element={<LoginPage />} />
-                    <Route path="/auth/register" element={<RegisterPage />} />
-                    <Route path="/dashboard" element={<Dashboard />} />
-                    <Route path="/dashboard/api-keys" element={<APIKeysSettingsPage />} />
-                    <Route path="/dashboard/usage" element={<DashboardUsage />} />
-                    <Route path="/dashboard/settings" element={<ProfileSettingsPage />} />
-                    <Route path="/settings" element={<ProfileSettingsPage />} />
-                    <Route path="/settings/api-keys" element={<APIKeysSettingsPage />} />
-                    <Route path="/settings/profile" element={<ProfileSettingsPage />} />
-                    <Route path="/settings/security" element={<SecuritySettingsPage />} />
+                    
+                    {/* Auth routes - redirect if already logged in */}
+                    <Route path="/auth/login" element={<ProtectedRoute requireAuth={false}><LoginPage /></ProtectedRoute>} />
+                    <Route path="/auth/register" element={<ProtectedRoute requireAuth={false}><RegisterPage /></ProtectedRoute>} />
+                    
+                    {/* Protected dashboard routes */}
+                    <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
+                    <Route path="/dashboard/api-keys" element={<ProtectedRoute><APIKeysSettingsPage /></ProtectedRoute>} />
+                    <Route path="/dashboard/usage" element={<ProtectedRoute><DashboardUsage /></ProtectedRoute>} />
+                    <Route path="/dashboard/settings" element={<ProtectedRoute><SecuritySettingsPage /></ProtectedRoute>} />
+                    
+                    {/* Protected settings routes */}
+                    <Route path="/settings" element={<ProtectedRoute><ProfileSettingsPage /></ProtectedRoute>} />
+                    <Route path="/settings/api-keys" element={<ProtectedRoute><APIKeysSettingsPage /></ProtectedRoute>} />
+                    <Route path="/settings/profile" element={<ProtectedRoute><ProfileSettingsPage /></ProtectedRoute>} />
+                    <Route path="/settings/security" element={<ProtectedRoute><SecuritySettingsPage /></ProtectedRoute>} />
+                    
+                    {/* Legal pages */}
                     <Route path="/legal/terms" element={<TermsOfServicePage />} />
                     <Route path="/legal/privacy" element={<PrivacyPolicyPage />} />
+                    
+                    {/* Test page */}
                     <Route path="/test" element={<TestPage />} />
                   </Routes>
                 </Suspense>

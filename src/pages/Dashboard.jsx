@@ -49,11 +49,11 @@ const Dashboard = () => {
                 <button className="flex items-center space-x-3 text-sm rounded-full focus:outline-none focus:ring-2 focus:ring-emerald-500">
                   <div className="w-8 h-8 bg-emerald-600 rounded-full flex items-center justify-center">
                     <span className="text-white font-medium">
-                      {user?.first_name?.[0] || user?.email?.[0] || 'U'}
+                      {user?.name?.[0] || user?.email?.[0] || 'U'}
                     </span>
                   </div>
                   <span className="text-white font-medium hidden md:block">
-                    {user?.first_name} {user?.last_name}
+                    {user?.name}
                   </span>
                 </button>
               </div>
@@ -77,7 +77,7 @@ const Dashboard = () => {
         {/* Welcome section */}
         <div className="mb-8">
           <h1 className="text-2xl font-bold text-white">
-            Welcome back, {user?.first_name}!
+            Welcome back, {user?.name}!
           </h1>
           <p className="mt-1 text-sm text-slate-400">
             Here's what's happening with your API usage today.

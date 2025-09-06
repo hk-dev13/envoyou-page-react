@@ -82,16 +82,6 @@ function APIKeysSettingsPage() {
         });
     };
 
-    const getUsagePercentage = (usage, limit) => {
-        return Math.min((usage / limit) * 100, 100);
-    };
-
-    const getUsageColor = (percentage) => {
-        if (percentage >= 90) return 'bg-red-500';
-        if (percentage >= 70) return 'bg-yellow-500';
-        return 'bg-emerald-500';
-    };
-
     return (
         <SettingsLayout>
             <div className="space-y-8">
@@ -258,17 +248,15 @@ function APIKeysSettingsPage() {
                                             <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
                                                 <div>
                                                     <span className="text-slate-400">Created:</span>
-                                                    <span className="text-white ml-2">{apiKey.created}</span>
+                                                    <span className="text-white ml-2">{new Date(apiKey.created_at).toLocaleDateString()}</span>
                                                 </div>
                                                 <div>
                                                     <span className="text-slate-400">Last Used:</span>
-                                                    <span className="text-white ml-2">{apiKey.lastUsed}</span>
+                                                    <span className="text-white ml-2">{apiKey.last_used ? new Date(apiKey.last_used).toLocaleDateString() : 'Never'}</span>
                                                 </div>
                                                 <div>
-                                                    <span className="text-slate-400">Environment:</span>
-                                                    <span className="text-white ml-2 capitalize">
-                                                        {apiKey.key.includes('_dev_') ? 'Development' : 'Production'}
-                                                    </span>
+                                                    <span className="text-slate-400">Usage Count:</span>
+                                                    <span className="text-white ml-2">{apiKey.usage_count}</span>
                                                 </div>
                                             </div>
                                         </div>
@@ -287,16 +275,10 @@ function APIKeysSettingsPage() {
                                     {/* Usage Bar */}
                                     <div>
                                         <div className="flex items-center justify-between text-sm mb-2">
-                                            <span className="text-slate-400">Usage this month</span>
+                                            <span className="text-slate-400">Usage</span>
                                             <span className="text-white">
-                                                {apiKey.usage.toLocaleString()} / {apiKey.limit.toLocaleString()} requests
+                                                {apiKey.usage_count} requests
                                             </span>
-                                        </div>
-                                        <div className="w-full bg-slate-700 rounded-full h-2">
-                                            <div
-                                                className={`h-2 rounded-full transition-all duration-300 ${getUsageColor(usagePercentage)}`}
-                                                style={{ width: `${usagePercentage}%` }}
-                                            />
                                         </div>
                                         <div className="text-right text-xs text-slate-500 mt-1">
                                             {usagePercentage.toFixed(1)}% used

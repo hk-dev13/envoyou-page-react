@@ -28,8 +28,8 @@ const CevsLookupSection = () => {
             );
             
             if (data && (Array.isArray(data) ? data.length > 0 : data.status === 'success')) {
-                // Handle both array and object responses
-                const resultsData = Array.isArray(data) ? data : [data.data || data];
+                // Handle backend CEVS response schema
+                const resultsData = Array.isArray(data) ? data : [data];
                 setResults(resultsData);
             } else {
                 setError(`No CEVS data found for "${searchQuery}". Please try a different company name.`);
@@ -128,13 +128,13 @@ const CevsLookupSection = () => {
                                             <h5 className="text-lg font-semibold text-white">
                                                 {result.company || result.country || 'Unknown Entity'}
                                             </h5>
-                                            {result.cevs_score && (
+                                            {result.score && (
                                                 <span className={`px-3 py-1 rounded-full text-sm font-semibold ${
-                                                    result.cevs_score >= 80 ? 'bg-emerald-500/20 text-emerald-400' :
-                                                    result.cevs_score >= 60 ? 'bg-yellow-500/20 text-yellow-400' :
+                                                    result.score >= 80 ? 'bg-emerald-500/20 text-emerald-400' :
+                                                    result.score >= 60 ? 'bg-yellow-500/20 text-yellow-400' :
                                                     'bg-red-500/20 text-red-400'
                                                 }`}>
-                                                    CEVS: {result.cevs_score}
+                                                    CEVS: {result.score}
                                                 </span>
                                             )}
                                         </div>
@@ -145,19 +145,19 @@ const CevsLookupSection = () => {
                                                     <span className="text-slate-400">Country:</span> {result.country}
                                                 </div>
                                             )}
-                                            {result.industry && (
+                                            {result.sources && result.sources.iso_count && (
                                                 <div>
-                                                    <span className="text-slate-400">Industry:</span> {result.industry}
+                                                    <span className="text-slate-400">ISO Certifications:</span> {result.sources.iso_count}
                                                 </div>
                                             )}
-                                            {result.emissions && (
+                                            {result.sources && result.sources.epa_matches && (
                                                 <div>
-                                                    <span className="text-slate-400">Emissions:</span> {result.emissions} CO₂e
+                                                    <span className="text-slate-400">EPA Matches:</span> {result.sources.epa_matches}
                                                 </div>
                                             )}
-                                            {result.verification_date && (
+                                            {result.retrieved_at && (
                                                 <div>
-                                                    <span className="text-slate-400">Verified:</span> {new Date(result.verification_date).toLocaleDateString()}
+                                                    <span className="text-slate-400">Last Updated:</span> {new Date(result.retrieved_at).toLocaleDateString()}
                                                 </div>
                                             )}
                                         </div>

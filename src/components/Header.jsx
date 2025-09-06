@@ -92,11 +92,11 @@ const Header = () => {
             >
                 <div className="w-8 h-8 bg-emerald-600 rounded-full flex items-center justify-center">
                     <span className="text-white text-sm font-medium">
-                        {user?.first_name?.[0] || user?.email?.[0] || 'U'}
+                        {user?.name?.[0] || user?.email?.[0] || 'U'}
                     </span>
                 </div>
                 <span className="hidden lg:block">
-                    {user?.first_name ? `${user.first_name} ${user.last_name}` : user?.email}
+                    {user?.name || user?.email}
                 </span>
                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
@@ -308,12 +308,12 @@ const Header = () => {
                                 <div className="flex items-center space-x-3 mb-3">
                                     <div className="w-10 h-10 bg-emerald-600 rounded-full flex items-center justify-center">
                                         <span className="text-white font-medium">
-                                            {user?.first_name?.[0] || user?.email?.[0] || 'U'}
+                                            {user?.name?.[0] || user?.email?.[0] || 'U'}
                                         </span>
                                     </div>
                                     <div>
                                         <div className="text-white font-medium">
-                                            {user?.first_name ? `${user.first_name} ${user.last_name}` : user?.email}
+                                            {user?.name || user?.email}
                                         </div>
                                         <div className="text-slate-400 text-sm">
                                             {user?.email}

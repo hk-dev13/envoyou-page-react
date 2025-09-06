@@ -47,11 +47,11 @@ const DashboardUsage = () => {
                 <button className="flex items-center space-x-3 text-sm rounded-full focus:outline-none focus:ring-2 focus:ring-emerald-500">
                   <div className="w-8 h-8 bg-emerald-600 rounded-full flex items-center justify-center">
                     <span className="text-white text-sm font-medium">
-                      {user?.first_name?.[0] || user?.email?.[0] || 'U'}
+                      {user?.name?.[0] || user?.email?.[0] || 'U'}
                     </span>
                   </div>
                   <span className="hidden lg:block text-white">
-                    {user?.first_name ? `${user.first_name} ${user.last_name}` : user?.email}
+                    {user?.name || user?.email}
                   </span>
                 </button>
               </div>

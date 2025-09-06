@@ -10,14 +10,11 @@ function ProfileSettingsPage() {
     const [message, setMessage] = useState('');
     
     const [formData, setFormData] = useState({
-        first_name: '',
-        last_name: '',
+        name: '',
         email: '',
         company: '',
         job_title: '',
-        bio: '',
-        website: '',
-        location: ''
+        timezone: ''
     });
 
     // Load user profile data
@@ -29,14 +26,11 @@ function ProfileSettingsPage() {
         try {
             const profileData = await apiService.getUserProfile();
             setFormData({
-                first_name: profileData.first_name || '',
-                last_name: profileData.last_name || '',
+                name: profileData.name || '',
                 email: profileData.email || '',
                 company: profileData.company || '',
                 job_title: profileData.job_title || '',
-                bio: profileData.bio || '',
-                website: profileData.website || '',
-                location: profileData.location || ''
+                timezone: profileData.timezone || 'UTC'
             });
         } catch (error) {
             console.error('Failed to load profile:', error);
@@ -74,14 +68,11 @@ function ProfileSettingsPage() {
 
     const handleCancel = () => {
         setFormData({
-            first_name: user?.first_name || '',
-            last_name: user?.last_name || '',
+            name: user?.name || '',
             email: user?.email || '',
             company: user?.company || '',
             job_title: user?.job_title || '',
-            bio: user?.bio || '',
-            website: user?.website || '',
-            location: user?.location || ''
+            timezone: user?.timezone || 'UTC'
         });
         setIsEditing(false);
         setMessage('');
@@ -158,35 +149,19 @@ function ProfileSettingsPage() {
                         </div>
                     </div>
 
-                    {/* First Name */}
+                    {/* Full Name */}
                     <div>
                         <label className="block text-sm font-medium text-white mb-2">
-                            First Name
+                            Full Name
                         </label>
                         <input
                             type="text"
-                            name="first_name"
-                            value={formData.first_name}
+                            name="name"
+                            value={formData.name}
                             onChange={handleInputChange}
                             disabled={!isEditing}
                             className="w-full px-3 py-2 bg-slate-800 border border-slate-700 text-white rounded-lg focus:ring-2 focus:ring-emerald-600 focus:border-transparent disabled:opacity-50 disabled:cursor-not-allowed"
-                            placeholder="Enter your first name"
-                        />
-                    </div>
-
-                    {/* Last Name */}
-                    <div>
-                        <label className="block text-sm font-medium text-white mb-2">
-                            Last Name
-                        </label>
-                        <input
-                            type="text"
-                            name="last_name"
-                            value={formData.last_name}
-                            onChange={handleInputChange}
-                            disabled={!isEditing}
-                            className="w-full px-3 py-2 bg-slate-800 border border-slate-700 text-white rounded-lg focus:ring-2 focus:ring-emerald-600 focus:border-transparent disabled:opacity-50 disabled:cursor-not-allowed"
-                            placeholder="Enter your last name"
+                            placeholder="Enter your full name"
                         />
                     </div>
 
@@ -238,52 +213,29 @@ function ProfileSettingsPage() {
                         />
                     </div>
 
-                    {/* Location */}
+                    {/* Timezone */}
                     <div>
                         <label className="block text-sm font-medium text-white mb-2">
-                            Location
+                            Timezone
                         </label>
-                        <input
-                            type="text"
-                            name="location"
-                            value={formData.location}
+                        <select
+                            name="timezone"
+                            value={formData.timezone}
                             onChange={handleInputChange}
                             disabled={!isEditing}
                             className="w-full px-3 py-2 bg-slate-800 border border-slate-700 text-white rounded-lg focus:ring-2 focus:ring-emerald-600 focus:border-transparent disabled:opacity-50 disabled:cursor-not-allowed"
-                            placeholder="Enter your location"
-                        />
-                    </div>
-
-                    {/* Website */}
-                    <div>
-                        <label className="block text-sm font-medium text-white mb-2">
-                            Website
-                        </label>
-                        <input
-                            type="url"
-                            name="website"
-                            value={formData.website}
-                            onChange={handleInputChange}
-                            disabled={!isEditing}
-                            className="w-full px-3 py-2 bg-slate-800 border border-slate-700 text-white rounded-lg focus:ring-2 focus:ring-emerald-600 focus:border-transparent disabled:opacity-50 disabled:cursor-not-allowed"
-                            placeholder="https://your-website.com"
-                        />
-                    </div>
-
-                    {/* Bio */}
-                    <div className="md:col-span-2">
-                        <label className="block text-sm font-medium text-white mb-2">
-                            Bio
-                        </label>
-                        <textarea
-                            name="bio"
-                            value={formData.bio}
-                            onChange={handleInputChange}
-                            disabled={!isEditing}
-                            rows={4}
-                            className="w-full px-3 py-2 bg-slate-800 border border-slate-700 text-white rounded-lg focus:ring-2 focus:ring-emerald-600 focus:border-transparent disabled:opacity-50 disabled:cursor-not-allowed"
-                            placeholder="Tell us about yourself..."
-                        />
+                        >
+                            <option value="UTC">UTC</option>
+                            <option value="America/New_York">Eastern Time</option>
+                            <option value="America/Chicago">Central Time</option>
+                            <option value="America/Denver">Mountain Time</option>
+                            <option value="America/Los_Angeles">Pacific Time</option>
+                            <option value="Europe/London">London</option>
+                            <option value="Europe/Paris">Paris</option>
+                            <option value="Asia/Tokyo">Tokyo</option>
+                            <option value="Asia/Shanghai">Shanghai</option>
+                            <option value="Australia/Sydney">Sydney</option>
+                        </select>
                     </div>
                 </div>
 
