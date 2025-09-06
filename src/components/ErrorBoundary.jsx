@@ -1,7 +1,17 @@
 import React from 'react';
 import logger from '../services/logger';
-import { APP_CONFIG } from '../config';
+import { APP_CONFIG, EXTERNAL_SERVICES } from '../config';
 import { useToast } from './Toast';
+
+// Import Sentry conditionally
+let Sentry = null;
+if (EXTERNAL_SERVICES.sentry.enabled && EXTERNAL_SERVICES.sentry.dsn) {
+  try {
+    Sentry = require('@sentry/react');
+  } catch (e) {
+    console.warn('Sentry not available:', e);
+  }
+}
 
 class ErrorBoundary extends React.Component {
   constructor(props) {
@@ -39,7 +49,38 @@ class ErrorBoundary extends React.Component {
   }
 
   reportToCrashlytics(error, errorInfo, errorId) {
-    // This would integrate with external crash reporting services
+    // Send to Sentry if available
+    if (Sentry) {
+      Sentry.withScope((scope) => {
+        scope.setTag('error_boundary', 'true');
+        scope.setTag('error_id', errorId);
+        scope.setLevel('error');
+
+        // Add user context if available
+        const user = JSON.parse(localStorage.getItem('envoyou_user_data') || 'null');
+        if (user) {
+          scope.setUser({
+            id: user.id,
+            email: user.email,
+            username: user.name,
+          });
+        }
+
+        // Add component stack as breadcrumb
+        scope.addBreadcrumb({
+          category: 'error',
+          message: 'React Error Boundary triggered',
+          level: 'error',
+          data: {
+            componentStack: errorInfo.componentStack,
+          },
+        });
+
+        Sentry.captureException(error);
+      });
+    }
+
+    // Also log to console for debugging
     console.error('Error reported to crash analytics:', {
       errorId,
       error: error.message,

@@ -21,6 +21,7 @@
     "prepare": "npm run validate"
   },
   "dependencies": {
+    "@sentry/react": "^10.10.0",
     "aos": "^2.3.4",
     "chart.js": "^4.5.0",
     "lucide-react": "^0.542.0",

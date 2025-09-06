@@ -1,6 +1,16 @@
-import { API_CONFIG } from '../config';
+import { API_CONFIG, EXTERNAL_SERVICES } from '../config';
 import logger from './logger';
 import { handleError } from './errorHandler';
+
+// Import Sentry conditionally
+let Sentry = null;
+if (EXTERNAL_SERVICES.sentry.enabled && EXTERNAL_SERVICES.sentry.dsn) {
+  try {
+    Sentry = require('@sentry/react');
+  } catch (e) {
+    console.warn('Sentry not available:', e);
+  }
+}
 
 class APIService {
   constructor() {
@@ -77,6 +87,24 @@ class APIService {
           attempt,
         });
 
+        // Send error to Sentry if available
+        if (Sentry) {
+          Sentry.withScope((scope) => {
+            scope.setTag('operation', 'apiRequest');
+            scope.setTag('method', method);
+            scope.setTag('url', url);
+            scope.setTag('attempt', attempt);
+            scope.setContext('api_error', {
+              status: error.response?.status,
+              message: error.message,
+              duration,
+              retryAttempt: attempt,
+              maxAttempts,
+            });
+            Sentry.captureException(error);
+          });
+        }
+
         if (handledError.shouldRetry && attempt < maxAttempts) {
           logger.info(`Retrying API request`, { method, url, attempt: attempt + 1, delay: handledError.delay });
           await new Promise(resolve => setTimeout(resolve, handledError.delay));
@@ -86,6 +114,23 @@ class APIService {
         throw handledError;
       }
     }
+
+    // Send final error to Sentry if available
+    if (Sentry && lastError) {
+      Sentry.withScope((scope) => {
+        scope.setTag('operation', 'apiRequest');
+        scope.setTag('method', method);
+        scope.setTag('url', url);
+        scope.setTag('final_attempt', 'true');
+        scope.setContext('final_api_error', {
+          message: lastError.message,
+          status: lastError.response?.status,
+          maxAttempts,
+        });
+        Sentry.captureException(lastError);
+      });
+    }
+
     throw lastError;
   }
 
