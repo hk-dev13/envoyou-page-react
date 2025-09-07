@@ -20,6 +20,8 @@ const ContactPage = lazy(() => import('./pages/ContactPage'));
 const FreeAPIKeyPage = lazy(() => import('./pages/FreeAPIKeyPage'));
 const LoginPage = lazy(() => import('./pages/auth/LoginPage'));
 const RegisterPage = lazy(() => import('./pages/auth/RegisterPage'));
+const RegisterSuccessPage = lazy(() => import('./pages/auth/RegisterSuccessPage'));
+const EmailVerificationPage = lazy(() => import('./pages/auth/EmailVerificationPage'));
 const Dashboard = lazy(() => import('./pages/Dashboard'));
 const DashboardUsage = lazy(() => import('./pages/DashboardUsage'));
 const APIKeysSettingsPage = lazy(() => import('./pages/settings/APIKeysSettingsPage'));
@@ -141,6 +143,8 @@ function App() {
                     {/* Auth routes - redirect if already logged in */}
                     <Route path="/auth/login" element={<ProtectedRoute requireAuth={false}><LoginPage /></ProtectedRoute>} />
                     <Route path="/auth/register" element={<ProtectedRoute requireAuth={false}><RegisterPage /></ProtectedRoute>} />
+                    <Route path="/auth/register-success" element={<RegisterSuccessPage />} />
+                    <Route path="/verify/:token" element={<EmailVerificationPage />} />
                     
                     {/* Protected dashboard routes */}
                     <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />

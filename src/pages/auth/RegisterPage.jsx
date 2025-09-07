@@ -105,7 +105,7 @@ const RegisterPage = () => {
     const result = await register(userData);
     
     if (result.success) {
-      navigate('/dashboard');
+      navigate('/auth/register-success');
     }
   };
 

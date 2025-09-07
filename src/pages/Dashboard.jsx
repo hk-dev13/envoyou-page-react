@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
+import EmailVerificationBanner from '../components/EmailVerificationBanner';
 
 const Dashboard = () => {
   const { user, logout } = useAuth();
@@ -83,6 +84,9 @@ const Dashboard = () => {
             Here's what's happening with your API usage today.
           </p>
         </div>
+
+        {/* Email Verification Banner */}
+        <EmailVerificationBanner />
 
         {/* Stats cards */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">

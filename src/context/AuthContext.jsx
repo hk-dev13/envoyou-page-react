@@ -170,19 +170,36 @@ export const AuthProvider = ({ children }) => {
     try {
       const data = await apiService.register(userData);
 
-      if (!data.access_token || !data.user) {
-        throw new Error('Register response is missing token or user data.');
+      // Handle new registration response format
+      if (data.success) {
+        // Create a temporary user object for unverified state
+        const tempUser = {
+          id: 'temp-' + Date.now(), // Temporary ID
+          email: userData.email,
+          name: userData.name,
+          email_verified: false,
+          company: userData.company,
+          job_title: userData.job_title,
+          created_at: new Date().toISOString()
+        };
+
+        // Store temporary session data
+        localStorage.setItem('envoyou_temp_user', JSON.stringify(tempUser));
+        localStorage.setItem('envoyou_registration_pending', 'true');
+
+        dispatch({
+          type: AUTH_ACTIONS.REGISTER_SUCCESS,
+          payload: {
+            token: null, // No token until verified
+            user: tempUser
+          },
+        });
+
+        logger.info(`New user ${userData.email} registered successfully (pending verification).`);
+        return { success: true, email_sent: data.email_sent };
+      } else {
+        throw new Error(data.message || 'Registration failed');
       }
-
-      localStorage.setItem('envoyou_token', data.access_token);
-      localStorage.setItem('envoyou_user', JSON.stringify(data.user));
-
-      dispatch({
-        type: AUTH_ACTIONS.REGISTER_SUCCESS,
-        payload: { token: data.access_token, user: data.user },
-      });
-      logger.info(`New user ${data.user.email} registered and logged in successfully.`);
-      return { success: true };
     } catch (error) {
       logger.error('Registration failed', { error: error.message });
       dispatch({

@@ -189,6 +189,10 @@ class APIService {
     return this.post('/auth/send-verification', { email });
   }
 
+  async verifyEmail(tokenData) {
+    return this.post('/auth/verify-email', tokenData);
+  }
+
   async verifyEmail(token) {
     return this.post('/auth/verify-email', { token });
   }
