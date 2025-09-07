@@ -8,12 +8,13 @@ const EmailVerificationPage = () => {
   const [status, setStatus] = useState('verifying'); // 'verifying', 'success', 'error'
   const [message, setMessage] = useState('');
   const [userEmail, setUserEmail] = useState('');
+  const [isResending, setIsResending] = useState(false);
 
   useEffect(() => {
     const verifyEmail = async () => {
       if (!token) {
         setStatus('error');
-        setMessage('Token verifikasi tidak valid');
+        setMessage('Verification token is invalid');
         return;
       }
 
@@ -23,14 +24,14 @@ const EmailVerificationPage = () => {
 
         if (response.message === 'Email verified successfully') {
           setStatus('success');
-          setMessage('Email berhasil diverifikasi! Anda sekarang dapat login ke akun Anda.');
+          setMessage('Email verified successfully! You can now log in to your account.');
         } else {
-          throw new Error('Verifikasi gagal');
+          throw new Error('Verification failed');
         }
       } catch (error) {
         console.error('Email verification error:', error);
         setStatus('error');
-        setMessage('Link verifikasi tidak valid atau sudah kadaluarsa. Silakan coba lagi atau minta email verifikasi baru.');
+        setMessage('Verification link is invalid or has expired. Please try again or request a new verification email.');
       }
     };
 
@@ -38,8 +39,38 @@ const EmailVerificationPage = () => {
   }, [token]);
 
   const handleResendVerification = async () => {
-    // This would need to be implemented - for now just show a message
-    setMessage('Fitur kirim ulang email verifikasi akan segera hadir.');
+    if (!userEmail && status !== 'error') {
+      setMessage('Please provide your email address to resend verification.');
+      return;
+    }
+
+    setIsResending(true);
+    try {
+      // For error state, we need to get email from user input
+      let emailToUse = userEmail;
+
+      if (status === 'error' && !emailToUse) {
+        // In a real app, you'd show an input field for email
+        // For now, we'll use a placeholder approach
+        setMessage('Please enter your email address first.');
+        setIsResending(false);
+        return;
+      }
+
+      const response = await apiService.sendVerificationEmail({ email: emailToUse });
+
+      if (response.message === 'Verification email sent successfully') {
+        setMessage('Verification email sent successfully! Please check your inbox.');
+        setStatus('success');
+      } else {
+        throw new Error('Failed to send verification email');
+      }
+    } catch (error) {
+      console.error('Resend verification error:', error);
+      setMessage('Failed to send verification email. Please try again later.');
+    } finally {
+      setIsResending(false);
+    }
   };
 
   return (
@@ -69,14 +100,14 @@ const EmailVerificationPage = () => {
         {/* Header */}
         <div>
           <h2 className="text-3xl font-bold text-white mb-2">
-            {status === 'verifying' && 'Memverifikasi Email...'}
-            {status === 'success' && '🎉 Email Berhasil Diverifikasi!'}
-            {status === 'error' && 'Verifikasi Gagal'}
+            {status === 'verifying' && 'Verifying Email...'}
+            {status === 'success' && '🎉 Email Verified Successfully!'}
+            {status === 'error' && 'Verification Failed'}
           </h2>
           <p className="text-slate-400">
-            {status === 'verifying' && 'Mohon tunggu sebentar...'}
-            {status === 'success' && 'Selamat! Akun Anda telah aktif.'}
-            {status === 'error' && 'Terjadi kesalahan dalam verifikasi email.'}
+            {status === 'verifying' && 'Please wait a moment...'}
+            {status === 'success' && 'Congratulations! Your account is now active.'}
+            {status === 'error' && 'There was an error verifying your email.'}
           </p>
         </div>
 
@@ -93,6 +124,19 @@ const EmailVerificationPage = () => {
           </div>
         )}
 
+        {/* Email Input for Resend (only show when needed) */}
+        {status === 'error' && (
+          <div className="space-y-2">
+            <input
+              type="email"
+              placeholder="Enter your email address"
+              value={userEmail}
+              onChange={(e) => setUserEmail(e.target.value)}
+              className="w-full px-4 py-3 bg-slate-800 border border-slate-700 rounded-lg text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent"
+            />
+          </div>
+        )}
+
         {/* Actions */}
         <div className="space-y-4">
           {status === 'success' && (
@@ -100,7 +144,7 @@ const EmailVerificationPage = () => {
               to="/auth/login"
               className="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-medium py-3 px-4 rounded-lg transition-colors inline-block text-center"
             >
-              Login Sekarang
+              Login Now
             </Link>
           )}
 
@@ -108,22 +152,30 @@ const EmailVerificationPage = () => {
             <div className="space-y-3">
               <button
                 onClick={handleResendVerification}
-                className="w-full bg-slate-700 hover:bg-slate-600 text-white font-medium py-3 px-4 rounded-lg transition-colors"
+                disabled={isResending}
+                className="w-full bg-slate-700 hover:bg-slate-600 disabled:bg-slate-600 disabled:cursor-not-allowed text-white font-medium py-3 px-4 rounded-lg transition-colors flex items-center justify-center"
               >
-                Kirim Ulang Email Verifikasi
+                {isResending ? (
+                  <>
+                    <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"></div>
+                    Sending...
+                  </>
+                ) : (
+                  'Resend Verification Email'
+                )}
               </button>
               <Link
                 to="/auth/login"
                 className="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-medium py-3 px-4 rounded-lg transition-colors inline-block text-center"
               >
-                Kembali ke Login
+                Back to Login
               </Link>
             </div>
           )}
 
           {status === 'verifying' && (
             <div className="text-sm text-slate-400">
-              <p>Sedang memproses verifikasi email Anda...</p>
+              <p>Processing your email verification...</p>
             </div>
           )}
         </div>
@@ -131,9 +183,9 @@ const EmailVerificationPage = () => {
         {/* Footer */}
         <div className="text-xs text-slate-500">
           <p>
-            Butuh bantuan?{' '}
+            Need help?{' '}
             <Link to="/contact" className="text-emerald-400 hover:text-emerald-300">
-              Hubungi kami
+              Contact us
             </Link>
           </p>
         </div>

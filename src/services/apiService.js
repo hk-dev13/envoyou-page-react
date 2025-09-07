@@ -193,10 +193,6 @@ class APIService {
     return this.post('/auth/verify-email', tokenData);
   }
 
-  async verifyEmail(token) {
-    return this.post('/auth/verify-email', { token });
-  }
-
   async forgotPassword(email) {
     return this.post('/auth/forgot-password', { email });
   }
