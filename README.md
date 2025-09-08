@@ -409,4 +409,11 @@ Permission is hereby granted, free of charge, to any person obtaining a copy of 
 
 ---
 
-**Built with ❤️ for environmental data transparency and sustainability**
+## Contact
+Maintained by [Husni Kusuma](https://github.com/hk-dev13)  
+🌐 Website: [envoyou.com](https://envoyou.com)  
+📧 More info: [info@envoyou.com](mailto:info@envoyou.com)  
+
+---
+> <p style="text-align: center;">© 2025 <a href="https://envoyou.com">Envoyou</a> | All Rights Reserved</p>
+> <p style="text-align: center;">Empowering Global Environmental Transparency</p>

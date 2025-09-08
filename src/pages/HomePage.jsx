@@ -13,7 +13,7 @@ const HomePage = () => {
     console.log('User agent:', navigator.userAgent);
 
     const handleGetStarted = () => {
-        navigate('/pricing');
+        navigate('/auth/register');
     };
 
     const handleViewDocumentation = () => {
