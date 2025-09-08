@@ -3,6 +3,26 @@
  * Centralized configuration management for EnvoyOU application
  */
 
+// Domain Configuration
+export const DOMAIN_CONFIG = {
+  main: import.meta.env.VITE_MAIN_DOMAIN || 'https://envoyou.com',
+  app: import.meta.env.VITE_APP_DOMAIN || 'https://app.envoyou.com',
+  api: import.meta.env.VITE_API_DOMAIN || 'https://api.envoyou.com',
+  
+  // CORS origins for backend
+  corsOrigins: [
+    import.meta.env.VITE_MAIN_DOMAIN || 'https://envoyou.com',
+    import.meta.env.VITE_APP_DOMAIN || 'https://app.envoyou.com',
+    ...(import.meta.env.VITE_ADDITIONAL_CORS_ORIGINS ? 
+        import.meta.env.VITE_ADDITIONAL_CORS_ORIGINS.split(',') : [])
+  ],
+  
+  // Cookie settings for cross-domain auth
+  cookieDomain: import.meta.env.VITE_COOKIE_DOMAIN || '.envoyou.com',
+  cookieSecure: import.meta.env.VITE_COOKIE_SECURE === 'true' || true,
+  cookieSameSite: import.meta.env.VITE_COOKIE_SAME_SITE || 'lax',
+};
+
 // Application Configuration
 export const APP_CONFIG = {
   name: import.meta.env.VITE_APP_NAME || 'EnvoyOU',
@@ -73,8 +93,8 @@ export const SECURITY_CONFIG = {
 // Contact Information
 export const CONTACT = {
   support: import.meta.env.VITE_SUPPORT_EMAIL || 'support@envoyou.com',
-  contact: import.meta.env.VITE_CONTACT_EMAIL || 'contact@envoyou.com',
-  legal: import.meta.env.VITE_LEGAL_EMAIL || 'legal@envoyou.com',
+  contact: import.meta.env.VITE_CONTACT_EMAIL || 'hello@envoyou.com',
+  legal: import.meta.env.VITE_LEGAL_EMAIL || 'info@envoyou.com',
 };
 
 // Social Media Links
@@ -199,6 +219,7 @@ export default {
   APP_CONFIG,
   API_CONFIG,
   AUTH_CONFIG,
+  DOMAIN_CONFIG,
   FEATURES,
   EXTERNAL_SERVICES,
   CONTACT,
