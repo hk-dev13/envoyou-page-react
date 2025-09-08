@@ -14,7 +14,7 @@ const RegisterSuccessPage = () => {
     }
 
     if (user?.email_verified) {
-      navigate('/dashboard');
+      window.location.href = 'https://app.envoyou.com/dashboard';
       return;
     }
   }, [isAuthenticated, user, navigate]);

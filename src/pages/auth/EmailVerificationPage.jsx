@@ -140,12 +140,12 @@ const EmailVerificationPage = () => {
         {/* Actions */}
         <div className="space-y-4">
           {status === 'success' && (
-            <Link
-              to="/auth/login"
+            <a
+              href="https://app.envoyou.com/auth/login"
               className="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-medium py-3 px-4 rounded-lg transition-colors inline-block text-center"
             >
               Login Now
-            </Link>
+            </a>
           )}
 
           {status === 'error' && (
