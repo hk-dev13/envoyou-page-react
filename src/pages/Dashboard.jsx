@@ -22,14 +22,11 @@ const Dashboard = () => {
           <div className="flex justify-between items-center py-6">
             <div className="flex items-center">
               <Link to="/" className="flex items-center">
-                <div className="w-8 h-8 bg-emerald-500 rounded-lg flex items-center justify-center mr-3">
-                  <svg className="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M12 2L2 7v10c0 5.55 3.84 9.74 9 10.9 5.16-1.16 9-5.35 9-10.9V7l-10-5z"/>
-                    <path d="M12 7L7 9.5v5.25c0 2.78 1.92 4.87 4.5 5.45 2.58-.58 4.5-2.67 4.5-5.45V9.5L12 7z" fillOpacity="0.7"/>
-                    <circle cx="12" cy="12" r="2" fill="white"/>
-                  </svg>
-                </div>
-                <span className="text-xl font-bold text-white">Envoyou</span>
+                <img 
+                  src="/svg/logo-full-nb.svg" 
+                  alt="Envoyou" 
+                  className="h-8 w-auto mr-3"
+                />
               </Link>
               <nav className="hidden md:flex space-x-8 ml-10">
                 <Link to="/dashboard" className="text-emerald-400 font-medium">Dashboard</Link>
