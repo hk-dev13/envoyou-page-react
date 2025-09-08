@@ -1,5 +1,13 @@
 # Netlify redirects for SPA
 /*    /index.html   200
 
+# Redirect auth routes to app subdomain
+/auth/*  https://app.envoyou.com/auth/:splat  301
+/login   https://app.envoyou.com/auth/login  301
+/register  https://app.envoyou.com/auth/register  301
+/dashboard  https://app.envoyou.com/dashboard  301
+/settings  https://app.envoyou.com/settings  301
+/verify/*  https://app.envoyou.com/verify/:splat  301
+
 # API redirects (if needed)
 /api/*  https://your-api-domain.com/:splat  200

@@ -164,17 +164,6 @@ export default defineConfig({
           router: ['react-router-dom'],
           
           // Feature chunks
-          auth: [
-            './src/context/AuthContext.jsx',
-            './src/pages/auth/LoginPage.jsx',
-            './src/pages/auth/RegisterPage.jsx',
-          ],
-          settings: [
-            './src/components/settings/SettingsLayout.jsx',
-            './src/pages/settings/ProfileSettingsPage.jsx',
-            './src/pages/settings/SecuritySettingsPage.jsx',
-            './src/pages/settings/APIKeysSettingsPage.jsx',
-          ],
           legal: [
             './src/pages/legal/PrivacyPolicyPage.jsx',
             './src/pages/legal/TermsOfServicePage.jsx',

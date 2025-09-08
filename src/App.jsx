@@ -1,6 +1,5 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import React, { Suspense, lazy, useEffect } from 'react';
-import { AuthProvider } from './context/AuthContext';
 import ErrorBoundary from './components/ErrorBoundary';
 import Header from './components/Header';
 import Footer from './components/Footer';
@@ -18,21 +17,9 @@ const AboutPage = lazy(() => import('./pages/AboutPage'));
 const PricingPage = lazy(() => import('./pages/PricingPage'));
 const ContactPage = lazy(() => import('./pages/ContactPage'));
 const FreeAPIKeyPage = lazy(() => import('./pages/FreeAPIKeyPage'));
-const LoginPage = lazy(() => import('./pages/auth/LoginPage'));
-const RegisterPage = lazy(() => import('./pages/auth/RegisterPage'));
-const RegisterSuccessPage = lazy(() => import('./pages/auth/RegisterSuccessPage'));
-const EmailVerificationPage = lazy(() => import('./pages/auth/EmailVerificationPage'));
-const Dashboard = lazy(() => import('./pages/Dashboard'));
-const DashboardUsage = lazy(() => import('./pages/DashboardUsage'));
-const APIKeysSettingsPage = lazy(() => import('./pages/settings/APIKeysSettingsPage'));
-const ProfileSettingsPage = lazy(() => import('./pages/settings/ProfileSettingsPage'));
-const SecuritySettingsPage = lazy(() => import('./pages/settings/SecuritySettingsPage'));
 const TermsOfServicePage = lazy(() => import('./pages/legal/TermsOfServicePage'));
 const PrivacyPolicyPage = lazy(() => import('./pages/legal/PrivacyPolicyPage'));
 const TestPage = lazy(() => import('./pages/TestPage'));
-
-// Import ProtectedRoute
-import ProtectedRoute from './components/auth/ProtectedRoute';
 
 // Loading component for Suspense fallback
 const PageLoader = () => (
@@ -126,56 +113,36 @@ function App() {
   return (
     <ErrorBoundary>
       <ToastProvider>
-        <AuthProvider>
-          <Router>
-            <div className="min-h-screen flex flex-col bg-slate-900">
-              <Header />
-              <main className="flex-grow">
-                <Suspense fallback={<PageLoader />}>
-                  <Routes>
-                    <Route path="/" element={<HomePage />} />
-                    <Route path="/documentation" element={<DocumentationPage />} />
-                    <Route path="/about" element={<AboutPage />} />
-                    <Route path="/pricing" element={<PricingPage />} />
-                    <Route path="/contact" element={<ContactPage />} />
-                    <Route path="/free-api-key" element={<FreeAPIKeyPage />} />
-                    
-                    {/* Auth routes - redirect if already logged in */}
-                    <Route path="/auth/login" element={<ProtectedRoute requireAuth={false}><LoginPage /></ProtectedRoute>} />
-                    <Route path="/auth/register" element={<ProtectedRoute requireAuth={false}><RegisterPage /></ProtectedRoute>} />
-                    <Route path="/auth/register-success" element={<RegisterSuccessPage />} />
-                    <Route path="/verify/:token" element={<EmailVerificationPage />} />
-                    
-                    {/* Protected dashboard routes */}
-                    <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
-                    <Route path="/dashboard/api-keys" element={<ProtectedRoute><APIKeysSettingsPage /></ProtectedRoute>} />
-                    <Route path="/dashboard/usage" element={<ProtectedRoute><DashboardUsage /></ProtectedRoute>} />
-                    <Route path="/dashboard/settings" element={<ProtectedRoute><SecuritySettingsPage /></ProtectedRoute>} />
-                    
-                    {/* Protected settings routes */}
-                    <Route path="/settings" element={<ProtectedRoute><ProfileSettingsPage /></ProtectedRoute>} />
-                    <Route path="/settings/api-keys" element={<ProtectedRoute><APIKeysSettingsPage /></ProtectedRoute>} />
-                    <Route path="/settings/profile" element={<ProtectedRoute><ProfileSettingsPage /></ProtectedRoute>} />
-                    <Route path="/settings/security" element={<ProtectedRoute><SecuritySettingsPage /></ProtectedRoute>} />
-                    
-                    {/* Legal pages */}
-                    <Route path="/legal/terms" element={<TermsOfServicePage />} />
-                    <Route path="/legal/privacy" element={<PrivacyPolicyPage />} />
-                    
-                    {/* Test page */}
-                    <Route path="/test" element={<TestPage />} />
-                  </Routes>
-                </Suspense>
-              </main>
-              <Footer />
-              <ServiceWorkerManager />
-              <PushNotificationManager />
-              <NetworkStatus />
-              <BackToTop />
-              <CookieConsent />
-            </div>
-          </Router>
-        </AuthProvider>
+        <Router>
+          <div className="min-h-screen flex flex-col bg-slate-900">
+            <Header />
+            <main className="flex-grow">
+              <Suspense fallback={<PageLoader />}>
+                <Routes>
+                  <Route path="/" element={<HomePage />} />
+                  <Route path="/documentation" element={<DocumentationPage />} />
+                  <Route path="/about" element={<AboutPage />} />
+                  <Route path="/pricing" element={<PricingPage />} />
+                  <Route path="/contact" element={<ContactPage />} />
+                  <Route path="/free-api-key" element={<FreeAPIKeyPage />} />
+                  
+                  {/* Legal pages */}
+                  <Route path="/legal/terms" element={<TermsOfServicePage />} />
+                  <Route path="/legal/privacy" element={<PrivacyPolicyPage />} />
+                  
+                  {/* Test page */}
+                  <Route path="/test" element={<TestPage />} />
+                </Routes>
+              </Suspense>
+            </main>
+            <Footer />
+            <ServiceWorkerManager />
+            <PushNotificationManager />
+            <NetworkStatus />
+            <BackToTop />
+            <CookieConsent />
+          </div>
+        </Router>
       </ToastProvider>
     </ErrorBoundary>
   );

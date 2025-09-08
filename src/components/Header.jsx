@@ -1,13 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { useAuth } from '../context/AuthContext';
 
 const Header = () => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
-    const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
     const location = useLocation();
     const navigate = useNavigate();
-    const { isAuthenticated, user, logout, isLoading } = useAuth();
 
     useEffect(() => {
         // Handle scrolling to sections when navigating with hash
@@ -22,26 +19,10 @@ const Header = () => {
         }
     }, [location]);
 
-    useEffect(() => {
-        const handleClickOutside = (event) => {
-            if (isUserMenuOpen && !event.target.closest('.user-menu')) {
-                setIsUserMenuOpen(false);
-            }
-        };
-        document.addEventListener('mousedown', handleClickOutside);
-        return () => document.removeEventListener('mousedown', handleClickOutside);
-    }, [isUserMenuOpen]);
-
     const handleSectionNavigation = (sectionId) => {
         if (location.pathname !== '/') {
             navigate(`/#${sectionId}`);
         }
-    };
-
-    const handleLogout = async () => {
-        await logout();
-        navigate('/');
-        setIsUserMenuOpen(false);
     };
 
     // Consolidated navigation links
@@ -84,51 +65,6 @@ const Header = () => {
         },
     ];
 
-    const UserMenu = () => (
-        <div className="relative user-menu">
-            <button
-                onClick={() => setIsUserMenuOpen(!isUserMenuOpen)}
-                className="flex items-center space-x-2 text-slate-300 hover:text-white transition-colors"
-            >
-                <div className="w-8 h-8 bg-emerald-600 rounded-full flex items-center justify-center">
-                    <span className="text-white text-sm font-medium">
-                        {user?.name?.[0] || user?.email?.[0] || 'U'}
-                    </span>
-                </div>
-                <span className="hidden lg:block">
-                    {user?.name || user?.email}
-                </span>
-                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                </svg>
-            </button>
-            {isUserMenuOpen && (
-                <div className="absolute right-0 mt-2 w-48 bg-slate-800 rounded-lg shadow-lg border border-slate-700 py-1 z-50">
-                    <Link
-                        to="/dashboard"
-                        className="block px-4 py-2 text-sm text-slate-300 hover:bg-slate-700 hover:text-white transition-colors"
-                        onClick={() => setIsUserMenuOpen(false)}
-                    >
-                        Dashboard
-                    </Link>
-                    <Link
-                        to="/settings"
-                        className="block px-4 py-2 text-sm text-slate-300 hover:bg-slate-700 hover:text-white transition-colors"
-                        onClick={() => setIsUserMenuOpen(false)}
-                    >
-                        Settings
-                    </Link>
-                    <div className="border-t border-slate-700 my-1"></div>
-                    <button
-                        onClick={handleLogout}
-                        className="w-full text-left px-4 py-2 text-sm text-slate-400 hover:bg-slate-700 hover:text-white transition-colors"
-                    >
-                        Sign Out
-                    </button>
-                </div>
-            )}
-        </div>
-    );
     return (
         <header className="sticky top-0 z-50 w-full border-b border-slate-800 glass-nav">
         <div className="container mx-auto px-6 py-4 flex justify-between items-center">
@@ -189,38 +125,30 @@ const Header = () => {
                 </svg>
             </button>
             
-            {isLoading ? (
-                <div className="hidden md:flex items-center space-x-4">
-                    <div className="w-8 h-8 bg-slate-700 rounded-full animate-pulse"></div>
-                    <div className="w-20 h-4 bg-slate-700 rounded animate-pulse"></div>
-                </div>
-            ) : isAuthenticated ? (
-                <UserMenu />
-            ) : (
-                <div className="hidden md:flex items-center space-x-4">
+            {/* Desktop CTA */}
+            <div className="hidden md:flex items-center space-x-4">
+                <a
+                    href="https://app.envoyou.com/auth/login"
+                    className="text-slate-300 hover:text-emerald-400 transition-colors"
+                >
+                    Sign In
+                </a>
+                {location.pathname === '/documentation' ? (
                     <Link
-                        to="/auth/login"
-                        className="text-slate-300 hover:text-emerald-400 transition-colors"
+                        to="/pricing"
+                        className="bg-emerald-500 hover:bg-emerald-600 text-white font-semibold px-5 py-2 rounded-lg transition-colors"
                     >
-                        Sign In
+                        Get API Key
                     </Link>
-                    {location.pathname === '/documentation' ? (
-                        <Link
-                            to="/pricing"
-                            className="bg-emerald-500 hover:bg-emerald-600 text-white font-semibold px-5 py-2 rounded-lg transition-colors"
-                        >
-                            Get API Key
-                        </Link>
-                    ) : (
-                        <Link 
-                            to="/auth/register" 
-                            className="bg-emerald-500 hover:bg-emerald-600 text-white font-semibold px-5 py-2 rounded-lg transition-colors"
-                        >
-                            Get Started
-                        </Link>
-                    )}
-                </div>
-            )}
+                ) : (
+                    <a 
+                        href="https://app.envoyou.com/auth/register" 
+                        className="bg-emerald-500 hover:bg-emerald-600 text-white font-semibold px-5 py-2 rounded-lg transition-colors"
+                    >
+                        Get Started
+                    </a>
+                )}
+            </div>
         </div>
 
         {/* Mobile menu */}
@@ -265,81 +193,33 @@ const Header = () => {
                             </Link>
                         );
                     })}
-                    {isLoading ? (
-                        <div className="flex items-center space-x-3 pt-4 border-t border-slate-700">
-                            <div className="w-10 h-10 bg-slate-700 rounded-full animate-pulse"></div>
-                            <div className="flex-1 space-y-2">
-                                <div className="w-24 h-4 bg-slate-700 rounded animate-pulse"></div>
-                                <div className="w-32 h-3 bg-slate-700 rounded animate-pulse"></div>
-                            </div>
-                        </div>
-                    ) : isAuthenticated ? (
-                        <>
+                    {/* Mobile CTA */}
+                    <div className="border-t border-slate-700 pt-4 mt-4 space-y-4">
+                        <a
+                            href="https://app.envoyou.com/auth/login"
+                            className="text-slate-300 hover:text-emerald-400 transition-colors block"
+                            onClick={() => setIsMenuOpen(false)}
+                        >
+                            Sign In
+                        </a>
+                        {location.pathname === '/documentation' ? (
                             <Link
-                                to="/dashboard"
-                                className="text-slate-300 hover:text-emerald-400 transition-colors"
+                                to="/pricing"
+                                className="bg-emerald-500 hover:bg-emerald-600 text-white font-semibold px-5 py-2 rounded-lg transition-colors text-center block"
                                 onClick={() => setIsMenuOpen(false)}
                             >
-                                Dashboard
+                                Get API Key
                             </Link>
-                            <div className="border-t border-slate-700 pt-4 mt-4">
-                                <div className="flex items-center space-x-3 mb-3">
-                                    <div className="w-10 h-10 bg-emerald-600 rounded-full flex items-center justify-center">
-                                        <span className="text-white font-medium">
-                                            {user?.name?.[0] || user?.email?.[0] || 'U'}
-                                        </span>
-                                    </div>
-                                    <div>
-                                        <div className="text-white font-medium">
-                                            {user?.name || user?.email}
-                                        </div>
-                                        <div className="text-slate-400 text-sm">
-                                            {user?.email}
-                                        </div>
-                                    </div>
-                                </div>
-                                <button
-                                    onClick={() => {
-                                        handleLogout();
-                                        setIsMenuOpen(false);
-                                    }}
-                                    className="w-full text-left text-slate-400 hover:text-white hover:bg-slate-800/50 rounded-lg transition-colors flex items-center space-x-2 px-2 py-2"
-                                >
-                                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
-                                    </svg>
-                                    <span>Sign Out</span>
-                                </button>
-                            </div>
-                        </>
-                    ) : (
-                        <>
-                            <Link
-                                to="/auth/login"
-                                className="text-slate-300 hover:text-emerald-400 transition-colors"
+                        ) : (
+                            <a
+                                href="https://app.envoyou.com/auth/register"
+                                className="bg-emerald-500 hover:bg-emerald-600 text-white font-semibold px-5 py-2 rounded-lg transition-colors text-center block"
                                 onClick={() => setIsMenuOpen(false)}
                             >
-                                Sign In
-                            </Link>
-                            {location.pathname === '/documentation' ? (
-                                <Link
-                                    to="/pricing"
-                                    className="bg-emerald-500 hover:bg-emerald-600 text-white font-semibold px-5 py-2 rounded-lg transition-colors text-center"
-                                    onClick={() => setIsMenuOpen(false)}
-                                >
-                                    Get API Key
-                                </Link>
-                            ) : (
-                                <Link
-                                    to="/auth/register"
-                                    className="bg-emerald-500 hover:bg-emerald-600 text-white font-semibold px-5 py-2 rounded-lg transition-colors text-center"
-                                    onClick={() => setIsMenuOpen(false)}
-                                >
-                                    Get Started
-                                </Link>
-                            )}
-                        </>
-                    )}
+                                Get Started
+                            </a>
+                        )}
+                    </div>
                 </nav>
             </div>
         )}

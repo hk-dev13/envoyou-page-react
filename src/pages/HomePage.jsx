@@ -1,23 +1,20 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
 import Button from '../components/Button';
 import CevsCalculator from '../components/CevsCalculator';
 import InfoCard from '../components/InfoCard';
 import { CheckCircle, Shield, TrendingUp, Users, Code, Database } from 'lucide-react';
 
 const HomePage = () => {
-    const navigate = useNavigate();
-
     console.log('🏠 HomePage component is rendering');
     console.log('Current URL:', window.location.href);
     console.log('User agent:', navigator.userAgent);
 
     const handleGetStarted = () => {
-        navigate('/auth/register');
+        window.location.href = 'https://app.envoyou.com/auth/register';
     };
 
     const handleViewDocumentation = () => {
-        navigate('/documentation');
+        window.location.href = '/documentation';
     };
 
     return (
