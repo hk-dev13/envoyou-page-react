@@ -7,7 +7,7 @@ A modern, high-performance React landing page for the Envoyou environmental data
 ![Vite](https://img.shields.io/badge/Vite-Latest-green.svg)
 ![Tailwind](https://img.shields.io/badge/Tailwind-v4-blue.svg)
 
-## ✨ Features
+## Features
 
 ### 🎯 **Core Features**
 - **Modern React 19** with Vite for lightning-fast development
