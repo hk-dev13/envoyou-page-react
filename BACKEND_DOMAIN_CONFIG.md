@@ -1,17 +1,17 @@
-# Backend Environment Variables untuk Multi-Domain Setup
+# Backend Environment Variables for Multi-Domain Setup
 
 ## Overview
-Dengan adanya subdomain baru (app.envoyou.com), backend perlu dikonfigurasi untuk menangani multiple domains dan CORS yang tepat.
+With the new subdomain (app.envoyou.com), the backend needs to be configured to handle multiple domains and proper CORS.
 
-## Environment Variables yang Perlu Ditambahkan
+## Environment Variables to Add
 
 ### 1. Domain Configuration
 ```bash
-# Frontend domains yang diizinkan
+# Frontend domains that are allowed
 ALLOWED_ORIGINS=https://envoyou.com,https://app.envoyou.com
 CORS_ALLOWED_ORIGINS=https://envoyou.com,https://app.envoyou.com,https://staging.envoyou.com
 
-# Cookie settings untuk cross-domain authentication
+# Cookie settings for cross-domain authentication
 COOKIE_DOMAIN=.envoyou.com
 COOKIE_SECURE=true
 COOKIE_SAME_SITE=lax
@@ -24,7 +24,7 @@ API_DOMAIN=https://api.envoyou.com
 
 ### 2. CORS Configuration
 ```bash
-# CORS settings untuk multiple domains
+# CORS settings for multiple domains
 CORS_ALLOW_CREDENTIALS=true
 CORS_ALLOW_METHODS=GET,POST,PUT,DELETE,OPTIONS
 CORS_ALLOW_HEADERS=Content-Type,Authorization,X-Requested-With,Accept,Origin
@@ -34,13 +34,13 @@ CORS_MAX_AGE=86400
 
 ### 3. Session/Cookie Configuration
 ```bash
-# Session settings untuk cross-domain
+# Session settings for cross-domain
 SESSION_COOKIE_DOMAIN=.envoyou.com
 SESSION_COOKIE_SECURE=true
 SESSION_COOKIE_HTTPONLY=true
 SESSION_COOKIE_SAMESITE=lax
 
-# JWT settings (jika menggunakan JWT)
+# JWT settings (if using JWT)
 JWT_COOKIE_DOMAIN=.envoyou.com
 JWT_COOKIE_SECURE=true
 JWT_COOKIE_SAMESITE=lax
@@ -61,7 +61,7 @@ GOOGLE_REDIRECT_URI=https://app.envoyou.com/auth/google/callback
 GITHUB_REDIRECT_URI=https://app.envoyou.com/auth/github/callback
 ```
 
-## Contoh Konfigurasi Backend (Node.js/Express)
+## Backend Configuration Example (Node.js/Express)
 
 ### CORS Setup
 ```javascript
@@ -111,45 +111,45 @@ const jwtOptions = {
 };
 ```
 
-## Checklist Konfigurasi Backend
+## Backend Configuration Checklist
 
 ### ✅ CORS Configuration
-- [ ] Tambahkan `https://app.envoyou.com` ke allowed origins
-- [ ] Set `credentials: true` untuk cookie support
-- [ ] Konfigurasi preflight OPTIONS requests
+- [ ] Add `https://app.envoyou.com` to allowed origins
+- [ ] Set `credentials: true` for cookie support
+- [ ] Configure preflight OPTIONS requests
 
 ### ✅ Cookie/Session Configuration
-- [ ] Set cookie domain ke `.envoyou.com`
-- [ ] Enable secure cookies di production
-- [ ] Set sameSite ke 'lax' untuk cross-domain
-- [ ] Test cookie sharing antara domains
+- [ ] Set cookie domain to `.envoyou.com`
+- [ ] Enable secure cookies in production
+- [ ] Set sameSite to 'lax' for cross-domain
+- [ ] Test cookie sharing between domains
 
 ### ✅ Authentication Redirects
 - [ ] Update email verification success URL
 - [ ] Update password reset success URL
 - [ ] Update social auth callback URLs
-- [ ] Test semua redirect flows
+- [ ] Test all redirect flows
 
 ### ✅ Database/Session Storage
-- [ ] Pastikan session storage mendukung cross-domain
+- [ ] Ensure session storage supports cross-domain
 - [ ] Test session persistence across domains
 - [ ] Verify user data consistency
 
 ### ✅ Security Headers
-- [ ] Update CSP untuk multiple domains
-- [ ] Configure HSTS untuk semua subdomains
-- [ ] Test security headers di semua domains
+- [ ] Update CSP for multiple domains
+- [ ] Configure HSTS for all subdomains
+- [ ] Test security headers on all domains
 
 ## Testing Checklist
 
 ### 🔍 CORS Testing
 ```bash
-# Test CORS dari app.envoyou.com
+# Test CORS from app.envoyou.com
 curl -H "Origin: https://app.envoyou.com" \
      -H "Access-Control-Request-Method: POST" \
      -X OPTIONS https://api.envoyou.com/api/test
 
-# Test CORS dari envoyou.com
+# Test CORS from envoyou.com
 curl -H "Origin: https://envoyou.com" \
      -H "Access-Control-Request-Method: GET" \
      -X OPTIONS https://api.envoyou.com/api/test
@@ -174,19 +174,19 @@ curl -b cookies.txt https://api.envoyou.com/api/user
 ## Troubleshooting
 
 ### CORS Issues
-- Pastikan semua origins tercantum di `ALLOWED_ORIGINS`
-- Check bahwa `credentials: true` di-set
+- Ensure all origins are listed in `ALLOWED_ORIGINS`
+- Check that `credentials: true` is set
 - Verify preflight OPTIONS handling
 
 ### Cookie Issues
-- Pastikan cookie domain adalah `.envoyou.com`
-- Check `secure` flag (harus true di HTTPS)
+- Ensure cookie domain is `.envoyou.com`
+- Check `secure` flag (must be true on HTTPS)
 - Verify `sameSite` setting
 
 ### Redirect Issues
-- Pastikan semua redirect URLs menggunakan `https://app.envoyou.com`
-- Check bahwa backend mengirim redirect yang benar
-- Test di incognito mode untuk menghindari cache issues
+- Ensure all redirect URLs use `https://app.envoyou.com`
+- Check that backend sends correct redirects
+- Test in incognito mode to avoid cache issues
 
 ## Environment Variables Summary
 
@@ -207,8 +207,8 @@ GITHUB_REDIRECT_URI=https://app.envoyou.com/auth/github/callback
 
 ## Next Steps
 
-1. **Update Backend Configuration**: Tambahkan environment variables di atas
-2. **Test CORS**: Pastikan API dapat diakses dari kedua domains
-3. **Test Cookies**: Verify cookie sharing berfungsi
-4. **Test Redirects**: Pastikan semua auth flows redirect dengan benar
-5. **Update Documentation**: Update API docs dengan informasi domain baru
+1. **Update Backend Configuration**: Add environment variables above
+2. **Test CORS**: Ensure API can be accessed from both domains
+3. **Test Cookies**: Verify cookie sharing works
+4. **Test Redirects**: Ensure all auth flows redirect correctly
+5. **Update Documentation**: Update API docs with new domain information

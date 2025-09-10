@@ -1,38 +1,38 @@
-# Multi-Domain Setup Guide untuk EnvoyOU
+# Multi-Domain Setup Guide for EnvoyOU
 
 ## Overview
-EnvoyOU sekarang menggunakan arsitektur multi-domain dengan:
+EnvoyOU now uses a multi-domain architecture with:
 - **envoyou.com**: Landing page/marketing site
-- **app.envoyou.com**: Aplikasi dashboard dan autentikasi
+- **app.envoyou.com**: Dashboard application and authentication
 - **api.envoyou.com**: Backend API
 
 ## Prerequisites
 
 ### 1. Domain Setup
-Pastikan semua subdomain sudah dikonfigurasi:
+Ensure all subdomains are properly configured:
 ```bash
-# DNS Records yang diperlukan:
+# Required DNS Records:
 envoyou.com      A     YOUR_SERVER_IP
 app.envoyou.com  A     YOUR_SERVER_IP
 api.envoyou.com  A     YOUR_SERVER_IP
 
-# atau jika menggunakan CNAME:
+# or if using CNAME:
 envoyou.com      CNAME your-netlify-app.netlify.app
 app.envoyou.com  CNAME your-netlify-app.netlify.app
 api.envoyou.com  CNAME your-api-server.com
 ```
 
 ### 2. SSL Certificates
-Pastikan semua domain memiliki SSL certificate valid:
+Ensure all domains have valid SSL certificates:
 ```bash
-# Let's Encrypt untuk semua subdomain
+# Let's Encrypt for all subdomains
 certbot certonly --dns-cloudflare -d envoyou.com -d app.envoyou.com -d api.envoyou.com
 ```
 
 ## Frontend Configuration
 
 ### 1. Environment Variables
-Update file `.env` di setiap frontend project:
+Update the `.env` file in each frontend project:
 
 #### Landing Page (envoyou.com)
 ```bash
@@ -72,15 +72,15 @@ npm run deploy
 ## Backend Configuration
 
 ### 1. Environment Variables
-Copy template dan update dengan nilai aktual:
+Copy template and update with actual values:
 
 ```bash
 cp .env.backend.template .env.production
-# Edit .env.production dengan nilai yang benar
+# Edit .env.production with correct values
 ```
 
 ### 2. CORS Configuration
-Pastikan backend mengizinkan requests dari kedua domain:
+Ensure backend allows requests from both domains:
 
 ```javascript
 // Express.js CORS setup
@@ -96,7 +96,7 @@ const corsOptions = {
 ```
 
 ### 3. Cookie Configuration
-Setup cookie untuk cross-domain authentication:
+Setup cookies for cross-domain authentication:
 
 ```javascript
 // Session cookie config
@@ -115,28 +115,28 @@ app.use(session({
 ## Deployment Checklist
 
 ### ✅ Domain & DNS
-- [ ] envoyou.com mengarah ke landing page
-- [ ] app.envoyou.com mengarah ke dashboard app
-- [ ] api.envoyou.com mengarah ke backend API
-- [ ] SSL certificates valid untuk semua domain
+- [ ] envoyou.com points to landing page
+- [ ] app.envoyou.com points to dashboard app
+- [ ] api.envoyou.com points to backend API
+- [ ] SSL certificates valid for all domains
 
 ### ✅ Frontend Configuration
-- [ ] Environment variables di-set dengan benar
-- [ ] Build berhasil tanpa error
-- [ ] Redirects berfungsi dengan benar
+- [ ] Environment variables set correctly
+- [ ] Build succeeds without errors
+- [ ] Redirects work properly
 
 ### ✅ Backend Configuration
-- [ ] CORS mengizinkan kedua domain
-- [ ] Cookie domain di-set ke `.envoyou.com`
-- [ ] Authentication redirects mengarah ke `app.envoyou.com`
-- [ ] Database connection berfungsi
+- [ ] CORS allows both domains
+- [ ] Cookie domain set to `.envoyou.com`
+- [ ] Authentication redirects point to `app.envoyou.com`
+- [ ] Database connection works
 
 ### ✅ Testing
-- [ ] Landing page dapat diakses di envoyou.com
-- [ ] Dashboard dapat diakses di app.envoyou.com
-- [ ] API dapat diakses dari kedua domain
-- [ ] Authentication flow berfungsi end-to-end
-- [ ] Cookie sharing berfungsi antara domain
+- [ ] Landing page accessible at envoyou.com
+- [ ] Dashboard accessible at app.envoyou.com
+- [ ] API accessible from both domains
+- [ ] Authentication flow works end-to-end
+- [ ] Cookie sharing works between domains
 
 ## Troubleshooting
 
