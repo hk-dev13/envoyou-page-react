@@ -99,7 +99,26 @@ function TermsOfServicePage() {
                             </section>
 
                             <section className="mb-8">
-                                <h2 className="text-2xl font-semibold text-white mb-4">6. Subscription and Billing</h2>
+                                <h2 className="text-2xl font-semibold text-white mb-4">6. Refund Policy</h2>
+                                <p className="text-slate-300 leading-relaxed mb-4">
+                                    We offer a 14-day money-back guarantee for all paid subscriptions. If you're not satisfied with our service within the first 14 days of your subscription, we'll provide a full refund.
+                                </p>
+                                <div className="bg-slate-800/50 rounded-lg p-4 mb-4">
+                                    <h3 className="text-lg font-semibold text-emerald-400 mb-2">Refund Eligibility:</h3>
+                                    <ul className="list-disc list-inside text-slate-300 space-y-1 ml-4">
+                                        <li>Request must be made within 14 days of initial purchase</li>
+                                        <li>Account must be in good standing (no violations of terms)</li>
+                                        <li>Refund will be processed within 5-7 business days</li>
+                                        <li>Refunds will be issued to the original payment method</li>
+                                    </ul>
+                                </div>
+                                <p className="text-slate-300 leading-relaxed">
+                                    To request a refund, please contact our support team at <strong className="text-emerald-400">info@envoyou.com</strong> with your account details and reason for the refund request.
+                                </p>
+                            </section>
+
+                            <section className="mb-8">
+                                <h2 className="text-2xl font-semibold text-white mb-4">7. Subscription and Billing</h2>
                                 <p className="text-slate-300 leading-relaxed mb-4">
                                     Our service offers various subscription plans with different usage limits. You agree to:
                                 </p>
@@ -112,7 +131,7 @@ function TermsOfServicePage() {
                             </section>
 
                             <section className="mb-8">
-                                <h2 className="text-2xl font-semibold text-white mb-4">7. Service Availability and Support</h2>
+                                <h2 className="text-2xl font-semibold text-white mb-4">8. Service Availability and Support</h2>
                                 <p className="text-slate-300 leading-relaxed mb-4">
                                     While we strive for 99.9% uptime, we cannot guarantee uninterrupted service. We provide:
                                 </p>
@@ -125,21 +144,21 @@ function TermsOfServicePage() {
                             </section>
 
                             <section className="mb-8">
-                                <h2 className="text-2xl font-semibold text-white mb-4">8. Intellectual Property</h2>
+                                <h2 className="text-2xl font-semibold text-white mb-4">9. Intellectual Property</h2>
                                 <p className="text-slate-300 leading-relaxed mb-4">
                                     All content and technology provided by EnvoyOU, including but not limited to our API, algorithms, and documentation, are protected by intellectual property laws. You retain ownership of your data while granting us necessary rights to provide our service.
                                 </p>
                             </section>
 
                             <section className="mb-8">
-                                <h2 className="text-2xl font-semibold text-white mb-4">9. Limitation of Liability</h2>
+                                <h2 className="text-2xl font-semibold text-white mb-4">10. Limitation of Liability</h2>
                                 <p className="text-slate-300 leading-relaxed mb-4">
                                     EnvoyOU shall not be liable for any indirect, incidental, special, or consequential damages resulting from the use or inability to use our service. Our total liability shall not exceed the amount paid by you for the service in the 12 months preceding the claim.
                                 </p>
                             </section>
 
                             <section className="mb-8">
-                                <h2 className="text-2xl font-semibold text-white mb-4">10. Termination</h2>
+                                <h2 className="text-2xl font-semibold text-white mb-4">11. Termination</h2>
                                 <p className="text-slate-300 leading-relaxed mb-4">
                                     Either party may terminate this agreement at any time. Upon termination:
                                 </p>
@@ -152,14 +171,14 @@ function TermsOfServicePage() {
                             </section>
 
                             <section className="mb-8">
-                                <h2 className="text-2xl font-semibold text-white mb-4">11. Changes to Terms</h2>
+                                <h2 className="text-2xl font-semibold text-white mb-4">12. Changes to Terms</h2>
                                 <p className="text-slate-300 leading-relaxed mb-4">
                                     We reserve the right to modify these terms at any time. We will notify users of significant changes via email or through our service. Continued use of the service after changes constitutes acceptance of the new terms.
                                 </p>
                             </section>
 
                             <section className="mb-0">
-                                <h2 className="text-2xl font-semibold text-white mb-4">12. Contact Information</h2>
+                                <h2 className="text-2xl font-semibold text-white mb-4">13. Contact Information</h2>
                                 <p className="text-slate-300 leading-relaxed mb-4">
                                     If you have any questions about these Terms of Service, please contact us:
                                 </p>
