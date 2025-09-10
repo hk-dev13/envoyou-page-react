@@ -6,13 +6,13 @@ const Footer = () => {
     <footer className="border-t border-slate-800 bg-slate-900/50">
       <div className="container mx-auto px-6 py-12">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8 text-center md:text-left">
-          {/* Bagian Kiri: Logo & Tagline */}
+          {/* Left Section: Logo & Tagline */}
           <div>
             <h3 className="text-lg font-bold text-white">Envoyou</h3>
             <p className="mt-1 text-slate-400">Empowering sustainable decisions with data.</p>
           </div>
 
-          {/* Bagian Navigasi */}
+          {/* Navigation Section */}
           <div className="flex flex-col space-y-2">
             <h4 className="font-semibold text-white mb-2">Navigation</h4>
             <Link to="/documentation" className="text-slate-400 hover:text-white transition-colors">Documentation</Link>
@@ -30,7 +30,7 @@ const Footer = () => {
             <a href="https://github.com/hk-dev13/project-permit-api" target="_blank" rel="noopener noreferrer" className="text-slate-400 hover:text-white transition-colors">Contribute</a>
           </div>
 
-          {/* Bagian Kanan: Media Sosial */}
+          {/* Right Section: Social Media */}
           <div>
             <h4 className="font-semibold text-white mb-2">Follow Us</h4>
             <div className="flex justify-center md:justify-start space-x-4 mt-4">
