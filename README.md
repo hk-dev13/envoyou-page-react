@@ -9,7 +9,7 @@ A modern, high-performance React landing page for the Envoyou environmental data
 
 ## Features
 
-### 🎯 **Core Features**
+### **Core Features**
 - **Modern React 19** with Vite for lightning-fast development
 - **Tailwind CSS v4** for beautiful, responsive design
 - **AOS (Animate On Scroll)** for smooth scroll animations
