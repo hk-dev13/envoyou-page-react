@@ -14,7 +14,7 @@ const HeroSection = () => {
                     Unified access to standardized global environmental datasets for ESG businesses, analysts, and investors. Stop time-consuming manual data collection and start making strategic data-driven decisions with confidence.
                 </p>
                 <div className="mt-10 flex flex-col sm:flex-row justify-center items-center space-y-4 sm:space-y-0 sm:space-x-6">
-                    <Link to="/auth/register" className="bg-emerald-500 hover:bg-emerald-600 text-white font-semibold px-8 py-4 rounded-lg transition-colors text-lg flex items-center space-x-2">
+                    <Link to="/v1/auth/register" className="bg-emerald-500 hover:bg-emerald-600 text-white font-semibold px-8 py-4 rounded-lg transition-colors text-lg flex items-center space-x-2">
                         <span>Get Started</span>
                         <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />

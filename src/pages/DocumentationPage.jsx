@@ -252,7 +252,7 @@ const AuthSection = () => (
                         <div className="text-slate-400 mb-2"># Example request</div>
                         <div className="text-emerald-400 whitespace-nowrap">
                             curl -H "Authorization: Bearer demo_key_basic_2025" \<br />
-                            &nbsp;&nbsp;&nbsp;&nbsp;"https://api.envoyou.com/global/emissions"
+                            &nbsp;&nbsp;&nbsp;&nbsp;"https://api.envoyou.com/v1/global/emissions"
                         </div>
                     </div>
                 </div>
@@ -262,7 +262,7 @@ const AuthSection = () => (
                         <div className="text-slate-400 mb-2"># Alternative method</div>
                         <div className="text-emerald-400 whitespace-nowrap">
                             curl -H "X-API-Key: demo_key_basic_2025" \<br />
-                            &nbsp;&nbsp;&nbsp;&nbsp;"https://api.envoyou.com/global/emissions"
+                            &nbsp;&nbsp;&nbsp;&nbsp;"https://api.envoyou.com/v1/global/emissions"
                         </div>
                     </div>
                 </div>
@@ -321,26 +321,26 @@ const EndpointsSection = () => (
                 />
                 <EndpointCard
                     method="GET"
-                    path="/permits/search"
+                    path="/v1/permits/search"
                     description="Search permits by company name or type"
                     auth="None"
                     params={["nama", "jenis", "status"]}
                 />
                 <EndpointCard
                     method="GET"
-                    path="/permits/active"
+                    path="/v1/permits/active"
                     description="Get only active permits"
                     auth="None"
                 />
                 <EndpointCard
                     method="GET"
-                    path="/permits/company/{company_name}"
+                    path="/v1/permits/company/{company_name}"
                     description="Get permits for specific company"
                     auth="None"
                 />
                 <EndpointCard
                     method="GET"
-                    path="/permits/stats"
+                    path="/v1/permits/stats"
                     description="Get permit statistics"
                     auth="None"
                 />
@@ -354,48 +354,48 @@ const EndpointsSection = () => (
             <div className="space-y-4">
                 <EndpointCard
                     method="GET"
-                    path="/global/cevs/{company_name}"
+                    path="/v1/global/cevs/{company_name}"
                     description="Calculate CEVS for a company (main endpoint)"
                     auth="Required"
                     params={["country"]}
                 />
                 <EndpointCard
                     method="GET"
-                    path="/global/emissions"
+                    path="/v1/global/emissions"
                     description="EPA power plant emissions data"
                     auth="Required"
                     params={["state", "year", "pollutant", "page", "limit"]}
                 />
                 <EndpointCard
                     method="GET"
-                    path="/global/emissions/stats"
+                    path="/v1/global/emissions/stats"
                     description="Emissions statistics"
                     auth="Required"
                 />
                 <EndpointCard
                     method="GET"
-                    path="/global/iso"
+                    path="/v1/global/iso"
                     description="ISO 14001 certifications"
                     auth="Required"
                     params={["country", "limit"]}
                 />
                 <EndpointCard
                     method="GET"
-                    path="/global/eea"
+                    path="/v1/global/eea"
                     description="EEA environmental indicators"
                     auth="Required"
                     params={["country", "indicator", "year", "limit"]}
                 />
                 <EndpointCard
                     method="GET"
-                    path="/global/edgar"
+                    path="/v1/global/edgar"
                     description="EDGAR emissions data"
                     auth="Required"
                     params={["country", "pollutant", "window"]}
                 />
                 <EndpointCard
                     method="GET"
-                    path="/global/campd"
+                    path="/v1/global/campd"
                     description="CAMPD power plant data"
                     auth="Required"
                     params={["facility_id"]}
@@ -482,7 +482,7 @@ const ExamplesSection = () => (
                         <div className="text-slate-400 mb-2"># Get CEVS for a company</div>
                         <div className="text-emerald-400 whitespace-pre-wrap break-all">
                             curl -H "Authorization: Bearer demo_key_premium_2025" \
-                            "https://api.envoyou.com/global/cevs/Green%20Energy%20Co?country=US"
+                            "https://api.envoyou.com/v1/global/cevs/Green%20Energy%20Co?country=US"
                         </div>
                     </div>
                 </div>
@@ -492,7 +492,7 @@ const ExamplesSection = () => (
                     <div className="bg-slate-900 rounded p-4 font-mono text-sm overflow-x-auto">
                         <div className="text-slate-400 mb-2"># Search permits by company name</div>
                         <div className="text-emerald-400 whitespace-pre-wrap break-all">
-                            curl "https://api.envoyou.com/permits/search?nama=PT%20Pertamina"
+                            curl "https://api.envoyou.com/v1/permits/search?nama=PT%20Pertamina"
                         </div>
                     </div>
                 </div>
