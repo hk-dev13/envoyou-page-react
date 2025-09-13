@@ -27,42 +27,12 @@ const Header = () => {
 
     // Consolidated navigation links
     const navigationLinks = [
-        {
-            name: 'Features',
-            href: '#features',
-            to: null,
-            isButton: location.pathname !== '/',
-        },
-        {
-            name: 'Pricing',
-            href: null,
-            to: '/pricing',
-            isButton: false,
-        },
-        {
-            name: 'Documentation',
-            href: null,
-            to: '/documentation',
-            isButton: false,
-        },
-        {
-            name: 'Test API',
-            href: null,
-            to: '/test',
-            isButton: false,
-        },
-        {
-            name: 'About',
-            href: null,
-            to: '/about',
-            isButton: false,
-        },
-        {
-            name: 'Contact',
-            href: null,
-            to: '/contact',
-            isButton: false,
-        },
+        { name: 'Features', href: '#features', to: null, isButton: location.pathname !== '/' },
+        { name: 'Pricing', href: null, to: '/pricing', isButton: false },
+        { name: 'Docs', href: 'https://docs.envoyou.com/', to: null, isButton: false },
+        { name: 'Test API', href: null, to: '/test', isButton: false },
+        { name: 'About', href: null, to: '/about', isButton: false },
+        { name: 'Contact', href: null, to: '/contact', isButton: false },
     ];
 
     return (
