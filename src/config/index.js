@@ -1,6 +1,6 @@
 /**
  * Environment Configuration
- * Centralized configuration management for EnvoyOU application
+ * Centralized configuration management for Envoyou application
  */
 
 // Domain Configuration
@@ -25,7 +25,7 @@ export const DOMAIN_CONFIG = {
 
 // Application Configuration
 export const APP_CONFIG = {
-  name: import.meta.env.VITE_APP_NAME || 'EnvoyOU',
+  name: import.meta.env.VITE_APP_NAME || 'Envoyou',
   version: import.meta.env.VITE_APP_VERSION || '1.0.0',
   description: import.meta.env.VITE_APP_DESCRIPTION || 'Professional CV Enhancement API Service',
   environment: import.meta.env.VITE_APP_ENV || 'development',
@@ -145,7 +145,7 @@ export const ERROR_MESSAGES = {
 // Success Messages
 export const SUCCESS_MESSAGES = {
   loginSuccess: 'Welcome back! Login successful.',
-  registerSuccess: 'Account created successfully! Welcome to EnvoyOU.',
+  registerSuccess: 'Account created successfully! Welcome to Envoyou.',
   profileUpdated: 'Profile updated successfully.',
   passwordChanged: 'Password changed successfully.',
   apiKeyCreated: 'API key created successfully.',

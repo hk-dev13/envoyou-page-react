@@ -32,7 +32,7 @@ const PageLoader = () => (
 );
 
 function App() {
-  console.log('EnvoyOU - Full App with Auth & Error Boundary');
+  console.log('Envoyou - Full App with Auth & Error Boundary');
   
   // Global error handler
   useEffect(() => {

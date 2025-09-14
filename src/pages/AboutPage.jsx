@@ -77,7 +77,7 @@ const AboutPage = () => {
                 <div className="container mx-auto px-4 sm:px-6">
                     <div className="max-w-6xl mx-auto">
                         <div className="text-center mb-16">
-                            <h2 className="text-4xl font-bold mb-6" data-aos="fade-up">Meet the Team Behind EnvoyOU</h2>
+                            <h2 className="text-4xl font-bold mb-6" data-aos="fade-up">Meet the Team Behind Envoyou</h2>
                             <p className="text-xl text-slate-400 max-w-3xl mx-auto" data-aos="fade-up" data-aos-delay="200">
                                 A passionate team of innovators, developers, and environmental experts working together to democratize environmental intelligence
                             </p>
@@ -115,7 +115,7 @@ const AboutPage = () => {
                                     <h3 className="text-xl font-semibold text-white mb-2">Aluna</h3>
                                     <p className="text-emerald-400 font-medium mb-4">Strategic Planning</p>
                                     <p className="text-slate-400 text-sm leading-relaxed">
-                                        Guiding direction, roadmap, and user-centered planning to keep EnvoyOU on track. Expert in product strategy and user experience design.
+                                        Guiding direction, roadmap, and user-centered planning to keep Envoyou on track. Expert in product strategy and user experience design.
                                     </p>
                                     <div className="flex justify-center mt-6">
                                         <div className="w-6 h-6 bg-slate-600 rounded-full flex items-center justify-center">
@@ -136,7 +136,7 @@ const AboutPage = () => {
                                     <h3 className="text-xl font-semibold text-white mb-2">Gemini</h3>
                                     <p className="text-emerald-400 font-medium mb-4">Research & Insights</p>
                                     <p className="text-slate-400 text-sm leading-relaxed">
-                                        Providing data-driven research and innovative ideas to push the boundaries of what EnvoyOU can do. Expert in environmental science and data analysis.
+                                        Providing data-driven research and innovative ideas to push the boundaries of what Envoyou can do. Expert in environmental science and data analysis.
                                     </p>
                                     <div className="flex justify-center mt-6">
                                         <div className="w-6 h-6 bg-slate-600 rounded-full flex items-center justify-center">

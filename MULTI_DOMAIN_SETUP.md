@@ -1,7 +1,7 @@
-# Multi-Domain Setup Guide for EnvoyOU
+# Multi-Domain Setup Guide for Envoyou
 
 ## Overview
-EnvoyOU now uses a multi-domain architecture with:
+Envoyou now uses a multi-domain architecture with:
 - **envoyou.com**: Landing page/marketing site
 - **app.envoyou.com**: Dashboard application and authentication
 - **api.envoyou.com**: Backend API
@@ -269,4 +269,4 @@ aws s3 cp config_backup_$DATE.tar.gz s3://envoyou-backups/config/
 
 **Last Updated**: September 9, 2025
 **Version**: 1.0.0
-**Maintainer**: EnvoyOU Dev Team
+**Maintainer**: Envoyou Dev Team

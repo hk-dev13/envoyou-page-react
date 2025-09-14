@@ -212,7 +212,7 @@ function PrivacyPolicyPage() {
                                     <p className="text-slate-300">
                                         <strong className="text-white">Data Protection Officer:</strong> info@envoyou.com<br />
                                         <strong className="text-white">General Inquiries:</strong> support@envoyou.com<br />
-                                        <strong className="text-white">Address:</strong> EnvoyOU Privacy Team<br />
+                                        <strong className="text-white">Address:</strong> Envoyou Privacy Team<br />
                                         <strong className="text-white">Response Time:</strong> Within 48 hours
                                     </p>
                                 </div>

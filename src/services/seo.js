@@ -8,7 +8,7 @@ import { APP_CONFIG } from '../config';
 class SEOService {
   constructor() {
     this.defaultMeta = {
-      title: 'EnvoyOU - Professional CV Management & API Service',
+      title: 'Envoyou - Professional CV Management & API Service',
       description: 'Professional CV data management API service with secure authentication, comprehensive documentation, and enterprise-grade reliability.',
       keywords: 'CV API, Resume API, Professional data, JSON API, Developer tools, Authentication',
       ogType: 'website',
@@ -39,7 +39,7 @@ class SEOService {
     this.setMetaTag('og:type', finalMeta.ogType, 'property');
     this.setMetaTag('og:url', finalMeta.canonicalUrl, 'property');
     this.setMetaTag('og:image', this.getFullImageUrl(finalMeta.ogImage), 'property');
-    this.setMetaTag('og:site_name', 'EnvoyOU', 'property');
+    this.setMetaTag('og:site_name', 'Envoyou', 'property');
     
     // Twitter Card tags
     this.setMetaTag('twitter:card', finalMeta.twitterCard);
@@ -143,7 +143,7 @@ class SEOService {
     return {
       '@context': 'https://schema.org',
       '@type': 'Organization',
-      name: 'EnvoyOU',
+      name: 'Envoyou',
       url: APP_CONFIG.siteURL,
       logo: `${APP_CONFIG.siteURL}/favicon_io_envoyou/android-chrome-512x512.png`,
       description: this.defaultMeta.description,
@@ -165,7 +165,7 @@ class SEOService {
     return {
       '@context': 'https://schema.org',
       '@type': 'WebSite',
-      name: 'EnvoyOU',
+      name: 'Envoyou',
       url: APP_CONFIG.siteURL,
       description: this.defaultMeta.description,
       potentialAction: {
@@ -183,7 +183,7 @@ class SEOService {
     return {
       '@context': 'https://schema.org',
       '@type': 'SoftwareApplication',
-      name: 'EnvoyOU API',
+      name: 'Envoyou API',
       description: 'Professional CV data management API service',
       url: APP_CONFIG.siteURL,
       applicationCategory: 'DeveloperApplication',
@@ -211,7 +211,7 @@ class SEOService {
   setPageSEO(pageType, data = {}) {
     const pageConfigs = {
       home: {
-        title: 'EnvoyOU - Professional CV Management & API Service',
+        title: 'Envoyou - Professional CV Management & API Service',
         description: 'Professional CV data management API service with secure authentication, comprehensive documentation, and enterprise-grade reliability.',
         keywords: 'CV API, Resume API, Professional data, JSON API, Developer tools, Authentication',
         canonicalUrl: APP_CONFIG.siteURL,
@@ -223,47 +223,47 @@ class SEOService {
       },
       
       about: {
-        title: 'About EnvoyOU - Professional CV API Service',
-        description: 'Learn about EnvoyOU\'s mission to provide professional CV data management through secure, reliable API services for developers and businesses.',
+        title: 'About Envoyou - Professional CV API Service',
+        description: 'Learn about Envoyou\'s mission to provide professional CV data management through secure, reliable API services for developers and businesses.',
         canonicalUrl: `${APP_CONFIG.siteURL}/about`,
       },
       
       pricing: {
-        title: 'EnvoyOU Pricing - CV API Plans & Features',
+        title: 'Envoyou Pricing - CV API Plans & Features',
         description: 'Choose the perfect plan for your CV API needs. Free tier available with premium plans for advanced features and higher usage limits.',
         keywords: 'CV API pricing, Resume API cost, Developer API plans, API subscription',
         canonicalUrl: `${APP_CONFIG.siteURL}/pricing`,
       },
       
       documentation: {
-        title: 'EnvoyOU API Documentation - Developer Guide',
-        description: 'Complete API documentation for EnvoyOU CV management service. Learn how to integrate, authenticate, and use our professional CV API.',
+        title: 'Envoyou API Documentation - Developer Guide',
+        description: 'Complete API documentation for Envoyou CV management service. Learn how to integrate, authenticate, and use our professional CV API.',
         keywords: 'API documentation, CV API guide, REST API docs, Developer documentation',
         canonicalUrl: `${APP_CONFIG.siteURL}/documentation`,
       },
       
       contact: {
-        title: 'Contact EnvoyOU - Get Support & Information',
-        description: 'Get in touch with EnvoyOU team for support, questions, or business inquiries about our CV API service.',
+        title: 'Contact Envoyou - Get Support & Information',
+        description: 'Get in touch with Envoyou team for support, questions, or business inquiries about our CV API service.',
         canonicalUrl: `${APP_CONFIG.siteURL}/contact`,
       },
       
       login: {
-        title: 'Login to EnvoyOU - Access Your CV API Dashboard',
-        description: 'Sign in to your EnvoyOU account to manage your CV API usage, view analytics, and access your dashboard.',
+        title: 'Login to Envoyou - Access Your CV API Dashboard',
+        description: 'Sign in to your Envoyou account to manage your CV API usage, view analytics, and access your dashboard.',
         robots: 'noindex, nofollow',
         canonicalUrl: `${APP_CONFIG.siteURL}/login`,
       },
       
       register: {
-        title: 'Register for EnvoyOU - Create Your CV API Account',
-        description: 'Create your free EnvoyOU account to start using our professional CV API service with secure authentication and comprehensive features.',
+        title: 'Register for Envoyou - Create Your CV API Account',
+        description: 'Create your free Envoyou account to start using our professional CV API service with secure authentication and comprehensive features.',
         canonicalUrl: `${APP_CONFIG.siteURL}/register`,
       },
       
       dashboard: {
-        title: 'EnvoyOU Dashboard - Manage Your CV API',
-        description: 'Access your EnvoyOU dashboard to monitor API usage, manage settings, and view analytics for your CV API integration.',
+        title: 'Envoyou Dashboard - Manage Your CV API',
+        description: 'Access your Envoyou dashboard to monitor API usage, manage settings, and view analytics for your CV API integration.',
         robots: 'noindex, nofollow',
         canonicalUrl: `${APP_CONFIG.siteURL}/dashboard`,
       },

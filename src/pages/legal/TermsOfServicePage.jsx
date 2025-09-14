@@ -37,14 +37,14 @@ function TermsOfServicePage() {
                             <section className="mb-8">
                                 <h2 className="text-2xl font-semibold text-white mb-4">1. Acceptance of Terms</h2>
                                 <p className="text-slate-300 leading-relaxed mb-4">
-                                    By accessing and using EnvoyOU's Global Environmental Data Verification API service, you accept and agree to be bound by the terms and provision of this agreement. These Terms of Service ("Terms") govern your use of our website and API services.
+                                    By accessing and using Envoyou's Global Environmental Data Verification API service, you accept and agree to be bound by the terms and provision of this agreement. These Terms of Service ("Terms") govern your use of our website and API services.
                                 </p>
                             </section>
 
                             <section className="mb-8">
                                 <h2 className="text-2xl font-semibold text-white mb-4">2. Description of Service</h2>
                                 <p className="text-slate-300 leading-relaxed mb-4">
-                                    EnvoyOU provides a comprehensive Environmental Data Verification API that delivers standardized global environmental datasets for ESG businesses, analysts, and investors. Our service includes:
+                                    Envoyou provides a comprehensive Environmental Data Verification API that delivers standardized global environmental datasets for ESG businesses, analysts, and investors. Our service includes:
                                 </p>
                                 <ul className="list-disc list-inside text-slate-300 space-y-2 ml-4">
                                     <li>Carbon emissions data verification</li>
@@ -146,14 +146,14 @@ function TermsOfServicePage() {
                             <section className="mb-8">
                                 <h2 className="text-2xl font-semibold text-white mb-4">9. Intellectual Property</h2>
                                 <p className="text-slate-300 leading-relaxed mb-4">
-                                    All content and technology provided by EnvoyOU, including but not limited to our API, algorithms, and documentation, are protected by intellectual property laws. You retain ownership of your data while granting us necessary rights to provide our service.
+                                    All content and technology provided by Envoyou, including but not limited to our API, algorithms, and documentation, are protected by intellectual property laws. You retain ownership of your data while granting us necessary rights to provide our service.
                                 </p>
                             </section>
 
                             <section className="mb-8">
                                 <h2 className="text-2xl font-semibold text-white mb-4">10. Limitation of Liability</h2>
                                 <p className="text-slate-300 leading-relaxed mb-4">
-                                    EnvoyOU shall not be liable for any indirect, incidental, special, or consequential damages resulting from the use or inability to use our service. Our total liability shall not exceed the amount paid by you for the service in the 12 months preceding the claim.
+                                    Envoyou shall not be liable for any indirect, incidental, special, or consequential damages resulting from the use or inability to use our service. Our total liability shall not exceed the amount paid by you for the service in the 12 months preceding the claim.
                                 </p>
                             </section>
 
@@ -185,7 +185,7 @@ function TermsOfServicePage() {
                                 <div className="bg-slate-800/50 rounded-lg p-4 mt-4">
                                     <p className="text-slate-300">
                                         <strong className="text-white">Email:</strong> info@envoyou.com<br />
-                                        <strong className="text-white">Address:</strong> EnvoyOU Legal Department<br />
+                                        <strong className="text-white">Address:</strong> Envoyou Legal Department<br />
                                         <strong className="text-white">Response Time:</strong> Within 48 hours
                                     </p>
                                 </div>
