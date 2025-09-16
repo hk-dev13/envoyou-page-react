@@ -3,6 +3,112 @@ import { Link } from 'react-router-dom';
 
 const PricingSection = () => {
     const [isAnnual, setIsAnnual] = useState(false);
+    const [expandedSections, setExpandedSections] = useState({});
+
+    // Pricing configuration
+    const pricingConfig = {
+        premium: {
+            monthlyPrice: 29,
+            annualDiscount: 0.20, // 20% discount for annual
+        }
+    };
+
+    // Dynamic pricing calculations
+    const monthlyPrice = pricingConfig.premium.monthlyPrice;
+    const annualDiscount = pricingConfig.premium.annualDiscount;
+    const annualPrice = Math.round(monthlyPrice * 12 * (1 - annualDiscount));
+    const discountedMonthlyPrice = Math.round(annualPrice / 12);
+    const savings = Math.round(annualDiscount * 100);
+
+    // Billing & Terms configuration
+    const billingConfig = {
+        title: "Billing & Terms",
+        sections: [
+            {
+                id: "subscription",
+                title: "Subscription Billing",
+                content: "Charges are processed automatically on monthly or annual cycles. All plans are subject to a 14-day money-back guarantee."
+            },
+            {
+                id: "enterprise",
+                title: "Enterprise Contracts",
+                content: "Custom billing cycles (e.g., quarterly) and payment terms are available. Volume discounts are offered for high-usage commitments."
+            },
+            {
+                id: "plan_changes",
+                title: "Plan Changes",
+                content: "Upgrades or downgrades are prorated."
+            },
+            {
+                id: "overage",
+                title: "Usage-Based Overage",
+                content: "For customers who occasionally exceed their plan limits, we offer automated usage-based pricing.",
+                subItems: [
+                    "Premium Tier Overage: $0.05 per 100 additional requests.",
+                    "Enterprise Tier Overage: Custom rates as defined in the contract."
+                ]
+            },
+            {
+                id: "special_programs",
+                title: "Special Programs",
+                content: "",
+                subItems: [
+                    "Startup Program: Eligible companies (< 3 years old, < $5M ARR) receive a 50% discount on their first year.",
+                    "Academic/NGO Program: Verified educational institutions and registered non-profits receive a 70% discount on standard pricing."
+                ]
+            },
+            {
+                id: "support",
+                title: "Support & Service Levels",
+                content: "",
+                subItems: [
+                    "Basic Support (Included with all plans): Access to documentation and community forums. Email support with a 48-hour response time.",
+                    "Premium Support (Included with Premium Plan): Email support with a 24-hour response time. Phone support access for critical issues.",
+                    "Enterprise Support (Included with Enterprise Plan): A dedicated account manager. Guaranteed 99.9% uptime SLA. Phone support with a 4-hour response time for critical issues."
+                ]
+            },
+            {
+                id: "terms",
+                title: "Terms & Conditions",
+                content: "",
+                subItems: [
+                    "Refund Policy: A 14-day money-back guarantee is offered for all new subscriptions. No refunds are issued for usage-based overages.",
+                    "Data & Privacy: Our platform is SOC 2, GDPR, and CCPA compliant. Custom Data Processing Agreements (DPA) are available for enterprise customers."
+                ]
+            },
+            {
+                id: "contact",
+                title: "Contact Information",
+                content: "",
+                contactLinks: [
+                    {
+                        type: "email",
+                        label: "General Support",
+                        value: "support@envoyou.com"
+                    },
+                    {
+                        type: "email",
+                        label: "Enterprise Sales",
+                        value: "info@envoyou.com"
+                    },
+                    {
+                        type: "page",
+                        label: "Contact Form",
+                        value: "/contact",
+                        text: "Use our contact form for detailed inquiries"
+                    }
+                ]
+            }
+        ]
+    };
+
+    // Toggle accordion section
+    const toggleSection = (sectionId) => {
+        setExpandedSections(prev => ({
+            ...prev,
+            [sectionId]: !prev[sectionId]
+        }));
+    };
 
     // Pricing data from txt file
     const pricingData = {
@@ -15,8 +121,9 @@ const PricingSection = () => {
         },
         premium: {
             name: "Premium Plan",
-            monthlyPrice: 29,
-            annualPrice: 290,
+            monthlyPrice: monthlyPrice,
+            annualPrice: annualPrice,
+            discountedMonthlyPrice: discountedMonthlyPrice,
             requests: "1,000 requests/hour",
             target: "Growing startups and small to medium-sized businesses"
         },
@@ -27,10 +134,6 @@ const PricingSection = () => {
             target: "Large enterprises with high-volume requirements"
         }
     };
-
-    const monthlyPrice = pricingData.premium.monthlyPrice;
-    const annualPrice = pricingData.premium.annualPrice;
-    const savings = Math.round(((monthlyPrice * 12 - annualPrice) / (monthlyPrice * 12)) * 100);
 
     return (
         <section id="pricing" className="py-20 sm:py-32">
@@ -97,10 +200,13 @@ const PricingSection = () => {
                             {isAnnual ? (
                                 <div className="space-y-1">
                                     <div className="flex items-center gap-2">
-                                        <span className="text-4xl font-bold text-white">${monthlyPrice}</span>
+                                        <span className="text-4xl font-bold text-white">${discountedMonthlyPrice}</span>
                                         <span className="text-lg font-medium text-slate-400">/month</span>
                                     </div>
                                     <p className="text-xs text-slate-400">Billed annually (${annualPrice}/year)</p>
+                                    <div className="mt-2 inline-flex items-center px-2 py-1 bg-emerald-500/10 border border-emerald-500/30 rounded-full">
+                                        <span className="text-emerald-400 text-xs font-medium">Save {savings}% with annual billing</span>
+                                    </div>
                                 </div>
                             ) : (
                                 <div className="space-y-1">
@@ -288,14 +394,114 @@ const PricingSection = () => {
                                     <td className="py-4 px-6 text-center text-emerald-400 font-semibold">Free</td>
                                     <td className="py-4 px-6 text-center">
                                         <div className="text-emerald-400 font-semibold">
-                                            ${monthlyPrice}/month
-                                            {isAnnual && <div className="text-xs text-slate-400">(${annualPrice}/year)</div>}
+                                            {isAnnual ? (
+                                                <div>
+                                                    <div>${discountedMonthlyPrice}/month</div>
+                                                    <div className="text-xs text-slate-400">(${annualPrice}/year)</div>
+                                                </div>
+                                            ) : (
+                                                <div>${monthlyPrice}/month</div>
+                                            )}
                                         </div>
                                     </td>
                                     <td className="py-4 px-6 text-center text-emerald-400 font-semibold">Custom</td>
                                 </tr>
                             </tbody>
                         </table>
+                    </div>
+                </div>
+
+                {/* Billing & Terms Section */}
+                <div className="mt-20 max-w-4xl mx-auto" data-aos="fade-up" data-aos-delay="500">
+                    <div className="text-center mb-12">
+                        <h3 className="text-2xl md:text-3xl font-bold text-white mb-4">{billingConfig.title}</h3>
+                        <p className="text-slate-400">Important information about billing, support, and terms of service</p>
+                    </div>
+
+                    <div className="space-y-4">
+                        {billingConfig.sections.map((section) => (
+                            <div key={section.id} className="bg-slate-800/50 rounded-lg border border-slate-700/50 overflow-hidden">
+                                <button
+                                    onClick={() => toggleSection(section.id)}
+                                    className="w-full px-6 py-4 text-left flex items-center justify-between hover:bg-slate-700/30 transition-colors"
+                                >
+                                    <h4 className="text-lg font-semibold text-white">{section.title}</h4>
+                                    <svg
+                                        className={`w-5 h-5 text-emerald-400 transform transition-transform ${
+                                            expandedSections[section.id] ? 'rotate-180' : ''
+                                        }`}
+                                        fill="none"
+                                        stroke="currentColor"
+                                        viewBox="0 0 24 24"
+                                    >
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7"></path>
+                                    </svg>
+                                </button>
+
+                                {expandedSections[section.id] && (
+                                    <div className="px-6 pb-4 border-t border-slate-700/50">
+                                        {section.content && (
+                                            <p className="text-slate-300 mb-3">{section.content}</p>
+                                        )}
+                                        {section.contactLinks && section.contactLinks.length > 0 && (
+                                            <div className="space-y-3">
+                                                {section.contactLinks.map((link, index) => (
+                                                    <div key={index}>
+                                                        {link.type === 'email' ? (
+                                                            <a
+                                                                href={`mailto:${link.value}`}
+                                                                className="flex items-center text-slate-300 hover:text-emerald-400 transition-colors"
+                                                            >
+                                                                <svg className="w-4 h-4 mr-2 text-emerald-400" fill="currentColor" viewBox="0 0 20 20">
+                                                                    <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z" />
+                                                                    <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z" />
+                                                                </svg>
+                                                                <span className="font-medium">{link.label}:</span>
+                                                                <span className="ml-2 underline">{link.value}</span>
+                                                            </a>
+                                                        ) : link.type === 'page' ? (
+                                                            <div>
+                                                                <Link
+                                                                    to={link.value}
+                                                                    className="flex items-center text-slate-300 hover:text-emerald-400 transition-colors"
+                                                                >
+                                                                    <svg className="w-4 h-4 mr-2 text-emerald-400" fill="currentColor" viewBox="0 0 20 20">
+                                                                        <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                                                                    </svg>
+                                                                    <span className="font-medium">{link.label}</span>
+                                                                </Link>
+                                                                {link.text && (
+                                                                    <p className="text-slate-400 text-sm mt-1 ml-6">{link.text}</p>
+                                                                )}
+                                                            </div>
+                                                        ) : null}
+                                                    </div>
+                                                ))}
+                                            </div>
+                                        )}
+                                        {section.subItems && section.subItems.length > 0 && !section.contactLinks && (
+                                            <ul className="space-y-2">
+                                                {section.subItems.map((item, index) => (
+                                                    <li key={index} className="text-slate-400 flex items-start">
+                                                        <span className="text-emerald-400 mr-2 mt-1">•</span>
+                                                        <span>{item}</span>
+                                                    </li>
+                                                ))}
+                                            </ul>
+                                        )}
+                                    </div>
+                                )}
+                            </div>
+                        ))}
+                    </div>
+
+                    <div className="mt-8 text-center">
+                        <p className="text-slate-400 text-sm">
+                            Have questions about our billing or terms?{' '}
+                            <Link to="/contact" className="text-emerald-400 hover:text-emerald-300 underline">
+                                Contact our sales team
+                            </Link>
+                        </p>
                     </div>
                 </div>
             </div>
