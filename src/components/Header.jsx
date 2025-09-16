@@ -27,7 +27,7 @@ const Header = () => {
 
     // Consolidated navigation links
     const navigationLinks = [
-        { name: 'Features', href: '#features', to: null, isButton: location.pathname !== '/' },
+        { name: 'Features', href: null, to: '/features', isButton: false },
         { name: 'Pricing', href: null, to: '/pricing', isButton: false },
         { name: 'Docs', href: 'https://docs.envoyou.com/', to: null, isButton: false },
         { name: 'Test API', href: null, to: '/test', isButton: false },

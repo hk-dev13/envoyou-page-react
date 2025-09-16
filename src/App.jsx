@@ -17,6 +17,7 @@ const AboutPage = lazy(() => import('./pages/AboutPage'));
 const PricingPage = lazy(() => import('./pages/PricingPage'));
 const ContactPage = lazy(() => import('./pages/ContactPage'));
 const FreeAPIKeyPage = lazy(() => import('./pages/FreeAPIKeyPage'));
+const FeaturesPage = lazy(() => import('./pages/FeaturesPage'));
 const TermsOfServicePage = lazy(() => import('./pages/legal/TermsOfServicePage'));
 const PrivacyPolicyPage = lazy(() => import('./pages/legal/PrivacyPolicyPage'));
 const TestPage = lazy(() => import('./pages/TestPage'));
@@ -120,6 +121,7 @@ function App() {
               <Suspense fallback={<PageLoader />}>
                 <Routes>
                   <Route path="/" element={<HomePage />} />
+                  <Route path="/features" element={<FeaturesPage />} />
                   <Route path="/documentation" element={<DocumentationPage />} />
                   <Route path="/about" element={<AboutPage />} />
                   <Route path="/pricing" element={<PricingPage />} />
