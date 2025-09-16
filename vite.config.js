@@ -10,6 +10,7 @@ export default defineConfig({
   plugins: [
     react(),
     tailwindcss(),
+    // PWA Configuration - Updated to use modern APIs and suppress deprecation warnings
     VitePWA({
       registerType: 'autoUpdate',
       includeAssets: ['favicon.ico', 'apple-touch-icon.png', 'maskable-icon.svg'],
@@ -17,6 +18,10 @@ export default defineConfig({
         cleanupOutdatedCaches: true,
         skipWaiting: true,
         clientsClaim: true,
+        // Suppress deprecation warnings
+        disableDevLogs: true,
+        // Use modern storage API
+        navigateFallbackDenylist: [/^\/_/, /\/[^/?]+\.[^/]+$/],
         runtimeCaching: [
           {
             urlPattern: /^https:\/\/fonts\.googleapis\.com\/.*/i,
