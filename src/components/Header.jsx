@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { DASHBOARD_URL } from '../config/constants';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 
 const Header = () => {
@@ -98,7 +99,7 @@ const Header = () => {
             {/* Desktop CTA */}
             <div className="hidden md:flex items-center space-x-4">
                 <a
-                    href="https://app.envoyou.com/v1/auth/login"
+                    href={`${DASHBOARD_URL}/auth/login`}
                     className="text-slate-300 hover:text-emerald-400 transition-colors"
                 >
                     Sign In
@@ -112,7 +113,7 @@ const Header = () => {
                     </Link>
                 ) : (
                     <a 
-                        href="https://app.envoyou.com/v1/auth/register" 
+                        href={`${DASHBOARD_URL}/auth/register`} 
                         className="bg-emerald-500 hover:bg-emerald-600 text-white font-semibold px-5 py-2 rounded-lg transition-colors"
                     >
                         Get Started
@@ -166,7 +167,7 @@ const Header = () => {
                     {/* Mobile CTA */}
                     <div className="border-t border-slate-700 pt-4 mt-4 space-y-4">
                         <a
-                            href="https://app.envoyou.com/v1/auth/login"
+                            href={`${DASHBOARD_URL}/auth/login`}
                             className="text-slate-300 hover:text-emerald-400 transition-colors block"
                             onClick={() => setIsMenuOpen(false)}
                         >
@@ -182,7 +183,7 @@ const Header = () => {
                             </Link>
                         ) : (
                             <a
-                                href="https://app.envoyou.com/v1/auth/register"
+                                href={`${DASHBOARD_URL}/auth/register`}
                                 className="bg-emerald-500 hover:bg-emerald-600 text-white font-semibold px-5 py-2 rounded-lg transition-colors text-center block"
                                 onClick={() => setIsMenuOpen(false)}
                             >
