@@ -41,7 +41,7 @@ const Header = () => {
         <div className="container mx-auto px-6 py-4 flex justify-between items-center">
             <Link to="/" className="flex items-center space-x-1 hover:opacity-80 transition-opacity">
                 <img 
-                    src="/svg/logo-full-nb.svg" 
+                    src="/svg/LOGO-LANDING-HEADER.svg" 
                     alt="Envoyou" 
                     className="h-8 w-auto text-emerald-400"
                 />

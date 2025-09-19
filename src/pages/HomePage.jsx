@@ -43,7 +43,7 @@ const HomePage = () => {
                     <div className="text-center mb-16">
                         <h1 className="text-4xl sm:text-6xl font-bold mb-6 flex items-center justify-center font-aileron" style={{ color: 'var(--envoyou-white)' }}>
                             <img 
-                                src="/svg/logo-icon-nb.svg" 
+                                src="/svg/dark-mode.svg" 
                                 alt="Envoyou" 
                                 className="h-12 w-12 text-emerald-400 mr-4"
                             />
